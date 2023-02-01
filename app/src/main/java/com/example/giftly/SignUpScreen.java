@@ -52,8 +52,8 @@ public class SignUpScreen extends AppCompatActivity {
                             Boolean insert = DB.insertData(user, pass);
                             if(insert == true){
                                 Toast.makeText(SignUpScreen.this,"Register Successful", Toast.LENGTH_SHORT).show();
-                                //Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                                //startActivity(intent);
+                                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                                startActivity(intent);
                             }else{
                                 Toast.makeText(SignUpScreen.this,"Register Failed", Toast.LENGTH_SHORT).show();
                             }
