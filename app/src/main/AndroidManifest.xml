@@ -12,10 +12,11 @@
         android:theme="@style/Theme.Giftly"
         tools:targetApi="31">
         <activity
+            android:name=".SignUpScreen"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true"/>
-
-
+            android:exported="true" />
     </application>
 
 </manifest>

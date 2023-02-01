@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1C1C"
+    tools:context=".SignUpScreen">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="172dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="120dp"
+        app:layout_constraintBottom_toTopOf="@+id/usernm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/giftly_icon" />
+
+    <EditText
+        android:id="@+id/usernm"
+        android:layout_width="309dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:hint="User Name"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/userpasswrd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/userpasswrd"
+        android:layout_width="309dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="11dp"
+        android:fontFamily="sans-serif-medium"
+        android:hint="Password"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/userRepasswrd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernm" />
+
+    <EditText
+        android:id="@+id/userRepasswrd"
+        android:layout_width="309dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="6dp"
+        android:fontFamily="sans-serif-medium"
+        android:hint="Retype Password"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userpasswrd" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="309dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="57dp"
+        android:text="By tapping Sign Up, you acknowledge that you have read the Privacy Policy and agree to the Terms of Service"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/regisbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userRepasswrd" />
+
+    <Button
+        android:id="@+id/regisbutton"
+        android:layout_width="197dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="107dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="107dp"
+        android:layout_marginBottom="81dp"
+        android:text="Sign Up"
+        app:backgroundTint="#008CF8"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
