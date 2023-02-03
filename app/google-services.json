@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "615467612983",
+    "project_id": "giftly-a5cc2",
+    "storage_bucket": "giftly-a5cc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615467612983:android:a3356fbfd95744a4f338b2",
+        "android_client_info": {
+          "package_name": "com.example.giftly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615467612983-nvtoto6dgvjdcbkg5qmt0jtv7u00v43v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZL6b6W_yGM37jblyjg93OIvLOufh3_2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615467612983-nvtoto6dgvjdcbkg5qmt0jtv7u00v43v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
