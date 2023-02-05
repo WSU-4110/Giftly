@@ -7,6 +7,7 @@
     android:background="#1C1C1C"
     tools:context=".SignUpScreen">
 
+    <!-- old design
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="172dp"
@@ -19,7 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/giftly_icon" />
-
     <EditText
         android:id="@+id/usernm"
         android:layout_width="309dp"
@@ -35,7 +35,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
     <EditText
         android:id="@+id/userpasswrd"
         android:layout_width="309dp"
@@ -52,7 +51,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernm" />
-
     <EditText
         android:id="@+id/userRepasswrd"
         android:layout_width="309dp"
@@ -69,7 +67,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userpasswrd" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="309dp"
@@ -84,7 +81,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userRepasswrd" />
-
     <Button
         android:id="@+id/regisbutton"
         android:layout_width="197dp"
@@ -99,6 +95,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

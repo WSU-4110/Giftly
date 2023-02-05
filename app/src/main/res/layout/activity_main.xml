@@ -7,7 +7,7 @@
     android:background="#1C1C1C"
     tools:context=".MainActivity">
 
-    <!-- Giftly Icon -->
+    <!-- Old design
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="276dp"
@@ -22,8 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/giftly_icon" />
-
-    <!-- String: A revolution for the gift giving process -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="309dp"
@@ -38,13 +36,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.45" />
-
-    <!-- Sign in button -->
     <Button
         android:id="@+id/signinbtn"
         android:layout_width="333dp"
         android:layout_height="62dp"
-
         android:layout_marginStart="40dp"
         android:layout_marginTop="57dp"
         android:layout_marginEnd="38dp"
@@ -53,13 +48,10 @@
         android:text="Sign in with Email"
         app:backgroundTint="#008CF8"
         app:cornerRadius="40dp"
-
         app:layout_constraintBottom_toTopOf="@+id/signupbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <!-- New user button -->
     <Button
         android:id="@+id/signupbtn"
         android:layout_width="196dp"
@@ -78,8 +70,6 @@
         app:layout_constraintTop_toBottomOf="@+id/signinbtn"
         app:strokeColor="#737373"
         app:strokeWidth="1dp" />
-
-    <!-- String: Copyrights -->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="346dp"
@@ -95,6 +85,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupbtn" />
+        app:layout_constraintTop_toBottomOf="@+id/signupbtn" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
