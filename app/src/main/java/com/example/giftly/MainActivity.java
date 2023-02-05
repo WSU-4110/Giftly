@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         //Clicking response for the sign in button
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), LoginScreen.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 }
