@@ -23,44 +23,28 @@ public class fireBaseClient extends User {
     FirebaseFirestore db;
 
     fireBaseClient(FirebaseAuth auth) {
-
-
-
-
         authentication = auth;
         db = FirebaseFirestore.getInstance();
     }
 
     void createProfile(User newUser) {
+        //create a Map with user data using firebase doc Schema
         Map<String, Object> user = new HashMap<>();
-        user.put("ParticipantsA", newUser.fullName);
+        user.put("Name", newUser.fullName);
         user.put("Events", newUser.events);
-        user.put("Interests", newUser);
-
-        db.collection("Users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        user.put("Interests", newUser.interests);
+        //reference the collection and call a set event using the authorized users ID
+        db.collection("Users").document(authentication.getUid()).set(user);
     }
 
-
-
-
-    User readProfile(String UserID) {
-
+    //Reads a user from the database with the matching document ID
+    User readUser(String UserID) {
+        //Create the reference in the users collection with the provided ID
         DocumentReference targetUser = db.collection("Users").document(UserID);
+        //
         DocumentSnapshot user = targetUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
+            //log status of document allocation
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
@@ -75,9 +59,9 @@ public class fireBaseClient extends User {
                     Log.d(TAG, "get failed with" + task.getException());
                 }
             }
-        }).getResult();
+        }).getResult(); //returns DocumentSnapshot
 
-        if (user.exists())
+        if (user.exists()) //If the Doc exists pass it to a User constructor
             return new User(user);
 
         else return null;
