@@ -18,10 +18,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class fireBaseClient extends User {
+
     FirebaseAuth authentication;
     FirebaseFirestore db;
 
     fireBaseClient(FirebaseAuth auth) {
+
+
+
+
         authentication = auth;
         db = FirebaseFirestore.getInstance();
     }
@@ -46,12 +51,8 @@ public class fireBaseClient extends User {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
-
-
-
     }
 
-    //t[] getUserEvents() {}
 
 
 
@@ -77,7 +78,34 @@ public class fireBaseClient extends User {
         }).getResult();
 
         if (user.exists())
-            return new User(user.getData());
+            return new User(user);
+
+        else return null;
+    }
+
+    Event readEvent(String eventID) {
+
+        DocumentReference targetEvent = db.collection("Users").document(eventID);
+        DocumentSnapshot event = targetEvent.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + doc.getData());
+                    }
+                    else {
+                        Log.d(TAG, "No Such Document");
+                    }
+                }
+                else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }
+        }).getResult();
+
+        if (event.exists())
+            return new Event(event);
 
         else return null;
     }

@@ -1,12 +1,15 @@
 package com.example.giftly.handler;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+
 import java.net.URL;
 import java.util.Map;
 
 public class User {
+    String userID;
     String fullName;
     String[] interests;
-    Event[] events;
+    String[] events;
     URL profilePicture; //in prog
 
 
@@ -17,16 +20,18 @@ public class User {
     }
 
 
-    public User(String fullName, String[] interests, Event[] events) {
+    public User(String fullName, String[] interests, String[] events) {
         this.fullName = fullName;
         this.interests = interests;
         this.events = events;
     }
 
-    public User(Map<String, Object> object) {
-        fullName = fullName;
-        interests = interests;
-        events = events;
+    //pulls data from a document snapshot
+    public User(DocumentSnapshot user) {
+        userID = user.getId();
+        fullName = user.get("Name").toString();
+        interests = (String[])(user.get("Interests"));
+        events = (String[])(user.get("Events"));
     }
 
     //getUser Info
@@ -36,7 +41,7 @@ public class User {
     public String[] getInterests() {
         return interests;
     }
-    public Event[] getEvents() {
+    public String[] getEvents() {
         return events;
     }
 }
