@@ -1,6 +1,7 @@
 package com.example.giftly.handler;
 
 import java.net.URL;
+import java.util.Map;
 
 public class User {
     String fullName;
@@ -20,6 +21,12 @@ public class User {
         this.fullName = fullName;
         this.interests = interests;
         this.events = events;
+    }
+
+    public User(Map<String, Object> object) {
+        fullName = fullName;
+        interests = interests;
+        events = events;
     }
 
     //getUser Info

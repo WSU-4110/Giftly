@@ -12,10 +12,7 @@ public class Event {
     User[] Participants;
 
 
-    public Event() {
-        eventName = "John Doe's Birthday";
 
-    }
     public Event(String eventID, String ownerID, String eventName, Date eventStartDate) {
         this.eventID = eventID;
         this.ownerID = ownerID;
