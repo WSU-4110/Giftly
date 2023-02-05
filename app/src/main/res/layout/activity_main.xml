@@ -7,94 +7,67 @@
     android:background="#1C1C1C"
     tools:context=".MainActivity">
 
-    <!-- Giftly Icon -->
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="276dp"
-        android:layout_height="265dp"
+        android:layout_width="212dp"
+        android:layout_height="179dp"
         android:layout_marginStart="67dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="27dp"
         android:layout_marginEnd="68dp"
-        android:layout_marginBottom="10dp"
         android:contentDescription="Giftly Logo"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/giftly_icon" />
 
-    <!-- String: A revolution for the gift giving process -->
     <TextView
         android:id="@+id/textView"
-        android:layout_width="309dp"
-        android:layout_height="78dp"
+        android:layout_width="266dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="-20dp"
+        android:layout_marginEnd="51dp"
         android:text="A revolution for the gift giving process"
         android:textColor="#ffffff"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.676"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <!-- Sign in button -->
     <Button
         android:id="@+id/signinbtn"
-        android:layout_width="333dp"
-        android:layout_height="62dp"
-
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="38dp"
-        android:layout_marginBottom="7dp"
+        android:layout_width="276dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="68dp"
         android:fontFamily="sans-serif-black"
-        android:text="Sign in with Email"
+        android:text="Press to Continue"
         app:backgroundTint="#008CF8"
         app:cornerRadius="40dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/signupbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <!-- New user button -->
+    <!--
     <Button
         android:id="@+id/signupbtn"
         android:layout_width="196dp"
         android:layout_height="63dp"
         android:layout_marginStart="107dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="108dp"
-        android:layout_marginBottom="27dp"
         android:fontFamily="sans-serif-black"
         android:text="New User"
         app:backgroundTint="#00000000"
         app:cornerRadius="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signinbtn"
         app:strokeColor="#737373"
-        app:strokeWidth="1dp" />
+        app:strokeWidth="1dp" />-->
 
-    <!-- String: Copyrights -->
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="346dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginBottom="80dp"
-        android:text="By Continuing you agree to the Terms and Conditions"
-        android:textColor="#BFC9CA"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupbtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
