@@ -7,14 +7,19 @@ public class Event {
     String ownerID;
 
     //Event Info
-    String EventName;
+    String eventName;
     Date eventStartDate;
     User[] Participants;
 
+
+    public Event() {
+        eventName = "John Doe's Birthday";
+
+    }
     public Event(String eventID, String ownerID, String eventName, Date eventStartDate) {
         this.eventID = eventID;
         this.ownerID = ownerID;
-        EventName = eventName;
+        eventName = eventName;
         this.eventStartDate = eventStartDate;
     }
 
@@ -26,7 +31,7 @@ public class Event {
         return ownerID;
     }
     public String getEventName() {
-        return EventName;
+        return eventName;
     }
     public Date getEventStartDate() {
         return eventStartDate;
