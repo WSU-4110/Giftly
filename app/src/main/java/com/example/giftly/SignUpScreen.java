@@ -14,16 +14,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SignUpScreen extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
-    //Declaring the ID views from the xml file
+public class SignUpScreen extends AppCompatActivity {
     private EditText editUsername, editPassword, editEmail;
     private Button btnSubmit;
     private TextView txtLoginInfo;
-    //Button signup, signin;
-    //DB_Helper DB;
-
-    //Determine if the user successfully login in or not
+    DB_Helper DB;
     private boolean isSigningUp = true;
 
     @Override
@@ -31,14 +31,13 @@ public class SignUpScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_screen);
 
-        //Initialize the variables declared
         editUsername = (EditText) findViewById(R.id.editUsername);
         editPassword = (EditText) findViewById(R.id.editPassword);
         editEmail = (EditText) findViewById(R.id.editEmail);
         btnSubmit = findViewById(R.id.btnSubmit);
         txtLoginInfo = findViewById(R.id.txtLoginInfo);
+        DB = new DB_Helper(this);
 
-        //Clicking response for the initializers
         txtLoginInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,116 +66,38 @@ public class SignUpScreen extends AppCompatActivity {
                 }
 
                 if(isSigningUp){
-                    //handleSignUp(); ======firebase connectivity=======
+                    handleSignUp();
                 }else{
-                    //handleLogin(); =======firebase connectivity======
+                    handleLogin();
                 }
             }
         });
-
-        //Clicking response for the sign up button
-        //editUsername = (EditText) findViewById(R.id.editUsername);
-        //editPassword = (EditText) findViewById(R.id.editPassword);
-        //editEmail = (EditText) findViewById(R.id.editEmail);
-        //signup = (Button) findViewById(R.id.btnSubmit);
-        //DB = new DB_Helper(this);
-
-        //Back button
-        //ActionBar actionBar = getSupportActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
-
-        //Clicking response for the sign-up button
-        /*
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String user = editUsername.getText().toString();
-                String pass = editPassword.getText().toString();
-                String repass = editEmail.getText().toString();
-
-                if(user.equals("")||pass.equals("")|repass.equals(""))
-                    Toast.makeText(SignUpScreen.this,"Please enter all the fields", Toast.LENGTH_SHORT).show();
-                else{
-                    if(pass.equals(repass)){
-                        Boolean checkuser = DB.checkusername(user);
-                        if(checkuser == false){
-                            Boolean insert = DB.insertData(user, pass);
-                            if(insert == true){
-                                Toast.makeText(SignUpScreen.this,"Register Successful", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                                startActivity(intent);
-                            }else{
-                                Toast.makeText(SignUpScreen.this,"Register Failed", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        else{
-                            Toast.makeText(SignUpScreen.this,"User already exists! Please sign in", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else{
-                        Toast.makeText(SignUpScreen.this,"Passwords not matching", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
-        });
-
-        //Clicking response for the sign-in button
-        //signin.setOnClickListener(new View.OnClickListener() {
-        //@Override
-        //public void onClick(View view) {
-        //Intent intent = new Intent(getApplicationContext(), LoginScreen.class);
-        //startActivity(intent);
-        //}
-        //});*/
 
     }
 
-    //This code will be used to connect with firebase after login/signup
-    /*
     private void handleSignUp(){
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(editEmail.getText().toString(),editPassword.getText().toString()).addOnCompleteListener(new onCompleteListener<AuthResult>(){
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(editEmail.getText().toString(),editPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task){
-                if(task.isSuccessful()) {
-                    Toast.makeText(SignUpScreen.this, "Signed up successfully", Toast.LENGTH_SHORT).show();
-                }else {
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(SignUpScreen.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+                }else{
                     Toast.makeText(SignUpScreen.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
     private void handleLogin(){
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(editEmail.getText().toString(), editPassword.getText().toString()).addOnCompleteListener(new onCompleteListener<AuthResult>(){
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(editEmail.getText().toString(),editPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task){
-                if(task.isSuccessful()) {
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
                     Toast.makeText(SignUpScreen.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                }else {
+                }else{
                     Toast.makeText(SignUpScreen.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }*/
-
-
-
-
-
-
-
-    /*
-    //This is the backbutton
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
-
-
+    }
 
 }

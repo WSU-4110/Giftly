@@ -44,13 +44,14 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="68dp"
         android:fontFamily="sans-serif-black"
-        android:text="Sign in with Email"
+        android:text="Press to Continue"
         app:backgroundTint="#008CF8"
         app:cornerRadius="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+    <!--
     <Button
         android:id="@+id/signupbtn"
         android:layout_width="196dp"
@@ -66,7 +67,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signinbtn"
         app:strokeColor="#737373"
-        app:strokeWidth="1dp" />
+        app:strokeWidth="1dp" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
