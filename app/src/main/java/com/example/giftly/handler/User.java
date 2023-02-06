@@ -10,7 +10,7 @@ public class User {
     String fullName;
     String[] interests;
     String[] events;
-    URL profilePicture; //in prog
+    URL profilePicture; //TODO
 
 
     //Test Constructor

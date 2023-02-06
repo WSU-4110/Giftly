@@ -7,8 +7,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -17,17 +15,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class fireBaseClient extends User {
+public class FireBaseClient extends User {
 
     FirebaseAuth authentication;
     FirebaseFirestore db;
 
-    fireBaseClient(FirebaseAuth auth) {
+    public FireBaseClient(FirebaseAuth auth) {
         authentication = auth;
         db = FirebaseFirestore.getInstance();
     }
 
-    void createProfile(User newUser) {
+    public void createProfile(User newUser) {
         //create a Map with user data using firebase doc Schema
         Map<String, Object> user = new HashMap<>();
         user.put("Name", newUser.fullName);
@@ -38,7 +36,7 @@ public class fireBaseClient extends User {
     }
 
     //Reads a user from the database with the matching document ID
-    User readUser(String UserID) {
+    public User readUser(String UserID) {
         //Create the reference in the users collection with the provided ID
         DocumentReference targetUser = db.collection("Users").document(UserID);
         //
@@ -67,7 +65,7 @@ public class fireBaseClient extends User {
         else return null;
     }
 
-    Event readEvent(String eventID) {
+    public Event readEvent(String eventID) {
 
         DocumentReference targetEvent = db.collection("Users").document(eventID);
         DocumentSnapshot event = targetEvent.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
