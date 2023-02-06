@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 public class HomeScreen extends AppCompatActivity {
 
+    //Variables for profile icon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
