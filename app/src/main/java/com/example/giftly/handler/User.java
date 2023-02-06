@@ -1,5 +1,9 @@
 package com.example.giftly.handler;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.net.URL;
@@ -28,10 +32,18 @@ public class User {
 
     //pulls data from a document snapshot
     public User(DocumentSnapshot user) {
-        userID = user.getId();
-        fullName = user.get("Name").toString();
-        interests = (String[])(user.get("Interests"));
-        events = (String[])(user.get("Events"));
+        try {
+            userID = user.getId();
+            fullName = user.get("Name").toString();
+            interests = (String[]) (user.get("Interests"));
+            events = (String[]) (user.get("Events"));
+        }
+        catch (NullPointerException e) {
+            Log.d(TAG, "Imported incomplete document, remaining values nulled");
+        }
+        finally {
+            Log.d(TAG, "Objecyt");
+        }
     }
 
     //getUser Info

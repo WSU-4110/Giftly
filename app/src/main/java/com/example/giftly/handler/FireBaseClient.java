@@ -32,7 +32,8 @@ public class FireBaseClient extends User {
         user.put("Events", newUser.events);
         user.put("Interests", newUser.interests);
         //reference the collection and call a set event using the authorized users ID
-        db.collection("Users").document(authentication.getUid()).set(user);
+        if (authentication.getUid() != null)
+            db.collection("Users").document(authentication.getUid()).set(user);
     }
 
     //Reads a user from the database with the matching document ID
