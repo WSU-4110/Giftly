@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+
 public class SignUpScreen extends AppCompatActivity {
     private EditText editUsername, editPassword, editEmail;
     private Button btnSubmit;
@@ -30,7 +31,7 @@ public class SignUpScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_screen);
-
+        
         editUsername = (EditText) findViewById(R.id.editUsername);
         editPassword = (EditText) findViewById(R.id.editPassword);
         editEmail = (EditText) findViewById(R.id.editEmail);

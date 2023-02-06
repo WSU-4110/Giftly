@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/giftly_icon" />
-
+        
     <EditText
         android:id="@+id/editUsername"
         android:layout_width="309dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
+        
     <EditText
         android:id="@+id/editEmail"
         android:layout_width="309dp"
