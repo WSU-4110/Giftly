@@ -5,7 +5,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +16,20 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SignUpScreen extends AppCompatActivity {
-    private EditText editUsername, editPassword, editEmail;
+    private EditText editName, editPassword, editEmail, editInterests;
     private Button btnSubmit;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private TextView txtLoginInfo;
     DB_Helper DB;
     private boolean isSigningUp = true;
@@ -31,13 +38,27 @@ public class SignUpScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_screen);
+
+        mAuth = FirebaseAuth.getInstance();
+        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Intent intent = new Intent(SignUpScreen.this, HomeScreen.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        };
         
-        editUsername = (EditText) findViewById(R.id.editUsername);
+        editName = (EditText) findViewById(R.id.editUsername);
         editPassword = (EditText) findViewById(R.id.editPassword);
         editEmail = (EditText) findViewById(R.id.editEmail);
         btnSubmit = findViewById(R.id.btnSubmit);
         txtLoginInfo = findViewById(R.id.txtLoginInfo);
-        DB = new DB_Helper(this);
+        editInterests = (EditText) findViewById(R.id.userInterests);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         txtLoginInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,12 +66,12 @@ public class SignUpScreen extends AppCompatActivity {
                 if(isSigningUp) {
                     isSigningUp = false;
                     //Hide the visibility of the text
-                    editUsername.setVisibility(View.GONE);
+                    editName.setVisibility(View.GONE);
                     btnSubmit.setText("Log in");
                     txtLoginInfo.setText("Dont have an account? Sign up");
                 }else{
                     isSigningUp = true;
-                    editUsername.setVisibility(View.VISIBLE);
+                    editName.setVisibility(View.VISIBLE);
                     btnSubmit.setText("Sign up");
                     txtLoginInfo.setText("Already have an account? Log in");
                 }
@@ -60,7 +81,7 @@ public class SignUpScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(editEmail.getText().toString().isEmpty() || editPassword.getText().toString().isEmpty()){
-                    if(isSigningUp && editUsername.getText().toString().isEmpty()){
+                    if(isSigningUp && editName.getText().toString().isEmpty()){
                         Toast.makeText(SignUpScreen.this, "Invalid input", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -82,8 +103,20 @@ public class SignUpScreen extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(SignUpScreen.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+                    String user_id = mAuth.getCurrentUser().getUid();
+                    DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
+
+                    String name = editName.getText().toString();
+                    String interests = editInterests.getText().toString();
+
+                    Map newPost = new HashMap();
+                    newPost.put("name", name);
+                    newPost.put("interests",interests);
+
+                    current_user_db.setValue(newPost);
                 }else{
                     Toast.makeText(SignUpScreen.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -99,6 +132,16 @@ public class SignUpScreen extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
