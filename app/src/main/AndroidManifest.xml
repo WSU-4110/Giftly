@@ -14,17 +14,17 @@
         android:theme="@style/Theme.Giftly"
         tools:targetApi="31">
         <activity
-            android:name="HomeScreen"
+            android:name=".HomeScreen"
             android:exported="false" />
         <activity
-            android:name="LoginScreen"
+            android:name=".LoginScreen"
             android:exported="false" />
         <activity
-            android:name="SignUpScreen"
+            android:name=".SignUpScreen"
             android:exported="false" />
 
         <activity
-            android:name="MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

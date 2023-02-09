@@ -1,7 +1,6 @@
 package com.example.giftly.handler;
 
 import static android.content.ContentValues.TAG;
-//import android.nfc.Tag;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,32 +14,34 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FireBaseClient extends User {
+public class FireBaseClient {
+    public FireBaseClient() {}
 
-    FirebaseAuth authentication;
-    FirebaseFirestore db;
-
-    public FireBaseClient(FirebaseAuth auth) {
-        authentication = auth;
-        db = FirebaseFirestore.getInstance();
+    //method wrappers because typing out that class name annoys me
+    public static FirebaseAuth getAuth() {
+        return FirebaseAuth.getInstance();
+    }
+    public static  FirebaseFirestore getDB() {
+        return FirebaseFirestore.getInstance();
     }
 
-    public void createProfile(User newUser) {
+
+    public static void createProfile(User newUser) {
         //create a Map with user data using firebase doc Schema
         Map<String, Object> user = new HashMap<>();
         user.put("Name", newUser.fullName);
         user.put("Events", newUser.events);
         user.put("Interests", newUser.interests);
         //reference the collection and call a set event using the authorized users ID
-        if (authentication.getUid() != null)
-            db.collection("Users").document(authentication.getUid()).set(user);
+        if (FirebaseAuth.getInstance().getUid() != null)
+            getDB().collection("Users").document(getAuth().getUid()).set(user);
     }
 
     //Reads a user from the database with the matching document ID
-    public User readUser(String UserID) {
+    public static User readUser(String UserID) {
         //Create the reference in the users collection with the provided ID
-        DocumentReference targetUser = db.collection("Users").document(UserID);
-        //
+        DocumentReference targetUser = getDB().collection("Users").document(UserID);
+
         DocumentSnapshot user = targetUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             //log status of document allocation
@@ -66,9 +67,9 @@ public class FireBaseClient extends User {
         else return null;
     }
 
-    public Event readEvent(String eventID) {
+    public static Event readEvent(String eventID) {
 
-        DocumentReference targetEvent = db.collection("Users").document(eventID);
+        DocumentReference targetEvent = getDB().collection("Users").document(eventID);
         DocumentSnapshot event = targetEvent.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -91,5 +92,9 @@ public class FireBaseClient extends User {
             return new Event(event);
 
         else return null;
+    }
+
+    public static String getCurrentUserName() {
+        return readUser(getAuth().getUid()).fullName;
     }
 }

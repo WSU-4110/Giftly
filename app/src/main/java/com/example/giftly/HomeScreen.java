@@ -1,8 +1,9 @@
 package com.example.giftly;
+import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
+import com.example.giftly.handler.FireBaseClient;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -10,5 +11,10 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        //find Users name and display it to test readUser data
+        TextView display = findViewById(R.id.TestDisplay);
+        display.setText(FireBaseClient.readUser(FireBaseClient.getAuth().getUid()).getFullName());
     }
+
 }
