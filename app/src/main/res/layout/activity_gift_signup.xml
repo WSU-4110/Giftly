@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header" />
-
+    <!--
     <EditText
         android:id="@+id/enter_date"
         android:layout_width="347dp"
@@ -55,7 +55,6 @@
         android:background="@drawable/gray_background"
         android:ems="10"
         android:fontFamily="sans-serif-medium"
-        android:hint="   Date"
         android:inputType="date"
         android:textColor="@color/white"
         android:textColorHighlight="@color/white"
@@ -65,14 +64,15 @@
         android:focusable="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_name" />
-
+    -->
 
     <EditText
         android:id="@+id/enter_location"
         android:layout_width="347dp"
-        android:layout_height="350dp"
-        android:layout_marginStart="32dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="31dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="175dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
         android:hint="   Gift List"
@@ -81,6 +81,7 @@
         android:textColorHint="@color/light_gray"
         android:textColorLink="@color/white"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_event"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_type_selection" />
 
@@ -115,21 +116,22 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Dropdown Menu -->
-    <Spinner
-        android:id="@+id/event_type_selection"
-        android:layout_width="346dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/gray_background"
-        android:contentDescription="@string/event_type"
-        android:popupBackground="@drawable/gray_background"
-        android:spinnerMode="dropdown"
-        android:theme="@style/spinnerTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_date" />
-
-    <!-- Image for Spinner -->
+    <!--
+   <Spinner
+       android:id="@+id/event_type_selection"
+       android:layout_width="346dp"
+       android:layout_height="48dp"
+       android:layout_marginStart="33dp"
+       android:layout_marginTop="8dp"
+       android:background="@drawable/gray_background"
+       android:contentDescription="@string/event_type"
+       android:popupBackground="@drawable/gray_background"
+       android:spinnerMode="dropdown"
+       android:theme="@style/spinnerTheme"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/enter_date" />
+    ->
+   <!-- Image for Spinner -->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="47dp"
