@@ -70,7 +70,7 @@
     <EditText
         android:id="@+id/enter_location"
         android:layout_width="347dp"
-        android:layout_height="102dp"
+        android:layout_height="350dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/gray_background"
