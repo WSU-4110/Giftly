@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1C1C"
+    android:textColor="@color/white"
+    tools:context=".AddEventScreen">
+
+    <!-- Add Event Header -->
+
+    <TextView
+        android:id="@+id/AddEvent_Header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="100dp"
+        android:text="Gift List"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/event_name"
+        android:layout_width="345dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="33dp"
+        android:background="@drawable/gray_background"
+        android:fontFamily="sans-serif-medium"
+        android:hint="   Event Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/white"
+        android:textColorHint="@color/light_gray"
+        android:textColorLink="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header" />
+
+    <EditText
+        android:id="@+id/enter_date"
+        android:layout_width="347dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/gray_background"
+        android:ems="10"
+        android:fontFamily="sans-serif-medium"
+        android:hint="   Date"
+        android:inputType="date"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/white"
+        android:textColorHint="@color/light_gray"
+        android:textColorLink="@color/white"
+        android:textSize="16sp"
+        android:focusable="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_name" />
+
+
+    <EditText
+        android:id="@+id/enter_location"
+        android:layout_width="347dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/gray_background"
+        android:fontFamily="sans-serif-medium"
+        android:hint="   Gift List"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/white"
+        android:textColorHint="@color/light_gray"
+        android:textColorLink="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_type_selection" />
+
+
+    <!-- Accept/Create Event -->
+    <Button
+        android:id="@+id/button_add_event"
+        android:layout_width="120dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="250dp"
+        android:layout_marginBottom="32dp"
+        android:text="Add"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:backgroundTint="#008CF8"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/OR_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="163dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Dropdown Menu -->
+    <Spinner
+        android:id="@+id/event_type_selection"
+        android:layout_width="346dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/gray_background"
+        android:contentDescription="@string/event_type"
+        android:popupBackground="@drawable/gray_background"
+        android:spinnerMode="dropdown"
+        android:theme="@style/spinnerTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_date" />
+
+    <!-- Image for Spinner -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="47dp"
+        android:layout_height="49dp"
+        app:layout_constraintBottom_toBottomOf="@+id/event_type_selection"
+        app:layout_constraintEnd_toEndOf="@+id/event_type_selection"
+        app:layout_constraintHorizontal_bias="0.993"
+        app:layout_constraintStart_toStartOf="@+id/event_type_selection"
+        app:layout_constraintTop_toTopOf="@+id/event_type_selection"
+        app:srcCompat="@mipmap/ic_dropdown_icon" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
