@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +27,6 @@ public class GiftSignup extends AppCompatActivity implements AdapterView.OnItemS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_event);
 
-        Spinner spinner = (Spinner) findViewById(R.id.event_type_selection);
-        spinner.setOnItemSelectedListener(this);
-
         // Temporary array
         List<String> categories = new ArrayList<String>();
         categories.add("Choose Event Type");
@@ -38,7 +34,6 @@ public class GiftSignup extends AppCompatActivity implements AdapterView.OnItemS
         categories.add("Secret Santa");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
 
         editText=(EditText) findViewById(R.id.enter_date);
         DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {

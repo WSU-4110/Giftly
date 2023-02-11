@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/event_name2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C1C1C"
@@ -69,10 +70,10 @@
     <EditText
         android:id="@+id/enter_location"
         android:layout_width="347dp"
-        android:layout_height="300dp"
+        android:layout_height="375dp"
         android:layout_marginStart="31dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="175dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
         android:hint="   Gift List"
@@ -85,7 +86,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_type_selection" />
 
-
+    <EditText
+        android:id="@+id/add_gift"
+        android:layout_width="345dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="33dp"
+        android:background="@drawable/gray_background"
+        android:fontFamily="sans-serif-medium"
+        android:hint="   Add Gift"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/white"
+        android:textColorHint="@color/light_gray"
+        android:textColorLink="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header" />
     <!-- Accept/Create Event -->
     <Button
         android:id="@+id/button_add_event"
