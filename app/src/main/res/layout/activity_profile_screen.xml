@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1C1C"
+    tools:context=".ProfileScreen">
+
+    <Button
+        android:id="@+id/editNameButton"
+        android:layout_width="318dp"
+        android:layout_height="63dp"
+        android:text="Edit Name"
+        app:backgroundTint="#444444"
+        app:cornerRadius="10dp"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="106dp" />
+
+    <Button
+        android:id="@+id/propicButton"
+        android:layout_width="318dp"
+        android:layout_height="63dp"
+        android:text="Profile Picture"
+        app:backgroundTint="#444444"
+        app:cornerRadius="10dp"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="208dp" />
+
+    <Button
+        android:id="@+id/ditgiftButton"
+        android:layout_width="318dp"
+        android:layout_height="63dp"
+        android:text="Edit Gift Ideas"
+        app:backgroundTint="#444444"
+        app:cornerRadius="10dp"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="294dp" />
+
+    <Button
+        android:id="@+id/anonymityButton"
+        android:layout_width="318dp"
+        android:layout_height="63dp"
+        android:text="Anonymity"
+        app:backgroundTint="#444444"
+        app:cornerRadius="10dp"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="400dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
