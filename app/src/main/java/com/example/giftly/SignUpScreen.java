@@ -94,7 +94,7 @@ public class SignUpScreen extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(SignUpScreen.this, FireBaseClient.getCurrentUserName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpScreen.this, "Sign in Successful", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(SignUpScreen.this, HomeScreen.class);
                     startActivity(i);
 

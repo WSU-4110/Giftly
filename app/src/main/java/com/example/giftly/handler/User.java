@@ -7,24 +7,26 @@ import android.util.Log;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class User {
     String userID;
     String fullName;
-    String[] interests;
-    String[] events;
+    ArrayList<String> interests;
+    ArrayList<String> events;
     URL profilePicture; //TODO
+
 
 
     //Test Constructor
     public User() {
         fullName = "John Doe";
-        interests = new String[]{"Cheeses", "Wines", "BBQ Accessories", "PS5 Games", "Pet Rocks"};
+        interests = new ArrayList<>(0);
     }
 
 
-    public User(String fullName, String[] interests, String[] events) {
+    public User(String fullName, ArrayList<String> interests, ArrayList<String> events) {
         this.fullName = fullName;
         this.interests = interests;
         this.events = events;
@@ -35,14 +37,14 @@ public class User {
         try {
             userID = user.getId();
             fullName = user.get("Name").toString();
-            interests = (String[]) (user.get("Interests"));
-            events = (String[]) (user.get("Events"));
+            interests = (ArrayList<String>) (user.get("Interests"));
+            events = (ArrayList<String>)(user.get("Events"));
         }
         catch (NullPointerException e) {
             Log.d(TAG, "Imported incomplete document, remaining values nulled");
         }
         finally {
-            Log.d(TAG, "Objecyt");
+            Log.d(TAG, "Object");
         }
     }
 
@@ -50,10 +52,10 @@ public class User {
     public String getFullName() {
         return fullName;
     }
-    public String[] getInterests() {
+    public ArrayList<String> getInterests() {
         return interests;
     }
-    public String[] getEvents() {
+    public ArrayList<String> getEvents() {
         return events;
     }
 }
