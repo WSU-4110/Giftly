@@ -27,7 +27,7 @@ public class Event {
         eventID = event.getId();
         ownerID = event.get("OwnerID").toString();
         eventStartDate = ((Timestamp)event.get("eventStartDate")).toDate();
-        participants = (String[])event.get("participants");
+        participants = (String[])event.get("Participants");
     }
 
     //Reg accessors
