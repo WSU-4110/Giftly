@@ -26,10 +26,9 @@ public class HomeScreen extends AppCompatActivity {
 
         //find Users name and display it to test readUser data
         TextView display = findViewById(R.id.TestDisplay);
-        ListenableFuture<User> getUser =  Giftly.client.readUser(FireBaseClient.getAuth().getUid());
 
         Futures.addCallback(
-                getUser,
+                Giftly.client.readUser(Giftly.client.getAuth().getUid()),
                 new FutureCallback<User>() {
                     public void onSuccess(User result) {
                         // handle success
