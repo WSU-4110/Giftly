@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class FireBaseClient {
         user.put("Events", newUser.events);
         user.put("Interests", newUser.interests);
         //reference the collection and call a set event using the authorized users ID
-        if (FirebaseAuth.getInstance().getUid() != null)
+        if (getAuth().getUid() != null)
             getDB().collection("Users").document(getAuth().getUid()).set(user);
     }
 
@@ -76,6 +77,46 @@ public class FireBaseClient {
                 return null;
             }
 
+        }
+    }
+
+    //Reads a user from the database with the matching document ID and returns Listenable Future for a user
+    public ListenableFuture<ArrayList<User>> readUser(ArrayList<String> UserIDs) {
+        return Giftly.service.submit(new userListCallback(UserIDs));
+    }
+    //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
+    private class userListCallback implements Callable<ArrayList<User>> {
+        ArrayList<String> UserIDList;
+
+        userListCallback(ArrayList<String> UIDs) {
+            UserIDList = UIDs;
+        }
+
+        @Override
+        public ArrayList<User> call() {
+            ArrayList<User> retrievedUsers = new ArrayList<>(UserIDList.size());
+
+            Task<QuerySnapshot> callDB = getDB().collection("Users").whereIn(FieldPath.documentId(), UserIDList).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    QuerySnapshot docs = task.getResult();
+                    if (docs.size() > 0) {
+                        Log.d(TAG, "Retrieved " + docs.size() + " from firebase");
+                    } else {
+                        Log.d(TAG, "No Documents Retrieved");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns DocumentSnapshot
+
+            try {
+                Tasks.await(callDB);
+                for (DocumentSnapshot user : callDB.getResult())
+                    retrievedUsers.add(new User(user));
+                return retrievedUsers;
+            } catch (Exception e) {
+                return null;
+            }
         }
     }
 }
