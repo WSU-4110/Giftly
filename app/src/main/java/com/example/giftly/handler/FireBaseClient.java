@@ -119,4 +119,85 @@ public class FireBaseClient {
             }
         }
     }
+
+    //Call event from firebase DB with eid
+    public ListenableFuture<Event> readEvent(String eventID) {
+        return Giftly.service.submit(new eventCallback(eventID));
+    }
+    //Callable implemented class that returns a Future
+    private class eventCallback implements Callable<Event> {
+        String eventID;
+        eventCallback(String EID) {eventID = EID;}
+
+        public Event call() {
+            DocumentReference targetEvent = getDB().collection("Events").document(eventID);
+
+            //log status of document allocation
+            Task<DocumentSnapshot> callDB = targetEvent.get().addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + doc.getData());
+                    }
+                    else {
+                        Log.d(TAG, "No Such Document");
+                    }
+                }
+                else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns DocumentSnapshot
+
+            try {
+                Tasks.await(callDB);
+                return new Event(callDB.getResult());
+            }
+            catch (Exception e) {
+                Log.d(TAG, e.toString());
+                return null;
+            }
+        }
+    }
+
+
+    //Reads a event from the database with the matching document ID and returns Listenable Future for a user
+    public ListenableFuture<ArrayList<Event>> readEvent(ArrayList<String> eventIDs) {
+        return Giftly.service.submit(new eventListCallback(eventIDs));
+    }
+    //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
+    private class eventListCallback implements Callable<ArrayList<Event>> {
+        ArrayList<String> EventIDList;
+
+        eventListCallback(ArrayList<String> EIDs) {
+            EventIDList = EIDs;
+        }
+
+        @Override
+        public ArrayList<Event> call() {
+            ArrayList<Event> retrievedUsers = new ArrayList<>(EventIDList.size());
+
+            Task<QuerySnapshot> callDB = getDB().collection("Events").whereIn(FieldPath.documentId(), EventIDList).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    QuerySnapshot docs = task.getResult();
+                    if (docs.size() > 0) {
+                        Log.d(TAG, "Retrieved " + docs.size() + " from firebase");
+                    } else {
+                        Log.d(TAG, "No Documents Retrieved");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns DocumentSnapshot
+
+            try {
+                Tasks.await(callDB);
+                for (DocumentSnapshot event : callDB.getResult())
+                    retrievedUsers.add(new Event(event));
+                return retrievedUsers;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
 }

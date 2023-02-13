@@ -1,4 +1,9 @@
 package com.example.giftly.handler;
+import static android.content.ContentValues.TAG;
+
+import android.nfc.Tag;
+import android.util.Log;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.Date;
@@ -24,8 +29,9 @@ public class Event {
 
     //Pulls data from document snapshot
     public Event(DocumentSnapshot event) {
+        eventName = event.get("eventName").toString();
         eventID = event.getId();
-        ownerID = event.get("OwnerID").toString();
+        ownerID = event.get("ownerID").toString();
         eventStartDate = ((Timestamp)event.get("eventStartDate")).toDate();
         participants = (String[])event.get("Participants");
     }

@@ -1,6 +1,8 @@
 package com.example.giftly;
 import static android.content.ContentValues.TAG;
 
+import static com.example.giftly.Giftly.client;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,11 +37,11 @@ public class HomeScreen extends AppCompatActivity {
         TextView display = findViewById(R.id.TestDisplay);
 
         Futures.addCallback(
-                Giftly.client.readUser(Giftly.client.getAuth().getUid()),
-                new FutureCallback<User>() {
-                    public void onSuccess(User result) {
+                Giftly.client.readEvent("XoJlaxyaeUf2vqxn4R5h"),
+                new FutureCallback<Event>() {
+                    public void onSuccess(Event result) {
                         // handle success
-                        display.setText(result.getFullName());
+                        display.setText(result.getEventName());
                     }
 
                     public void onFailure(@NonNull Throwable thrown) {
