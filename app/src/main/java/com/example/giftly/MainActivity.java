@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
         button_signin = (Button) findViewById(R.id.signinbtn);
 
+        //Response will transition to the sign in/sign up screen
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

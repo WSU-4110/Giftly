@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1C1C"
+    tools:context=".ProfileScreen">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="102dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="163dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="146dp"
+        android:text="Profile"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/edit_name_opt"
+        android:layout_width="300dp"
+        android:layout_height="68dp"
+        android:textAllCaps="false"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="56dp"
+        android:fontFamily="sans-serif-black"
+        android:drawableLeft="@drawable/edit_name"
+        android:text="Edit Name"
+        android:textSize="20dp"
+        android:drawableRight="@drawable/setting_arrow"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/pro_pic_opt"
+        android:layout_width="300dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="56dp"
+        android:drawableLeft="@drawable/account_img"
+        android:drawableRight="@drawable/setting_arrow"
+        android:fontFamily="sans-serif-black"
+        android:text="Profile Picture"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_name_opt" />
+
+    <Button
+        android:id="@+id/edit_gift_ideas_opt"
+        android:layout_width="300dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="56dp"
+        android:drawableLeft="@drawable/gift_idea"
+        android:drawableRight="@drawable/setting_arrow"
+        android:fontFamily="sans-serif-black"
+        android:text="Edit Gift Ideas"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pro_pic_opt" />
+
+    <Button
+        android:id="@+id/anonymity_opt"
+        android:layout_width="300dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="56dp"
+        android:drawableLeft="@drawable/anonymity_icon"
+        android:drawableRight="@drawable/setting_arrow"
+        android:fontFamily="sans-serif-black"
+        android:text="Anonymity"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_gift_ideas_opt" />
+
+
+    <Button
+        android:id="@+id/button_log_out"
+        android:layout_width="163dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="124dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Log Out"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/anonymity_opt" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
