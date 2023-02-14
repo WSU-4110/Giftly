@@ -145,6 +145,7 @@ public class SignUpScreen extends AppCompatActivity {
                     //Intent i = new Intent(SignUpScreen.this, HomeScreen.class);
                     //startActivity(i);
 
+
                     //After logging in, transition to the home screen
                     startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
                     Toast.makeText(SignUpScreen.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
