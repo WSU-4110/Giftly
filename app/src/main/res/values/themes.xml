@@ -22,4 +22,9 @@
     <style name="Theme.Giftly.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Giftly.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="spinnerTheme">
+        <item name="android:textColor">@color/light_gray</item>
+    </style>
+
 </resources>
