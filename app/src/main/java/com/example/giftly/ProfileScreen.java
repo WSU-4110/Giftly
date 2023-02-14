@@ -13,24 +13,11 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileScreen extends AppCompatActivity {
-    private Button btnLogOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
-
-        btnLogOut = findViewById(R.id.button_log_out);
-
-        //Log out button configuration
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(ProfileScreen.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
-            }
-        });
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

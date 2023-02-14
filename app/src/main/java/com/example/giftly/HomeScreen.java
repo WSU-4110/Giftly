@@ -6,6 +6,8 @@ import static com.example.giftly.Giftly.client;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,11 +30,22 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class HomeScreen extends AppCompatActivity {
+    public Button settingsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        settingsBtn = (Button) findViewById(R.id.SettingsBtn);
+
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreen.this, SettingsScreen.class);
+                startActivity(intent);
+            }
+        });
 
         //find Users name and display it to test readUser data
         TextView display = findViewById(R.id.TestDisplay);
