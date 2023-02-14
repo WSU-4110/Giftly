@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -36,6 +37,25 @@ public class HomeScreen extends AppCompatActivity {
         //find Users name and display it to test readUser data
         TextView display = findViewById(R.id.TestDisplay);
 
+        //This call will display the user's name in the greeting message
+        Futures.addCallback(
+                Giftly.client.readUser(client.getAuth().getUid()),
+                new FutureCallback<User>() {
+                    @Override
+                    public void onSuccess(User result) {
+                        display.setText(result.getFullName().toString());
+                    }
+
+                    @Override
+                    public void onFailure(Throwable thrown) {
+
+                    }
+                },
+                this.getMainExecutor()
+        );
+
+        //This call will display the events from the user
+        /*
         Futures.addCallback(
                 Giftly.client.readEvent("XoJlaxyaeUf2vqxn4R5h"),
                 new FutureCallback<Event>() {
@@ -51,7 +71,7 @@ public class HomeScreen extends AppCompatActivity {
                 },
                 // causes the callbacks to be executed on the main (UI) thread
                 this.getMainExecutor()
-        );
+        );*/
 
 
         //Load User Info
