@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1C1C"
+    tools:context=".SettingsScreen">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="144dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="163dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="146dp"
+        android:text="Settings"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/edit_name_opt"
+        android:layout_width="300dp"
+        android:layout_height="68dp"
+        android:textAllCaps="false"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="56dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Font Size"
+        android:textSize="20dp"
+        android:drawableRight="@drawable/setting_arrow"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/pro_pic_opt"
+        android:layout_width="300dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="56dp"
+        android:drawableRight="@drawable/setting_arrow"
+        android:fontFamily="sans-serif-black"
+        android:text="Layout"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_name_opt" />
+
+    <Button
+        android:id="@+id/edit_gift_ideas_opt"
+        android:layout_width="300dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="56dp"
+        android:drawableRight="@drawable/setting_arrow"
+        android:fontFamily="sans-serif-black"
+        android:text="Theme"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pro_pic_opt" />
+
+
+    <Button
+        android:id="@+id/button_log_out"
+        android:layout_width="244dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="207dp"
+        android:layout_marginEnd="84dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Log Out"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_gift_ideas_opt" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

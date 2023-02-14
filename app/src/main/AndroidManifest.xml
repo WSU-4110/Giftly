@@ -6,15 +6,18 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".Giftly"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:name="Giftly"
         android:label=""
         android:supportsRtl="true"
         android:theme="@style/Theme.Giftly"
         tools:targetApi="31">
+        <activity
+            android:name=".SettingsScreen"
+            android:exported="false" />
         <activity
             android:name=".ProfileScreen"
             android:exported="false" />
