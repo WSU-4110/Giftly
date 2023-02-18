@@ -71,9 +71,8 @@
         android:id="@+id/enter_location"
         android:layout_width="347dp"
         android:layout_height="375dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="18dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
         android:hint="   Gift List"
@@ -82,9 +81,10 @@
         android:textColorHint="@color/light_gray"
         android:textColorLink="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_event"
+        app:layout_constraintBottom_toTopOf="@+id/add_gift"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_type_selection" />
+        app:layout_constraintTop_toBottomOf="@+id/event_name" />
 
     <EditText
         android:id="@+id/add_gift"
@@ -127,10 +127,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="163dp"
         android:layout_marginEnd="163dp"
-        android:layout_marginBottom="15dp"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/AddEvent_Header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -149,17 +149,17 @@
        android:theme="@style/spinnerTheme"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toBottomOf="@+id/enter_date" />
-    ->
+    -->
    <!-- Image for Spinner -->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="47dp"
         android:layout_height="49dp"
-        app:layout_constraintBottom_toBottomOf="@+id/event_type_selection"
-        app:layout_constraintEnd_toEndOf="@+id/event_type_selection"
+        app:layout_constraintBottom_toTopOf="@+id/event_name"
+        app:layout_constraintEnd_toStartOf="@+id/AddEvent_Header"
         app:layout_constraintHorizontal_bias="0.993"
-        app:layout_constraintStart_toStartOf="@+id/event_type_selection"
-        app:layout_constraintTop_toTopOf="@+id/event_type_selection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_dropdown_icon" />
 
 

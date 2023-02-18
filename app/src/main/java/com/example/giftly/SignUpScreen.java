@@ -1,5 +1,7 @@
 package com.example.giftly;
 
+import static com.example.giftly.Giftly.client;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.giftly.handler.FireBaseClient;
+import com.example.giftly.handler.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -115,6 +118,9 @@ public class SignUpScreen extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     //After signing up, transition to the home screen
+
+                    //client.createProfile(new User());
+
                     startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
                     Toast.makeText(SignUpScreen.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
 

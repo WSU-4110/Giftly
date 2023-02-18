@@ -27,7 +27,12 @@
         <activity
             android:name=".SignUpScreen"
             android:exported="false" />
-
+        <activity
+            android:name=".crappyEventViewer"
+            android:exported="false" />
+        <activity
+            android:name=".DisplayEventScreen"
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -36,7 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

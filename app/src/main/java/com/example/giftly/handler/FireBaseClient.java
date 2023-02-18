@@ -41,6 +41,8 @@ public class FireBaseClient {
             getDB().collection("Users").document(getAuth().getUid()).set(user);
     }
 
+
+
     //Reads a user from the database with the matching document ID and returns Listenable Future for a user
     public ListenableFuture<User> readUser(String UserID) {
         return Giftly.service.submit(new userCallback(UserID));
