@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +32,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_create_new_event);
 
         //Button Functionality
-        button_create_event = (Button) findViewById(R.id.button_add_event);
+        button_create_event = (Button) findViewById(R.id.button_add_gift);
 
         Spinner spinner = (Spinner) findViewById(R.id.event_type_selection);
         spinner.setOnItemSelectedListener(this);
