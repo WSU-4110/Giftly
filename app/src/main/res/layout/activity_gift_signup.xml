@@ -26,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/event_name"
         android:layout_width="345dp"
         android:layout_height="48dp"
@@ -35,6 +35,7 @@
         android:layout_marginEnd="33dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
+        android:gravity="fill"
         android:hint="   Event Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
@@ -46,12 +47,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header" />
 
-    <EditText
-        android:id="@+id/enter_location"
+    <TextView
+        android:id="@+id/gift_list"
         android:layout_width="345dp"
         android:layout_height="350dp"
         android:layout_marginStart="31dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="100dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
@@ -61,7 +61,7 @@
         android:textColorHint="@color/light_gray"
         android:textColorLink="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_event"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_gift"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header" />
 
     <Button
-        android:id="@+id/button_add_event"
+        android:id="@+id/button_add_gift"
         android:layout_width="120dp"
         android:layout_height="49dp"
         android:layout_marginEnd="250dp"
