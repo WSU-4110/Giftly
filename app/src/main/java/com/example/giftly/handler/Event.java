@@ -6,6 +6,9 @@ import android.util.Log;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Event {
@@ -15,7 +18,7 @@ public class Event {
     //Event Info
     String eventName;
     Date eventStartDate;
-    String[] participants;
+    ArrayList<String> participants;
 
 
 
@@ -33,7 +36,7 @@ public class Event {
         eventID = event.getId();
         ownerID = event.get("ownerID").toString();
         eventStartDate = ((Timestamp)event.get("eventStartDate")).toDate();
-        participants = (String[])event.get("Participants");
+        participants = (ArrayList<String>)event.get("participants");
     }
 
     //Reg accessors
@@ -49,7 +52,7 @@ public class Event {
     public Date getEventStartDate() {
         return eventStartDate;
     }
-    public String[] getParticipants() {
+    public ArrayList<String> getParticipants() {
         return participants;
     }
 }

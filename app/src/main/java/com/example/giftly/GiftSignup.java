@@ -36,7 +36,7 @@ public class GiftSignup extends AppCompatActivity {
         String eventID = participantIntent.getStringExtra("userID");
         String userID = participantIntent.getStringExtra("eventID");
 
-        client.getGiftList(eventID, userID);
+        //client.getGiftList(eventID, userID);
 
 
 
