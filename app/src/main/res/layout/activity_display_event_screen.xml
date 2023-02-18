@@ -71,7 +71,7 @@
         android:drawableLeft="@drawable/baseline_settings_24"
         android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
         android:fontFamily="sans-serif-black"
-        android:text="Edit Name"
+        android:text="Edit Event"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textSize="18sp"
@@ -81,7 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_date" />
 
-    <!-- Button to Gift List -->
+    <!-- Button to Gift List // WILL NOT NEED POSSIBLY -->
     <Button
         android:id="@+id/gift_list_button"
         android:layout_width="120dp"
