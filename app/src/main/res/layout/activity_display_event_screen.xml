@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1C1C"
+    android:textColor="@color/white"
+    tools:context=".AddEventScreen">
+
+    <!-- Name of Event -->
+    <TextView
+        android:id="@+id/Event_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="100dp"
+        android:text="Event Name"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Location of Event -->
+    <EditText
+        android:id="@+id/event_location"
+        android:layout_width="349dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="33dp"
+        android:background="@drawable/gray_background"
+        android:fontFamily="sans-serif-medium"
+        android:hint="   Location"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColorHint="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Event_title" />
+
+    <!-- Date of Event -->
+    <EditText
+        android:id="@+id/event_date"
+        android:layout_width="349dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/gray_background"
+        android:ems="10"
+        android:focusable="false"
+        android:fontFamily="sans-serif-medium"
+        android:hint="   Date"
+        android:inputType="date"
+        android:textColorHint="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_location" />
+
+    <!-- Button to Edit Event -->
+    <Button
+        android:id="@+id/edit_event"
+        android:layout_width="349dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginEnd="29dp"
+        android:drawableLeft="@drawable/baseline_settings_24"
+        android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+        android:fontFamily="sans-serif-black"
+        android:text="Edit Event"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:backgroundTint="@color/gray"
+        app:cornerRadius="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_date" />
+
+    <!-- Button to Gift List // WILL NOT NEED POSSIBLY -->
+    <Button
+        android:id="@+id/gift_list_button"
+        android:layout_width="120dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginBottom="32dp"
+        android:text="Gift List"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:backgroundTint="#008CF8"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Participant Title -->
+    <TextView
+        android:id="@+id/participant_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="151dp"
+        android:text="Participants"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_event" />
+
+    <!-- List of Participants -->
+    <ListView
+        android:id="@+id/participant_list"
+        android:layout_width="349dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/gray_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/participant_title" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
