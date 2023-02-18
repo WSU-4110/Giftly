@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -26,30 +25,14 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
     final Calendar myCalendar= Calendar.getInstance();
     EditText editText;
 
-    public Button button_create_event, button_cancel_add;
+    public Button button_create_event;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_event);
 
         //Button Functionality
-        button_create_event = (Button) findViewById(R.id.button_add_event);
-        button_cancel_add = (Button) findViewById(R.id.button_cancel);
-        button_create_event.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddEventScreen.this, DisplayEventScreen.class);
-                startActivity(intent);
-            }
-        });
-
-        button_cancel_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddEventScreen.this, HomeScreen.class);
-                startActivity(intent);
-            }
-        });
+        button_create_event = (Button) findViewById(R.id.button_add_gift);
 
         Spinner spinner = (Spinner) findViewById(R.id.event_type_selection);
         spinner.setOnItemSelectedListener(this);
@@ -97,7 +80,5 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
-
-
 
 }
