@@ -1,5 +1,7 @@
 package com.example.giftly;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +30,9 @@ public class DisplayEventScreen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_event_screen);
+        Intent eventIntent = getIntent();
+        String eventID = eventIntent.getStringExtra("eventID");
+        Log.d(TAG, "EventID: " + eventID);
 
         // This section is commented out until we add the edit event page?
 //        button_edit_event = (Button) findViewById(R.id.edit_event);
