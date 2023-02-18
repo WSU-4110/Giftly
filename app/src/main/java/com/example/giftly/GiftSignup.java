@@ -1,5 +1,7 @@
 package com.example.giftly;
 
+import static com.example.giftly.Giftly.client;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -34,6 +36,7 @@ public class GiftSignup extends AppCompatActivity {
         String eventID = participantIntent.getStringExtra("userID");
         String userID = participantIntent.getStringExtra("eventID");
 
+        client.getGiftList(eventID, userID);
 
 
 
