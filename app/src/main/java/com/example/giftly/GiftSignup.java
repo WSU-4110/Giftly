@@ -28,7 +28,7 @@ public class GiftSignup extends AppCompatActivity {
     EditText editText;
 
     public void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_create_new_event);
+        setContentView(R.layout.activity_gift_signup);
         super.onCreate(savedInstanceState);
 
 
