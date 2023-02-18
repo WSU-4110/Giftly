@@ -98,4 +98,6 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         // TODO Auto-generated method stub
     }
 
+
+
 }

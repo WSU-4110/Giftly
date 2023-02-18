@@ -99,11 +99,13 @@ public class HomeScreen extends AppCompatActivity {
             LinearLayout eventList = findViewById(R.id.events);
             Log.d(TAG, "Adding Events to List:");
 
+            //Loops through arraylist of events and makes a new button for each event.
             for (int i = 0; i < events.size(); i++) {
                 Button button = new Button(eventList.getContext());
                 button.setId(i);
                 Log.d(TAG, String.format("Added event %d name %s", i, events.get(i)));
                 button.setText(events.get(i).getEventName());
+                //Add button layout modification stuff to make it look nice here (target button)
                 button.setOnClickListener(new handleClick(events.get(i).getEventID()));
                 eventList.addView(button);
             }
