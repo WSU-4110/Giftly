@@ -56,15 +56,57 @@ public class HomeScreen extends AppCompatActivity {
                 new FutureCallback<User>() {
                     @Override
                     public void onSuccess(User result) {
-                        display.setText(result.getFullName().toString());
-
+                        display.setText(result.getFullName());
                         //This call will display the user's name in the greeting message
                         Futures.addCallback(
                                 Giftly.client.readEvent(result.getEvents()),
                                 new FutureCallback<ArrayList<Event>>() {
                                     @Override
                                     public void onSuccess(ArrayList<Event> events) {
+                                        //anon class for updating GUI thread
+                                        class updateEvents implements Runnable {
+                                            ArrayList<Event> events;
+                                            updateEvents(ArrayList<Event> e) { events = e;}
+                                            @Override
+                                            public void run() {
+                                                LinearLayout eventList = findViewById(R.id.events);
+                                                Log.d(TAG, "Adding Events to List:");
+
+                                                //Loops through arraylist of events and makes a new button for each event.
+                                                for (int i = 0; i < events.size(); i++) {
+                                                    Button button = new Button(eventList.getContext());
+                                                    button.setId(i);
+                                                    Log.d(TAG, String.format("Added event %d name %s", i, events.get(i)));
+                                                    button.setText(events.get(i).getEventName());
+                                                    //Add button layout modification stuff to make it look nice here (target button)
+                                                    button.setOnClickListener(new handleClick(events.get(i).getEventID()));
+                                                    eventList.addView(button);
+                                                    Object B4B4B;
+                                                    button.setBackgroundColor(Color.parseColor("#4B4B4B"));
+                                                    button.setTextColor(Color.WHITE);
+                                                    button.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
+
+                                                }
+                                            }
+
+                                            class handleClick implements View.OnClickListener {
+                                                String eventID;
+                                                handleClick(String eventID) {
+                                                    this.eventID = eventID;
+                                                }
+                                                @Override
+                                                public void onClick(View view) {
+                                                    Log.d(TAG, eventID);
+                                                    Intent intent = new Intent(getApplicationContext(),DisplayEventScreen.class);
+                                                    intent.putExtra("eventID", eventID.toString());
+                                                    Log.d(TAG, "Event ID: " + intent.getStringExtra("eventID"));
+                                                    startActivity(intent);
+                                                }
+                                            }
+
+                                        };
                                         Log.d(TAG, events.toString());
+                                        //update events list on GUI thread using anon class
                                         runOnUiThread(new updateEvents(events));
                                     }
                                     @Override
@@ -97,47 +139,7 @@ public class HomeScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class updateEvents implements Runnable {
-        ArrayList<Event> events;
-        updateEvents(ArrayList<Event> e) { events = e;}
-        @Override
-        public void run() {
-            LinearLayout eventList = findViewById(R.id.events);
-            Log.d(TAG, "Adding Events to List:");
 
-            //Loops through arraylist of events and makes a new button for each event.
-            for (int i = 0; i < events.size(); i++) {
-                Button button = new Button(eventList.getContext());
-                button.setId(i);
-                Log.d(TAG, String.format("Added event %d name %s", i, events.get(i)));
-                button.setText(events.get(i).getEventName());
-                //Add button layout modification stuff to make it look nice here (target button)
-                button.setOnClickListener(new handleClick(events.get(i).getEventID()));
-                eventList.addView(button);
-                Object B4B4B;
-                button.setBackgroundColor(Color.parseColor("#4B4B4B"));
-                button.setTextColor(Color.WHITE);
-                button.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
-
-            }
-        }
-
-        class handleClick implements View.OnClickListener {
-            String eventID;
-            handleClick(String eventID) {
-                this.eventID = eventID;
-            }
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, eventID);
-                Intent intent = new Intent(getApplicationContext(),DisplayEventScreen.class);
-                intent.putExtra("eventID", eventID.toString());
-                Log.d(TAG, "Event ID: " + intent.getStringExtra("eventID"));
-                startActivity(intent);
-            }
-        }
-
-    };
 
 }
 

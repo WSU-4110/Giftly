@@ -1,6 +1,7 @@
 package com.example.giftly;
 
 import static android.content.ContentValues.TAG;
+import static com.example.giftly.Giftly.client;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +21,6 @@ import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -29,7 +30,6 @@ public class DisplayEventScreen extends AppCompatActivity {
 
     // Temporary List of Participants; array to be filled in by database info
     ListView participantList;
-
 
 
     @SuppressLint("MissingInflatedId")
@@ -45,31 +45,45 @@ public class DisplayEventScreen extends AppCompatActivity {
         Log.d(TAG, "EventID: " + eventID);
 
         participantList = findViewById(R.id.participant_list);
-
-
+        TextView eventTitle = findViewById(R.id.Event_title);
 
         Futures.addCallback(
-                Giftly.client.readEvent(eventID),
+                client.readEvent(eventID),
                 new FutureCallback<Event>() {
+                    class updateEventGui implements Runnable {
+                        final Event event;
+
+                        public updateEventGui(Event event) {
+                            this.event = event;
+                        }
+
+                        @Override
+                        public void run() {
+                            eventTitle.setText(event.getEventName());
+                        }
+                    }
                     @Override
                     public void onSuccess(Event event) {
                         Log.d(TAG, "Successfully pulled EventID" + event.getParticipants());
+                        runOnUiThread(new updateEventGui(event));
+                        ArrayList<String> participants = event.getParticipants();
 
-                        runOnUiThread(new updateEventGui());
+                        participants.remove(client.getAuth().getUid());
 
                         Futures.addCallback(
-                                Giftly.client.readUser(event.getParticipants()),
+                                client.readUser(event.getParticipants()),
                                 new FutureCallback<ArrayList<User>>() {
+
                                     @Override
                                     public void onSuccess(ArrayList<User> users) {
                                         Log.d(TAG, "Successfully pulled Users" + users.toString());
                                         String[] participantNames = new String[users.size()];
-
-                                        for(int i = 0; i < users.size(); i++) participantNames[i] = users.get(i).getFullName();
-
-
+                                        for (int i = 0; i < users.size(); i++) {
+                                            participantNames[i] = users.get(i).getFullName();
+                                        }
                                         runOnUiThread(new updateParticipants(participantNames, event.getParticipants(), eventID));
                                     }
+
                                     @Override
                                     public void onFailure(Throwable thrown) {
                                     }
@@ -77,10 +91,11 @@ public class DisplayEventScreen extends AppCompatActivity {
 
 
                     }
+
                     @Override
                     public void onFailure(Throwable thrown) {
                     }
-            }, Giftly.service);
+                }, Giftly.service);
 
         // This section is commented out until we add the edit event page?
 //        button_edit_event = (Button) findViewById(R.id.edit_event);
@@ -92,8 +107,10 @@ public class DisplayEventScreen extends AppCompatActivity {
 //            }
 //        });
         // The list of participants is displayed on the screen
-    }
 
+
+
+    }
     class updateParticipants implements Runnable {
         String[] participantNames;
         String[] participantIDs;
@@ -107,28 +124,17 @@ public class DisplayEventScreen extends AppCompatActivity {
 
         @Override
         public void run() {
-            ArrayAdapter<String> arr = new ArrayAdapter<String>(getApplicationContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, participantNames);
+            ArrayAdapter<String> arr = new ArrayAdapter<String>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, participantNames);
             participantList.setAdapter(arr);
-            participantList.setOnItemClickListener(new AdapterView.OnItemClickListener()
-
-            {
+            participantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick (AdapterView < ? > parent, View view,int position, long id){
-                        Intent i = new Intent(DisplayEventScreen.this, GiftSignup.class);
-                        i.putExtra("eventID", eventID);
-                        i.putExtra("userID", participantNames[position]);
-                        startActivity(i);
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent i = new Intent(DisplayEventScreen.this, GiftSignup.class);
+                    i.putExtra("eventID", eventID);
+                    i.putExtra("userID", participantIDs[position]);
+                    startActivity(i);
                 }
             });
-        }
-    }
-
-    class updateEventGui implements Runnable {
-
-
-        @Override
-        public void run() {
-
         }
     }
 }

@@ -1,44 +1,64 @@
 package com.example.giftly;
 
+import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+
 import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 
 public class GiftSignup extends AppCompatActivity {
+
     final Calendar myCalendar = Calendar.getInstance();
     EditText editText;
 
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_gift_signup);
         super.onCreate(savedInstanceState);
-
+        TextView giftListDisplay = findViewById(R.id.gift_list);
 
         Intent participantIntent = getIntent();
-        String eventID = participantIntent.getStringExtra("userID");
-        String userID = participantIntent.getStringExtra("eventID");
+        String eventID = participantIntent.getStringExtra("eventID");
+        String userID = participantIntent.getStringExtra("userID");
 
-        //client.getGiftList(eventID, userID);
 
+        Futures.addCallback(
+                client.readGiftList(eventID, userID),
+                new FutureCallback<String>() {
+                    //anon class for runnable
+                    class updateGiftList implements Runnable {
+                        final String giftList;
+
+                        public updateGiftList(String giftList) {
+                            this.giftList = giftList;
+                        }
+
+                        @Override
+                        public void run() {
+                            giftListDisplay.setText(giftList);
+                        }
+                    }
+                    @Override
+                    public void onSuccess(String giftList) {
+                        Log.d(TAG, "Successfully pulled Gifts");
+                        runOnUiThread(new updateGiftList(giftList));
+                    }
+
+                    @Override
+                    public void onFailure(Throwable thrown) {
+                    }
+                }, Giftly.service);
 
 
     }
+
 }

@@ -40,8 +40,6 @@ public class FireBaseClient {
             getDB().collection("Users").document(getAuth().getUid()).set(user);
     }
 
-
-
     //Reads a user from the database with the matching document ID and returns Listenable Future for a user
     public ListenableFuture<User> readUser(String UserID) {
         return Giftly.service.submit(new userCallback(UserID));
@@ -160,7 +158,6 @@ public class FireBaseClient {
         }
     }
 
-
     //Reads a event from the database with the matching document ID and returns Listenable Future for a user
     public ListenableFuture<ArrayList<Event>> readEvent(ArrayList<String> eventIDs) {
         return Giftly.service.submit(new eventListCallback(eventIDs));
@@ -196,8 +193,60 @@ public class FireBaseClient {
                     retrievedUsers.add(new Event(event));
                 return retrievedUsers;
             } catch (Exception e) {
-                Log.d(TAG, "ERROR MAKING EVENT LIST: " + e.toString());
+                Log.d(TAG, "ERROR MAKING EVENT LIST: " + e);
                 return null;
+            }
+        }
+    }
+
+    //Call event from firebase DB with eid
+    public ListenableFuture<String> readGiftList(String eventID, String userID) {
+        return Giftly.service.submit(new giftListCallback(eventID, userID));
+    }
+    //Callable implemented class that returns a Future
+    private class giftListCallback implements Callable<String> {
+        String eventID;
+        String userID;
+
+        public giftListCallback(String eventID, String userID) {
+            this.eventID = eventID;
+            this.userID = userID;
+        }
+
+        public String call() {
+            StringBuilder giftList = new StringBuilder();
+
+            DocumentReference targetEvent = getDB().collection("Events").document(eventID);
+
+            //log status of document allocation
+            Task<DocumentSnapshot> callDB = targetEvent.get().addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + doc.getData());
+                    }
+                    else {
+                        Log.d(TAG, "No Such Document");
+                    }
+                }
+                else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns DocumentSnapshot
+
+            try {
+                Tasks.await(callDB);
+                DocumentSnapshot event = callDB.getResult();
+
+                Log.d(TAG, userID + ": " + event.contains(userID));
+                for (String entry : (ArrayList<String>)event.get(userID)) {
+                    giftList.append(entry).append("\n");
+                }
+                return giftList.toString();
+            }
+            catch (Exception e) {
+                Log.d(TAG, e.toString());
+                return "No Gifts Found";
             }
         }
     }
