@@ -43,7 +43,7 @@ public class HomeScreen extends AppCompatActivity {
         //find Users name and display it to test readUser data
         TextView display = findViewById(R.id.TestDisplay);
         settingsBtn = (Button) findViewById(R.id.SettingsBtn);
-        //settingsBtn.setBackgroundColor(Color.TRANSPARENT);
+        settingsBtn.setBackgroundColor(Color.TRANSPARENT);
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

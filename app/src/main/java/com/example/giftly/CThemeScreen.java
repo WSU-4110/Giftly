@@ -28,8 +28,11 @@ public class CThemeScreen extends AppCompatActivity {
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(CThemeScreen.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
+        //Create theme buttons
         Button dftThemeBtn = findViewById(R.id.defaultTheme);
         Button glyThemeBtn = findViewById(R.id.giftlyTheme);
+        Button vltThemeBtn = findViewById(R.id.valentinesTheme);
+        Button etrThemeBtn = findViewById(R.id.easterTheme);
         Button savingit = findViewById(R.id.saveIt);
 
         savingit.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +55,25 @@ public class CThemeScreen extends AppCompatActivity {
         glyThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.dummycolor);
+                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Giftly_color);
+                sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
+                getWindow().getDecorView().setBackgroundColor(selectedColor);
+            }
+        });
+
+        vltThemeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Valentines_color);
+                sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
+                getWindow().getDecorView().setBackgroundColor(selectedColor);
+            }
+        });
+
+        etrThemeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Easter_color);
                 sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
                 getWindow().getDecorView().setBackgroundColor(selectedColor);
             }
