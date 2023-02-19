@@ -64,10 +64,10 @@ public class SignUpScreen extends AppCompatActivity {
 
         //Auto sign in if the user hasn't logged out
 
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+/*        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
             startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
             finish();
-        }
+        }*/
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

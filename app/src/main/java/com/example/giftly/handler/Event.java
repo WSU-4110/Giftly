@@ -1,15 +1,12 @@
 package com.example.giftly.handler;
 import static android.content.ContentValues.TAG;
 
-import android.nfc.Tag;
 import android.util.Log;
-
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class Event {
     String eventID;
@@ -32,11 +29,17 @@ public class Event {
 
     //Pulls data from document snapshot
     public Event(DocumentSnapshot event) {
-        eventName = event.get("eventName").toString();
-        eventID = event.getId();
-        ownerID = event.get("ownerID").toString();
-        eventStartDate = ((Timestamp)event.get("eventStartDate")).toDate();
-        participants = (ArrayList<String>)event.get("participants");
+
+        try {
+            eventName = event.contains("eventName") ? Objects.requireNonNull(event.get("eventName")).toString() : "No Event Name";
+            eventID = event.getId();
+            eventStartDate = event.contains("eventStartDate") ? ((Timestamp) Objects.requireNonNull(event.get("eventStartDate"))).toDate() : new Date();
+            participants = event.contains("participants") ? (ArrayList<String>) event.get("participants") : new ArrayList<>(1);
+            ownerID = event.contains("ownerID") ? Objects.requireNonNull(event.get("ownerID")).toString() : participants.get(0);
+        }
+        catch (NullPointerException e) {
+            Log.d(TAG, e.toString());
+        }
     }
 
     //Reg accessors

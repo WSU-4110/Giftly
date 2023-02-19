@@ -64,11 +64,11 @@ public class HomeScreen extends AppCompatActivity {
                                 new FutureCallback<ArrayList<Event>>() {
                                     @Override
                                     public void onSuccess(ArrayList<Event> events) {
-                                    runOnUiThread(new updateEvents(events));
+                                        Log.d(TAG, events.toString());
+                                        runOnUiThread(new updateEvents(events));
                                     }
                                     @Override
                                     public void onFailure(Throwable thrown) {
-
                                     }
                                 }, Giftly.service
                         );

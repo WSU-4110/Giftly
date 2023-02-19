@@ -15,7 +15,6 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -197,6 +196,7 @@ public class FireBaseClient {
                     retrievedUsers.add(new Event(event));
                 return retrievedUsers;
             } catch (Exception e) {
+                Log.d(TAG, "ERROR MAKING EVENT LIST: " + e.toString());
                 return null;
             }
         }
