@@ -3,6 +3,8 @@ package com.example.giftly;
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.giftly.handler.*;
 import com.google.common.util.concurrent.FutureCallback;
@@ -31,6 +34,9 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        //Back button icon
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         //find Users name and display it to test readUser data
         TextView display = findViewById(R.id.TestDisplay);
@@ -108,6 +114,11 @@ public class HomeScreen extends AppCompatActivity {
                 //Add button layout modification stuff to make it look nice here (target button)
                 button.setOnClickListener(new handleClick(events.get(i).getEventID()));
                 eventList.addView(button);
+                Object B4B4B;
+                button.setBackgroundColor(Color.parseColor("#4B4B4B"));
+                button.setTextColor(Color.WHITE);
+                button.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
+
             }
         }
 
@@ -128,8 +139,5 @@ public class HomeScreen extends AppCompatActivity {
 
     };
 
-
-
-
-
 }
+
