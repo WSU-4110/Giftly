@@ -3,6 +3,8 @@ package com.example.giftly;
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.view.Menu;
@@ -29,18 +32,18 @@ import java.util.ArrayList;
 
 public class HomeScreen extends AppCompatActivity {
     public Button settingsBtn;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        //Back button icon
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         //find Users name and display it to test readUser data
         TextView display = findViewById(R.id.TestDisplay);
         settingsBtn = (Button) findViewById(R.id.SettingsBtn);
+        //settingsBtn.setBackgroundColor(Color.TRANSPARENT);
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +84,11 @@ public class HomeScreen extends AppCompatActivity {
                 },
                 Giftly.service
         );
+
+        //Theme: Fetch the current color of the background
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(HomeScreen.this, R.color.Default_color));
+        getWindow().getDecorView().setBackgroundColor(savedColor);
     }
 
     @Override

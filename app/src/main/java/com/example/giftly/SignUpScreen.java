@@ -63,8 +63,8 @@ public class SignUpScreen extends AppCompatActivity {
         editInterests = (EditText) findViewById(R.id.userInterests);
 
         //Auto sign in if the user hasn't logged out
-
-/*        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+        /*
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
             startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
             finish();
         }*/

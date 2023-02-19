@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#404040</color>
     <color name="light_gray">#CFCFCF</color>
+
+    <color name="Default_color">#1C1C1C</color>
+    <color name="Giftly_color">#FF03DAC5</color>
+    <color name="dummycolor">#F2D523</color>
 </resources>

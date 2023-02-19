@@ -5,55 +5,66 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-public class SettingsScreen extends AppCompatActivity {
-    private Button btnLogOut;
-    public Button choosingThemeBtn;
+public class CThemeScreen extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings_screen);
+        setContentView(R.layout.activity_ctheme_screen);
 
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(SettingsScreen.this, R.color.Default_color));
+        int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(CThemeScreen.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
-        btnLogOut = findViewById(R.id.button_log_out);
-        choosingThemeBtn = findViewById(R.id.themeBtn);
+        Button dftThemeBtn = findViewById(R.id.defaultTheme);
+        Button glyThemeBtn = findViewById(R.id.giftlyTheme);
+        Button savingit = findViewById(R.id.saveIt);
 
-        choosingThemeBtn.setOnClickListener(new View.OnClickListener() {
+        savingit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SettingsScreen.this, CThemeScreen.class);
+                Intent intent = new Intent(CThemeScreen.this, HomeScreen.class);
                 startActivity(intent);
             }
         });
 
-        //Log out button configuration
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
+        dftThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(SettingsScreen.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
+                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Default_color);
+                sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
+                getWindow().getDecorView().setBackgroundColor(selectedColor);
             }
         });
 
-        //Enable the back-button
+        glyThemeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.dummycolor);
+                sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
+                getWindow().getDecorView().setBackgroundColor(selectedColor);
+            }
+        });
+
+
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+
 
     }
 
