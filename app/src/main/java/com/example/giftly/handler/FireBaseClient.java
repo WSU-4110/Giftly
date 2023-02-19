@@ -2,6 +2,8 @@ package com.example.giftly.handler;
 
 //all of by beautiful imports
 import static android.content.ContentValues.TAG;
+import static com.example.giftly.Giftly.service;
+
 import android.util.Log;
 
 import com.example.giftly.Giftly;
@@ -15,6 +17,7 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +32,7 @@ public class FireBaseClient {
         return FirebaseFirestore.getInstance();
     }
 
+    //sets firebase user doc corresponding to current Auth login to user
     public void createProfile(User newUser) {
         //create a Map with user data using firebase doc Schema
         Map<String, Object> user = new HashMap<>();
@@ -40,9 +44,58 @@ public class FireBaseClient {
             getDB().collection("Users").document(getAuth().getUid()).set(user);
     }
 
+    public ListenableFuture<String> setGift(String targetUserID, String eventID, String gift) {
+
+
+        class updateGiftList implements Callable<String> {
+            @Override
+            public String call() throws Exception {
+                DocumentReference targetEvent = getDB().collection("Events").document(eventID);
+                //log status of document allocation
+                Task<DocumentSnapshot> callDB = targetEvent.get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        if (doc.exists()) {
+                            Log.d(TAG, "DocumentSnapshot data: " + doc.getData());
+                        }
+                        else {
+                            Log.d(TAG, "No Such Document");
+                        }
+                    }
+                    else {
+                        Log.d(TAG, "get failed with" + task.getException());
+                    }
+                }); //returns DocumentSnapshot
+                try {
+                    Tasks.await(callDB);
+                    DocumentSnapshot event = callDB.getResult();
+                    if (event.contains(targetUserID)) {
+                        ArrayList<String> giftList = (ArrayList<String>)event.get(targetUserID);
+                        ArrayList<String> participants = (ArrayList<String>)event.get("participants");
+                        //find the index of the current user in the event participants list
+                        int userIndex = participants.indexOf(getAuth().getUid());
+                        //check if the array is currently updated to handle the index of the user
+                        giftList.ensureCapacity(userIndex);
+                        giftList.set(userIndex,gift);
+
+                        getDB().collection("Events").document(eventID).update(targetUserID, giftList);
+                    }
+                }
+                catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                    return "Update Event Failed";
+                }
+                return "Updated gift list success";
+            }
+        }
+
+
+        return service.submit(new updateGiftList());
+    }
+
     //Reads a user from the database with the matching document ID and returns Listenable Future for a user
     public ListenableFuture<User> readUser(String UserID) {
-        return Giftly.service.submit(new userCallback(UserID));
+        return service.submit(new userCallback(UserID));
     }
     //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
     private class userCallback implements Callable<User> {
@@ -81,7 +134,7 @@ public class FireBaseClient {
 
     //Reads a user from the database with the matching document ID and returns Listenable Future for a user
     public ListenableFuture<ArrayList<User>> readUser(ArrayList<String> UserIDs) {
-        return Giftly.service.submit(new userListCallback(UserIDs));
+        return service.submit(new userListCallback(UserIDs));
     }
     //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
     private class userListCallback implements Callable<ArrayList<User>> {
@@ -121,7 +174,7 @@ public class FireBaseClient {
 
     //Call event from firebase DB with eid
     public ListenableFuture<Event> readEvent(String eventID) {
-        return Giftly.service.submit(new eventCallback(eventID));
+        return service.submit(new eventCallback(eventID));
     }
     //Callable implemented class that returns a Future
     private class eventCallback implements Callable<Event> {
@@ -160,7 +213,7 @@ public class FireBaseClient {
 
     //Reads a event from the database with the matching document ID and returns Listenable Future for a user
     public ListenableFuture<ArrayList<Event>> readEvent(ArrayList<String> eventIDs) {
-        return Giftly.service.submit(new eventListCallback(eventIDs));
+        return service.submit(new eventListCallback(eventIDs));
     }
     //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
     private class eventListCallback implements Callable<ArrayList<Event>> {
@@ -201,7 +254,7 @@ public class FireBaseClient {
 
     //Call event from firebase DB with eid
     public ListenableFuture<String> readGiftList(String eventID, String userID) {
-        return Giftly.service.submit(new giftListCallback(eventID, userID));
+        return service.submit(new giftListCallback(eventID, userID));
     }
     //Callable implemented class that returns a Future
     private class giftListCallback implements Callable<String> {

@@ -16,3 +16,9 @@ public class Giftly extends Application {
     //multithreading
     public static FireBaseClient client = new FireBaseClient();
 }
+
+/*todo
+ * Implement edit gift feature
+ * Implement join event feature
+ *
+ */
