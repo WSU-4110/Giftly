@@ -81,11 +81,14 @@ public class HomeScreen extends AppCompatActivity {
                                                     //Add button layout modification stuff to make it look nice here (target button)
                                                     button.setOnClickListener(new handleClick(events.get(i).getEventID()));
                                                     eventList.addView(button);
-                                                    Object B4B4B;
+                                                    //Assuming your button is in a LinearLayout as stated
+                                                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) button.getLayoutParams();
+                                                    params.setMargins(0, 0, 0, 25); //left, top, right, bottom
+                                                    button.setLayoutParams(params);
                                                     button.setBackgroundColor(Color.parseColor("#4B4B4B"));
                                                     button.setTextColor(Color.WHITE);
+                                                    button.setTextSize(16);
                                                     button.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
-
                                                 }
                                             }
 
