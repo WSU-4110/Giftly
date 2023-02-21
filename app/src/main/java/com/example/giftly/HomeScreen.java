@@ -106,7 +106,7 @@ public class HomeScreen extends AppCompatActivity {
                                                     eventList.addView(button);
                                                     //Assuming your button is in a LinearLayout as stated
                                                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) button.getLayoutParams();
-                                                    params.setMargins(0, 0, 0, 25); //left, top, right, bottom
+                                                    params.setMargins(0, -5, 0, 18); //left, top, right, bottom
                                                     button.setLayoutParams(params);
                                                     button.setBackgroundColor(Color.parseColor("#4B4B4B"));
                                                     button.setTextColor(Color.WHITE);

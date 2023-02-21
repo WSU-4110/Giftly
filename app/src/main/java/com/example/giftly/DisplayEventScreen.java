@@ -75,10 +75,12 @@ public class DisplayEventScreen extends AppCompatActivity {
                             this.event = event;
                         }
 
+
                         // Displays event name and date; pulled from database
                         @Override
                         public void run() {
-                            eventTitle.setText(event.getEventName()); eventDate.setText(event.getEventStartDate());
+                            //eventTitle.setText(event.getEventName());
+                            //eventDate.setText(event.getEventStartDate());
                         }
                     }
 
