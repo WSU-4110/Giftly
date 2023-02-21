@@ -11,7 +11,7 @@
     <color name="light_gray">#CFCFCF</color>
 
     <color name="Default_color">#1C1C1C</color>
-    <color name="Giftly_color">#29C972</color>
-    <color name="Valentines_color">#E96EED</color>
-    <color name="Easter_color">#2FCDF1</color>
+    <color name="Giftly_color">#20B240</color>
+    <color name="Valentines_color">#B73693</color>
+    <color name="Easter_color">#20B7B8</color>
 </resources>
