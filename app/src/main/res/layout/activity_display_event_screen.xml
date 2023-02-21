@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:textAlignment="textEnd"
     android:textColor="@color/white"
     tools:context=".AddEventScreen">
 
@@ -26,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Location of Event -->
-    <EditText
+    <TextView
         android:id="@+id/event_location"
         android:layout_width="349dp"
         android:layout_height="50dp"
@@ -39,25 +40,24 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColorHint="@color/white"
         android:textSize="18sp"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Event_title" />
 
     <!-- Date of Event -->
-    <EditText
+    <TextView
         android:id="@+id/event_date"
         android:layout_width="349dp"
         android:layout_height="50dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="6dp"
         android:background="@drawable/gray_background"
-        android:ems="10"
-        android:focusable="false"
         android:fontFamily="sans-serif-medium"
-        android:hint="   Date"
-        android:inputType="date"
-        android:textColorHint="@color/white"
+        android:text="   Date"
+        android:textColor="@color/white"
         android:textSize="18sp"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_location" />
 

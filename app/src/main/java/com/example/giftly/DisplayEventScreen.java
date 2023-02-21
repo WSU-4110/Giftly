@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,6 +63,7 @@ public class DisplayEventScreen extends AppCompatActivity {
 
         participantList = findViewById(R.id.participant_list);
         TextView eventTitle = findViewById(R.id.Event_title);
+        TextView eventDate = findViewById(R.id.event_date);
 
         Futures.addCallback(
                 client.readEvent(eventID),
@@ -73,11 +75,13 @@ public class DisplayEventScreen extends AppCompatActivity {
                             this.event = event;
                         }
 
+                        // Displays event name and date; pulled from database
                         @Override
                         public void run() {
-                            eventTitle.setText(event.getEventName());
+                            eventTitle.setText(event.getEventName()); eventDate.setText((CharSequence) event.getEventStartDate());
                         }
                     }
+
                     @Override
                     public void onSuccess(Event event) {
                         Log.d(TAG, "Successfully pulled EventID" + event.getParticipants());
