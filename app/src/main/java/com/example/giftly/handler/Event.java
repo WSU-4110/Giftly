@@ -52,8 +52,8 @@ public class Event {
     public String getEventName() {
         return eventName;
     }
-    public CharSequence getEventStartDate() {
-        return (CharSequence) eventStartDate;
+    public Date getEventStartDate() {
+        return eventStartDate;
     }
     public ArrayList<String> getParticipants() {
         return participants;
