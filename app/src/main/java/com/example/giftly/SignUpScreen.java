@@ -42,6 +42,7 @@ public class SignUpScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_screen);
 
+        //Write the feed onto real-time
         //Real-time database management
         /*
         mAuth = FirebaseAuth.getInstance();
