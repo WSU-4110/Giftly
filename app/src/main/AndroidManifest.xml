@@ -25,6 +25,9 @@
             android:name=".SettingsScreen"
             android:exported="false" />
         <activity
+            android:name=".GiftSignup"
+            android:exported="false" />
+        <activity
             android:name=".ProfileScreen"
             android:exported="false" />
         <activity

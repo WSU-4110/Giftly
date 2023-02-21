@@ -33,6 +33,8 @@ import java.util.ArrayList;
 public class HomeScreen extends AppCompatActivity {
     public Button settingsBtn;
     public Button addEventBtn;
+
+    public Button addGiftBtn;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -46,6 +48,7 @@ public class HomeScreen extends AppCompatActivity {
         settingsBtn = (Button) findViewById(R.id.SettingsBtn);
         settingsBtn.setBackgroundColor(Color.TRANSPARENT);
         addEventBtn = (Button) findViewById(R.id.addEventBtn);
+        addGiftBtn = (Button) findViewById(R.id.YourGiftListBtn);
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +61,14 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeScreen.this, AddEventScreen.class);
+                startActivity(intent);
+            }
+        });
+
+        addGiftBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreen.this, GiftSignup.class);
                 startActivity(intent);
             }
         });
