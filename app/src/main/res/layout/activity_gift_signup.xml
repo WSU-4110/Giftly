@@ -5,7 +5,6 @@
     android:id="@+id/event_name2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1C1C1C"
     android:textColor="@color/white"
     tools:context=".AddEventScreen">
 
@@ -15,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:text="Gift List"
         android:textColor="@color/white"
@@ -28,10 +27,10 @@
 
     <TextView
         android:id="@+id/event_name"
-        android:layout_width="345dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="352dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="43dp"
         android:layout_marginEnd="33dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
@@ -49,10 +48,11 @@
 
     <TextView
         android:id="@+id/gift_list"
-        android:layout_width="345dp"
-        android:layout_height="350dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginBottom="100dp"
+        android:layout_width="348dp"
+        android:layout_height="252dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="35dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
         android:hint="   Gift List"
@@ -61,15 +61,16 @@
         android:textColorHint="@color/light_gray"
         android:textColorLink="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_gift"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_name" />
 
     <EditText
         android:id="@+id/add_gift"
         android:layout_width="345dp"
         android:layout_height="48dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="11dp"
         android:layout_marginEnd="33dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
@@ -81,22 +82,25 @@
         android:textColorLink="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header" />
+        app:layout_constraintTop_toBottomOf="@+id/gift_list" />
 
     <Button
         android:id="@+id/button_add_gift"
         android:layout_width="120dp"
         android:layout_height="49dp"
-        android:layout_marginEnd="250dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="249dp"
         android:text="Add"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:backgroundTint="#008CF8"
         app:cornerRadius="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_gift" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

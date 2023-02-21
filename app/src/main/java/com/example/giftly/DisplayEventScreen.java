@@ -4,9 +4,12 @@ import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +17,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.giftly.handler.Event;
 import com.example.giftly.handler.User;
@@ -27,6 +33,7 @@ import java.util.ArrayList;
 public class DisplayEventScreen extends AppCompatActivity {
 
     public Button button_edit_event;
+    private SharedPreferences sharedPreferences;
 
     // Temporary List of Participants; array to be filled in by database info
     ListView participantList;
@@ -37,6 +44,15 @@ public class DisplayEventScreen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_event_screen);
+
+        //Theme: Fetch the current color of the background
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(DisplayEventScreen.this, R.color.Default_color));
+        getWindow().getDecorView().setBackgroundColor(savedColor);
+
+        //Enable the back-button
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent eventIntent = getIntent();
         String eventID = eventIntent.getStringExtra("eventID");
@@ -137,6 +153,17 @@ public class DisplayEventScreen extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    //Back button configuration
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

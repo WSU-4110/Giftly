@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1C1C1C"
     android:textColor="@color/white"
     tools:context=".AddEventScreen">
 
@@ -67,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="100dp"
         android:text="Create Event"
         android:textColor="@color/white"
