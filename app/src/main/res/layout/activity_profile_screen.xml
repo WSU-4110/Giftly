@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1C1C1C"
     tools:context=".ProfileScreen">
 
     <TextView
@@ -23,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/edit_name_opt"
+        android:id="@+id/fontSizeBtn"
         android:layout_width="300dp"
         android:layout_height="68dp"
         android:textAllCaps="false"
@@ -42,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/pro_pic_opt"
+        android:id="@+id/layoutBtn"
         android:layout_width="300dp"
         android:layout_height="68dp"
         android:layout_marginStart="55dp"
@@ -57,10 +56,10 @@
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_name_opt" />
+        app:layout_constraintTop_toBottomOf="@+id/fontSizeBtn" />
 
     <Button
-        android:id="@+id/edit_gift_ideas_opt"
+        android:id="@+id/themeBtn"
         android:layout_width="300dp"
         android:layout_height="68dp"
         android:layout_marginStart="55dp"
@@ -75,7 +74,7 @@
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pro_pic_opt" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutBtn" />
 
     <Button
         android:id="@+id/anonymity_opt"
@@ -93,7 +92,7 @@
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_gift_ideas_opt" />
+        app:layout_constraintTop_toBottomOf="@+id/themeBtn" />
 
 
 
