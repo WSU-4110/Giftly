@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 public class HomeScreen extends AppCompatActivity {
     public Button settingsBtn;
+    public Button addEventBtn;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -44,11 +45,19 @@ public class HomeScreen extends AppCompatActivity {
         TextView display = findViewById(R.id.TestDisplay);
         settingsBtn = (Button) findViewById(R.id.SettingsBtn);
         settingsBtn.setBackgroundColor(Color.TRANSPARENT);
-
+        addEventBtn = (Button) findViewById(R.id.addEventBtn);
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeScreen.this, SettingsScreen.class);
+                startActivity(intent);
+            }
+        });
+
+        addEventBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreen.this, AddEventScreen.class);
                 startActivity(intent);
             }
         });

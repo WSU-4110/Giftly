@@ -120,6 +120,7 @@ public class DisplayEventScreen extends AppCompatActivity {
             participantNames = names;
             participantIDs = p.toArray(new String[p.size()]);
             this.eventID = eventID;
+
         }
 
         @Override
