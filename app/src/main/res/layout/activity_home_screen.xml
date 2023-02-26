@@ -16,12 +16,12 @@
         android:textColor="#ffffff"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/TestDisplay"
+        app:layout_constraintEnd_toStartOf="@+id/userNameDispl"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/TestDisplay"
+        android:id="@+id/userNameDispl"
         android:layout_width="226dp"
         android:layout_height="45dp"
         android:layout_marginStart="-17dp"
@@ -44,24 +44,24 @@
         android:textStyle="bold"
         app:backgroundTint="#008CF8"
         app:cornerRadius="40dp"
-        app:layout_constraintEnd_toStartOf="@+id/YourGiftListBtn"
+        app:layout_constraintEnd_toStartOf="@+id/joinEvent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greetDisplay" />
 
     <Button
-        android:id="@+id/YourGiftListBtn"
+        android:id="@+id/joinEvent"
         android:layout_width="134dp"
         android:layout_height="41dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="27dp"
-        android:text="Your Gift List"
+        android:text="Join Event"
         android:textAllCaps="false"
         android:textStyle="bold"
         app:backgroundTint="#008CF8"
         app:cornerRadius="40dp"
         app:layout_constraintEnd_toStartOf="@+id/SettingsBtn"
         app:layout_constraintStart_toEndOf="@+id/addEventBtn"
-        app:layout_constraintTop_toBottomOf="@+id/TestDisplay" />
+        app:layout_constraintTop_toBottomOf="@+id/userNameDispl" />
 
     <Button
         android:id="@+id/SettingsBtn"
@@ -72,8 +72,8 @@
         android:layout_marginEnd="20dp"
         android:drawableTop="@drawable/settings_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/YourGiftListBtn"
-        app:layout_constraintTop_toBottomOf="@+id/TestDisplay" />
+        app:layout_constraintStart_toEndOf="@+id/joinEvent"
+        app:layout_constraintTop_toBottomOf="@+id/userNameDispl" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardList"
