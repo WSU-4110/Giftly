@@ -62,14 +62,6 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
-        addGiftBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeScreen.this, GiftSignup.class);
-                startActivity(intent);
-            }
-        });
-
         //This call will display the user's name in the greeting message
         Futures.addCallback(
                 Giftly.client.readUser(client.getAuth().getUid()),
