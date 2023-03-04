@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 public class Giftly extends Application {
 
     public static ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
-    //multithreading
+    //multithreading.
     public static FireBaseClient client = new FireBaseClient();
 }
 
