@@ -9,21 +9,24 @@
 
     <!-- Add Event Header -->
 
+
     <TextView
         android:id="@+id/copy_link"
         android:layout_width="344dp"
         android:layout_height="56dp"
         android:layout_marginStart="33dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="34dp"
         android:background="@drawable/gray_background"
         android:gravity="center|start"
         android:text="  Invite Link"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OR_TextView" />
-
 
     <Button
         android:id="@+id/button_add_invitee"
@@ -73,6 +76,7 @@
         android:textColorHint="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/add_gift"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -82,7 +86,7 @@
         android:layout_width="345dp"
         android:layout_height="48dp"
         android:layout_marginStart="33dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="33dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
@@ -103,8 +107,11 @@
         android:layout_height="50dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="7dp"
         android:background="@drawable/gray_background"
         android:ems="10"
+        android:focusable="false"
         android:fontFamily="sans-serif-medium"
         android:hint="   Date"
         android:inputType="date"
@@ -113,7 +120,8 @@
         android:textColorHint="@color/light_gray"
         android:textColorLink="@color/white"
         android:textSize="16sp"
-        android:focusable="false"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_gift" />
 
@@ -124,6 +132,7 @@
         android:layout_height="102dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
         android:hint="   Location"
@@ -132,15 +141,20 @@
         android:textColorHint="@color/light_gray"
         android:textColorLink="@color/white"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/add_invitee"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_type_selection" />
+
+    <!-- Accept/Create Event -->
 
     <Button
         android:id="@+id/button_cancel"
         android:layout_width="120dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginBottom="32dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="98dp"
         android:text="Cancel"
         android:textAllCaps="false"
         android:textColor="#008CF8"
@@ -149,15 +163,18 @@
         app:backgroundTint="@color/white"
         app:cornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/button_add_gift"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/copy_link" />
 
-    <!-- Accept/Create Event -->
     <Button
         android:id="@+id/button_add_gift"
         android:layout_width="120dp"
         android:layout_height="49dp"
-        android:layout_marginEnd="33dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="98dp"
         android:text="Add"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -165,7 +182,9 @@
         app:backgroundTint="#008CF8"
         app:cornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/copy_link" />
 
     <TextView
         android:id="@+id/add_invitee"
@@ -173,12 +192,15 @@
         android:layout_height="56dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="18dp"
+        android:layout_marginEnd="34dp"
         android:background="@drawable/gray_background"
         android:gravity="center|left"
         android:text="  Add Invitee(s)"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/OR_TextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gift_list" />
 
@@ -187,9 +209,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="163dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="163dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="10dp"
         android:text="--- OR ---"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -206,11 +228,14 @@
         android:layout_height="48dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/gray_background"
         android:contentDescription="@string/event_type"
         android:popupBackground="@drawable/gray_background"
         android:spinnerMode="dropdown"
         android:theme="@style/spinnerTheme"
+        app:layout_constraintBottom_toTopOf="@+id/gift_list"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_date" />
 

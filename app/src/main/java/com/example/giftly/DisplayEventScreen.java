@@ -36,7 +36,6 @@ public class DisplayEventScreen extends AppCompatActivity {
     public Button button_edit_event;
     private SharedPreferences sharedPreferences;
 
-    // Temporary List of Participants; array to be filled in by database info
     ListView participantList;
 
 

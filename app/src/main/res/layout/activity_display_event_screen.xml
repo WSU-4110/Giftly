@@ -109,6 +109,7 @@
         android:background="@drawable/gray_background"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/participant_title" />
