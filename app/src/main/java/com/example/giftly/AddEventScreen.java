@@ -1,7 +1,11 @@
 package com.example.giftly;
 
+import static android.content.ContentValues.TAG;
+import static com.example.giftly.Giftly.client;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -9,6 +13,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,14 +33,25 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.giftly.handler.Event;
+import com.example.giftly.handler.User;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+
+import org.w3c.dom.Text;
+
 public class AddEventScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     final Calendar myCalendar= Calendar.getInstance();
-    EditText editText;
 
     public Button button_create_event, button_cancel_adding;
+    public TextView textbox_eventName, textbox_eventDate;
     private SharedPreferences sharedPreferences;
+    public SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
+
 
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_event);
 
@@ -49,8 +65,13 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Button Functionality
-        button_create_event = (Button) findViewById(R.id.button_add_gift);
+        button_create_event = (Button) findViewById(R.id.button_add_event);
         button_cancel_adding = (Button) findViewById(R.id.button_cancel);
+
+        //Text Entries
+        textbox_eventName = (EditText) findViewById(R.id.event_name_entry);
+        textbox_eventDate = (EditText) findViewById(R.id.enter_date);
+
 
         button_cancel_adding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +83,34 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         button_create_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddEventScreen.this, DisplayEventScreen.class);
-                startActivity(intent);
+                Date eventDate;
+                try {
+                    eventDate = dateFormatter.parse(textbox_eventDate.getText().toString());
+                    Log.d(TAG, "event date found");
+                }
+                catch (java.text.ParseException e) {
+                    Log.d(TAG, e.getMessage());
+                    eventDate = new Date();
+                }
+                Futures.addCallback(
+                        client.createEvent(textbox_eventName.getText().toString(), eventDate),
+                        new FutureCallback<String>() {
+
+                            @Override
+                            public void onSuccess(String eventID) {
+                                Log.d(TAG, "Successfully Created Event");
+                                Intent intent = new Intent(AddEventScreen.this, DisplayEventScreen.class);
+                                intent.putExtra("eventID",eventID);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Throwable thrown) {
+                                runOnUiThread(new makeToast(thrown.getMessage()));
+                                Log.d(TAG, "Add event failed: "+ thrown.getMessage());
+
+                            }
+                        }, Giftly.service);
             }
         });
 
@@ -71,15 +118,14 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         spinner.setOnItemSelectedListener(this);
 
         // Temporary array
-        List<String> categories = new ArrayList<String>();
-        categories.add("Choose Event Type");
+        List<String> categories = new ArrayList<>();
+        categories.add("Group Giving");
         categories.add("Single Recipient");
         categories.add("Secret Santa");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
-        editText=(EditText) findViewById(R.id.enter_date);
         DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -89,18 +135,21 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
                 updateLabel();
             }
         };
-        editText.setOnClickListener(new View.OnClickListener() {
+        textbox_eventDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddEventScreen.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(AddEventScreen.this,
+                        date,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
     }
     private void updateLabel(){
-        String myFormat="MM/dd/yy";
-        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-        editText.setText(dateFormat.format(myCalendar.getTime()));
+        SimpleDateFormat dateFormat=new SimpleDateFormat("dd/MM/yy", Locale.US);
+        textbox_eventDate.setText(dateFormat.format(myCalendar.getTime()));
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -123,6 +172,17 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class makeToast implements Runnable {
+        String message;
+        makeToast(String s) {
+            message = s;
+        }
+        @Override
+        public void run() {
+            Toast.makeText(AddEventScreen.this, message, Toast.LENGTH_SHORT);
+        }
     }
 
 }
