@@ -2,7 +2,6 @@ package com.example.giftly;
 
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
-import static com.example.giftly.Giftly.service;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -45,9 +43,9 @@ public class GiftSignup extends AppCompatActivity {
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(GiftSignup.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
-        TextView giftListDisplay = findViewById(R.id.gift_list);
-        Button editEventButton = (Button) findViewById(R.id.button_add_gift);
-        EditText textAdd = findViewById(R.id.add_gift);
+        TextView giftListDisplay = findViewById(R.id.locatiopn_entry);
+        Button editEventButton = (Button) findViewById(R.id.button_add_event);
+        EditText textAdd = findViewById(R.id.event_name_entry);
 
         Intent participantIntent = getIntent();
         String eventID = participantIntent.getStringExtra("eventID");

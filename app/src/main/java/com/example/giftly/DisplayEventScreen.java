@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -56,6 +57,11 @@ public class DisplayEventScreen extends AppCompatActivity {
 
         Intent eventIntent = getIntent();
         String eventID = eventIntent.getStringExtra("eventID");
+
+        if (eventIntent.getBooleanExtra("new", false)) {
+            Log.d(TAG, "New Event Detected");
+            Toast.makeText(DisplayEventScreen.this, "Event Successfully Created", Toast.LENGTH_SHORT).show();
+        }
 
 
         Log.d(TAG, "EventID: " + eventID);
