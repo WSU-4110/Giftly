@@ -182,7 +182,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         }
         @Override
         public void run() {
-            Toast.makeText(AddEventScreen.this, message, Toast.LENGTH_SHORT);
+            Toast.makeText(AddEventScreen.this, message, Toast.LENGTH_SHORT).show();
         }
     }
 

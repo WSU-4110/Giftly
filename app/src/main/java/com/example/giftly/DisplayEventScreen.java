@@ -60,7 +60,7 @@ public class DisplayEventScreen extends AppCompatActivity {
 
         if (eventIntent.getBooleanExtra("new", false)) {
             Log.d(TAG, "New Event Detected");
-            Toast.makeText(DisplayEventScreen.this, "Event Successfully Created", Toast.LENGTH_SHORT);
+            Toast.makeText(DisplayEventScreen.this, "Event Successfully Created", Toast.LENGTH_SHORT).show();
         }
 
 
