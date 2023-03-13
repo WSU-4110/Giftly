@@ -101,6 +101,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
                                 Log.d(TAG, "Successfully Created Event");
                                 Intent intent = new Intent(AddEventScreen.this, DisplayEventScreen.class);
                                 intent.putExtra("eventID",eventID);
+                                intent.putExtra("new",true);
                                 startActivity(intent);
                             }
 

@@ -95,6 +95,8 @@
             android:id="@+id/events"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:alwaysDrawnWithCache="false"
+            android:animateLayoutChanges="false"
             android:orientation="vertical"></LinearLayout>
     </androidx.cardview.widget.CardView>
 
