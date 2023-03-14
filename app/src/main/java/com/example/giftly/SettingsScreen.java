@@ -9,21 +9,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsScreen extends AppCompatActivity {
     private Button btnLogOut;
     public Button choosingThemeBtn;
+    public Button choosingFontSizeBtn;
     private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_screen);
+
+        //These 4 code lines will change the font size while calling iterateViews
+        SharedPreferences preferences = getSharedPreferences("prefs", MODE_PRIVATE);
+        float fontSize = preferences.getFloat("font_size", getResources().getDimension(R.dimen.fab_margin));
+        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+        iterateViews(rootView, fontSize);
 
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -32,11 +43,22 @@ public class SettingsScreen extends AppCompatActivity {
 
         btnLogOut = findViewById(R.id.button_log_out);
         choosingThemeBtn = findViewById(R.id.themeBtn);
+        choosingFontSizeBtn = findViewById(R.id.fontSizeBtn);
 
+        //Creating a button response for themes
         choosingThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SettingsScreen.this, CThemeScreen.class);
+                startActivity(intent);
+            }
+        });
+
+        //Creating a button response for font size
+        choosingFontSizeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsScreen.this, FontSizeScreen.class);
                 startActivity(intent);
             }
         });
@@ -66,5 +88,17 @@ public class SettingsScreen extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void iterateViews(View view, float size) {
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                iterateViews(viewGroup.getChildAt(i), size);
+            }
+        } else if (view instanceof TextView || view instanceof Button || view instanceof EditText) {
+            TextView textView = (TextView) view;
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+        }
     }
 }
