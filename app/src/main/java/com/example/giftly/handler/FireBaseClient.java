@@ -1,10 +1,5 @@
-
-
-
-
 package com.example.giftly.handler;
-
-//all of by beautiful imports
+//all of the beautiful imports
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.service;
 
@@ -36,6 +31,16 @@ public class FireBaseClient {
     public FirebaseFirestore getUser() {
         return FirebaseFirestore.getInstance();
     }
+    //Private instance object and constructor
+    private static FireBaseClient instance;
+    private FireBaseClient() {}
+    //Public instance accessor
+    public static FireBaseClient getClient() {
+        if (instance == null)
+            instance = new FireBaseClient();
+        return instance;
+    }
+
 
     //sets firebase user doc corresponding to current Auth login to user
     public void createProfile(User newUser) {
