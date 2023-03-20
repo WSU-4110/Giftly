@@ -1,0 +1,64 @@
+Index: app/src/main/java/com/example/giftly/handler/FireBaseClient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.giftly.handler;\r\n\r\n//all of by beautiful imports\r\nimport static android.content.ContentValues.TAG;\r\nimport android.util.Log;\r\n\r\nimport com.example.giftly.Giftly;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.android.gms.tasks.Tasks;\r\nimport com.google.common.util.concurrent.ListenableFuture;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.firestore.DocumentReference;\r\nimport com.google.firebase.firestore.DocumentSnapshot;\r\nimport com.google.firebase.firestore.FieldPath;\r\nimport com.google.firebase.firestore.FirebaseFirestore;\r\nimport com.google.firebase.firestore.QuerySnapshot;\r\n\r\nimport java.lang.reflect.Array;\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\nimport java.util.concurrent.Callable;\r\n\r\npublic class FireBaseClient {\r\n    //method wrappers because typing out that class name annoys me\r\n    public FirebaseAuth getAuth() {\r\n        return FirebaseAuth.getInstance();\r\n    }\r\n    public FirebaseFirestore getDB() {\r\n        return FirebaseFirestore.getInstance();\r\n    }\r\n\r\n    public void createProfile(User newUser) {\r\n        //create a Map with user data using firebase doc Schema\r\n        Map<String, Object> user = new HashMap<>();\r\n        user.put(\"Name\", newUser.fullName);\r\n        user.put(\"Events\", newUser.events);\r\n        user.put(\"Interests\", newUser.interests);\r\n        //reference the collection and call a set event using the authorized users ID\r\n        if (getAuth().getUid() != null)\r\n            getDB().collection(\"Users\").document(getAuth().getUid()).set(user);\r\n    }\r\n\r\n    //Reads a user from the database with the matching document ID and returns Listenable Future for a user\r\n    public ListenableFuture<User> readUser(String UserID) {\r\n        return Giftly.service.submit(new userCallback(UserID));\r\n    }\r\n    //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future\r\n    private class userCallback implements Callable<User> {\r\n        String UserID;\r\n        userCallback(String UID) {UserID = UID;}\r\n        @Override\r\n        public User call() {\r\n            DocumentReference targetUser = getDB().collection(\"Users\").document(UserID);\r\n\r\n            //log status of document allocation\r\n            Task<DocumentSnapshot> callDB = targetUser.get().addOnCompleteListener(task -> {\r\n                if(task.isSuccessful()) {\r\n                    DocumentSnapshot doc = task.getResult();\r\n                    if (doc.exists()) {\r\n                        Log.d(TAG, \"DocumentSnapshot data: \" + doc.getData());\r\n                    }\r\n                    else {\r\n                        Log.d(TAG, \"No Such Document\");\r\n                    }\r\n                }\r\n                else {\r\n                    Log.d(TAG, \"get failed with\" + task.getException());\r\n                }\r\n            }); //returns DocumentSnapshot\r\n\r\n            try {\r\n                Tasks.await(callDB);\r\n                return new User(callDB.getResult());\r\n            }\r\n            catch (Exception e) {\r\n                return null;\r\n            }\r\n\r\n        }\r\n    }\r\n\r\n    //Reads a user from the database with the matching document ID and returns Listenable Future for a user\r\n    public ListenableFuture<ArrayList<User>> readUser(ArrayList<String> UserIDs) {\r\n        return Giftly.service.submit(new userListCallback(UserIDs));\r\n    }\r\n    //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future\r\n    private class userListCallback implements Callable<ArrayList<User>> {\r\n        ArrayList<String> UserIDList;\r\n\r\n        userListCallback(ArrayList<String> UIDs) {\r\n            UserIDList = UIDs;\r\n        }\r\n\r\n        @Override\r\n        public ArrayList<User> call() {\r\n            ArrayList<User> retrievedUsers = new ArrayList<>(UserIDList.size());\r\n\r\n            Task<QuerySnapshot> callDB = getDB().collection(\"Users\").whereIn(FieldPath.documentId(), UserIDList).get().addOnCompleteListener(task -> {\r\n                if (task.isSuccessful()) {\r\n                    QuerySnapshot docs = task.getResult();\r\n                    if (docs.size() > 0) {\r\n                        Log.d(TAG, \"Retrieved \" + docs.size() + \" from firebase\");\r\n                    } else {\r\n                        Log.d(TAG, \"No Documents Retrieved\");\r\n                    }\r\n                } else {\r\n                    Log.d(TAG, \"get failed with\" + task.getException());\r\n                }\r\n            }); //returns DocumentSnapshot\r\n\r\n            try {\r\n                Tasks.await(callDB);\r\n                for (DocumentSnapshot user : callDB.getResult())\r\n                    retrievedUsers.add(new User(user));\r\n                return retrievedUsers;\r\n            } catch (Exception e) {\r\n                return null;\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/giftly/handler/FireBaseClient.java b/app/src/main/java/com/example/giftly/handler/FireBaseClient.java
+--- a/app/src/main/java/com/example/giftly/handler/FireBaseClient.java	
++++ b/app/src/main/java/com/example/giftly/handler/FireBaseClient.java	
+@@ -68,7 +68,6 @@
+                     Log.d(TAG, "get failed with" + task.getException());
+                 }
+             }); //returns DocumentSnapshot
+-
+             try {
+                 Tasks.await(callDB);
+                 return new User(callDB.getResult());
+@@ -76,7 +75,6 @@
+             catch (Exception e) {
+                 return null;
+             }
+-
+         }
+     }
+ 
+@@ -87,16 +85,19 @@
+     //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
+     private class userListCallback implements Callable<ArrayList<User>> {
+         ArrayList<String> UserIDList;
+-
++        //Constructor for making a call with a provided UID
+         userListCallback(ArrayList<String> UIDs) {
+             UserIDList = UIDs;
+         }
+ 
++        //The callable function
+         @Override
+         public ArrayList<User> call() {
++            //Initialize arraylist for users
+             ArrayList<User> retrievedUsers = new ArrayList<>(UserIDList.size());
+-
++            //Query the DB for all users in an event
+             Task<QuerySnapshot> callDB = getDB().collection("Users").whereIn(FieldPath.documentId(), UserIDList).get().addOnCompleteListener(task -> {
++                //logs
+                 if (task.isSuccessful()) {
+                     QuerySnapshot docs = task.getResult();
+                     if (docs.size() > 0) {
+@@ -110,12 +111,14 @@
+             }); //returns DocumentSnapshot
+ 
+             try {
++                //If success, loop through returned documents and construct a user from each one.
+                 Tasks.await(callDB);
+                 for (DocumentSnapshot user : callDB.getResult())
+                     retrievedUsers.add(new User(user));
+                 return retrievedUsers;
+             } catch (Exception e) {
+-                return null;
++                //If failure, empty list lmao
++                return retrievedUsers;
+             }
+         }
+     }
