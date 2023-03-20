@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +39,6 @@ public class DisplayEventScreen extends AppCompatActivity {
     public Button button_edit_event;
     private SharedPreferences sharedPreferences;
 
-    // Temporary List of Participants; array to be filled in by database info
     ListView participantList;
 
     @SuppressLint("MissingInflatedId")
@@ -67,6 +67,11 @@ public class DisplayEventScreen extends AppCompatActivity {
 
         Intent eventIntent = getIntent();
         String eventID = eventIntent.getStringExtra("eventID");
+
+        if (eventIntent.getBooleanExtra("new", false)) {
+            Log.d(TAG, "New Event Detected");
+            Toast.makeText(DisplayEventScreen.this, "Event Successfully Created", Toast.LENGTH_SHORT).show();
+        }
 
 
         Log.d(TAG, "EventID: " + eventID);

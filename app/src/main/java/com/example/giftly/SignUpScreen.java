@@ -64,11 +64,11 @@ public class SignUpScreen extends AppCompatActivity {
         editInterests = (EditText) findViewById(R.id.userInterests);
 
         //Auto sign in if the user hasn't logged out
-        /*
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
             startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
             finish();
-        }*/
+        }
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -82,13 +82,14 @@ public class SignUpScreen extends AppCompatActivity {
                     editName.setVisibility(View.GONE);
                     editInterests.setVisibility(View.GONE);
                     btnSubmit.setText("Log in");
-                    txtLoginInfo.setText("Dont have an account? Sign up");
+                    txtLoginInfo.setText("Don't have an account? Sign up");
                 }else{
                     isSigningUp = true;
                     editName.setVisibility(View.VISIBLE);
                     editInterests.setVisibility(View.VISIBLE);
                     btnSubmit.setText("Sign up");
-                    txtLoginInfo.setText("Already have an account? Log in");
+                    txtLoginInfo.setText("Alre" +
+                            "ady have an account? Log in");
                 }
             }
         });

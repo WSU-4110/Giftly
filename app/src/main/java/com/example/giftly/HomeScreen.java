@@ -15,13 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.giftly.handler.*;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
@@ -44,11 +42,10 @@ public class HomeScreen extends AppCompatActivity {
 
 
         //find Users name and display it to test readUser data
-        TextView display = findViewById(R.id.TestDisplay);
+        TextView display = findViewById(R.id.userNameDispl);
         settingsBtn = (Button) findViewById(R.id.SettingsBtn);
         settingsBtn.setBackgroundColor(Color.TRANSPARENT);
         addEventBtn = (Button) findViewById(R.id.addEventBtn);
-        addGiftBtn = (Button) findViewById(R.id.YourGiftListBtn);
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,14 +58,6 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeScreen.this, AddEventScreen.class);
-                startActivity(intent);
-            }
-        });
-
-        addGiftBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeScreen.this, GiftSignup.class);
                 startActivity(intent);
             }
         });
