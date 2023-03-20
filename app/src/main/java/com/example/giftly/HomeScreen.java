@@ -7,9 +7,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -109,27 +111,49 @@ public class HomeScreen extends AppCompatActivity {
                                                 LinearLayout eventList = findViewById(R.id.events);
                                                 Log.d(TAG, "Adding Events to List:");
 
+                                                TextView header = new TextView(eventList.getContext());
+                                                header.setText("Ongoing Events");
+                                                header.setTextSize(20);
+                                                header.setPadding(32, 32, 0, 32);
+                                                header.setGravity(Gravity.CENTER_VERTICAL);
+                                                header.setTextColor(Color.WHITE);
+                                                header.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
+                                                GridLayout.LayoutParams paramsHeader = new GridLayout.LayoutParams();
+                                                paramsHeader.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                paramsHeader.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                paramsHeader.setMargins(32, 0, 0, 0); //left, top, right, bottom
+                                                header.setLayoutParams(paramsHeader);
+                                                eventList.addView(header);
+
                                                 GridLayout gridLayout = new GridLayout(eventList.getContext());
                                                 gridLayout.setColumnCount(2); // set the number of columns you want
                                                 for (int i = 0; i < events.size(); i++) {
                                                     Button button = new Button(eventList.getContext());
                                                     button.setId(i);
-                                                    Log.d(TAG, String.format("Added event %d name %s", i, events.get(i)));
-                                                    button.setText(events.get(i).getEventName());
+                                                    //Log.d(TAG, String.format("Added event %d name %s", i, events.get(i)));
+                                                    //button.setText(events.get(i).getEventName().toLowerCase());
+                                                    button.setText(events.get(i).getEventName().toLowerCase().replaceFirst("\\w", String.valueOf(Character.toUpperCase(events.get(i).getEventName().charAt(0)))));
+
                                                     //Add button layout modification stuff to make it look nice here (target button)
                                                     button.setOnClickListener(new handleClick(events.get(i).getEventID()));
                                                     GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                                                    params.setMargins(16, 16, 16, 16); //left, top, right, bottom
+                                                    params.setMargins(16, 16, 16, 32); //left, top, right, bottom
                                                     params.width = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                    params.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                    params.height = 250;
                                                     button.setLayoutParams(params);
                                                     button.setBackgroundColor(Color.parseColor("#4B4B4B"));
                                                     button.setTextColor(Color.WHITE);
                                                     button.setTextSize(16);
-                                                    button.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
+                                                    button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
                                                     gridLayout.addView(button);
                                                 }
+                                                GridLayout.LayoutParams paramsGridLayout = new GridLayout.LayoutParams();
+                                                paramsGridLayout.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                paramsGridLayout.setMargins(32, 0, 0, 0); //left, top, right, bottom
+                                                gridLayout.setLayoutParams(paramsGridLayout);
                                                 eventList.addView(gridLayout);
+
 
                                             }
 
