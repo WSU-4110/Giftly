@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.giftly.handler.*;
 import com.google.common.util.concurrent.FutureCallback;
@@ -33,6 +34,8 @@ public class HomeScreen extends AppCompatActivity {
     public Button addEventBtn;
 
     public Button addGiftBtn;
+
+    public Button joinEventBtn;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -46,6 +49,18 @@ public class HomeScreen extends AppCompatActivity {
         settingsBtn = (Button) findViewById(R.id.SettingsBtn);
         settingsBtn.setBackgroundColor(Color.TRANSPARENT);
         addEventBtn = (Button) findViewById(R.id.addEventBtn);
+        joinEventBtn = (Button)findViewById(R.id.joinEvent);
+
+        joinEventBtn.setOnClickListener(new View.OnClickListener() {
+            //Pop Up when join event button is clicked
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomeScreen.this);
+                builder.setMessage("Enter Event ID")
+                        .setTitle("Join Event");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
