@@ -130,18 +130,28 @@ public class HomeScreen extends AppCompatActivity {
                                                 for (int i = 0; i < events.size(); i++) {
                                                     Button button = new Button(eventList.getContext());
                                                     button.setId(i);
-                                                    //Log.d(TAG, String.format("Added event %d name %s", i, events.get(i)));
-                                                    //button.setText(events.get(i).getEventName().toLowerCase());
-                                                    button.setText(events.get(i).getEventName().toLowerCase().replaceFirst("\\w", String.valueOf(Character.toUpperCase(events.get(i).getEventName().charAt(0)))));
+                                                    // Set the event name to lowercase
+                                                    String eventName = events.get(i).getEventName().toLowerCase();
+                                                    // Capitalize the first letter of the event name
+                                                    eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
+
+                                                    button.setText(eventName);
 
                                                     //Add button layout modification stuff to make it look nice here (target button)
                                                     button.setOnClickListener(new handleClick(events.get(i).getEventID()));
                                                     GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                                                     params.setMargins(16, 16, 16, 32); //left, top, right, bottom
                                                     params.width = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                    params.height = 250;
+                                                    params.height = 300;
                                                     button.setLayoutParams(params);
-                                                    button.setBackgroundColor(Color.parseColor("#4B4B4B"));
+
+                                                    // Set the button background to a drawable with rounded corners
+                                                    GradientDrawable shape = new GradientDrawable();
+                                                    shape.setShape(GradientDrawable.RECTANGLE);
+                                                    shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
+                                                    shape.setColor(Color.parseColor("#4B4B4B"));
+                                                    button.setBackground(shape);
+
                                                     button.setTextColor(Color.WHITE);
                                                     button.setTextSize(16);
                                                     button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
@@ -153,6 +163,7 @@ public class HomeScreen extends AppCompatActivity {
                                                 paramsGridLayout.setMargins(32, 0, 0, 0); //left, top, right, bottom
                                                 gridLayout.setLayoutParams(paramsGridLayout);
                                                 eventList.addView(gridLayout);
+
 
 
                                             }
