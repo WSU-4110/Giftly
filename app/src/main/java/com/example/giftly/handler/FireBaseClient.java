@@ -1,17 +1,18 @@
-
-
-
-
 package com.example.giftly.handler;
-
+//TODO Add cusotm exception definitions for eventAlreadyExists, noDocFound so I don't have to add a general Exception catcher
 //all of by beautiful imports
 import static android.content.ContentValues.TAG;
+import static com.example.giftly.Giftly.client;
 import static com.example.giftly.Giftly.service;
 
 import android.util.Log;
 
+import com.example.giftly.DisplayEventScreen;
+import com.example.giftly.Giftly;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -89,11 +90,11 @@ public class FireBaseClient {
                     else {
                         giftList = new ArrayList<>(userIndex+1);
                     }
-                    giftList.set(userIndex,gift);
+                    giftList.set(userIndex,gift.trim());
                     getUser().collection("Events").document(eventID).update(targetUserID, giftList);
                 }
                 catch (Exception e) {
-                    Log.d(TAG, e.toString());
+                    Log.d(TAG, e.getMessage());
                     return "Update Event Failed";
                 }
                 return "Updated gift list success";
@@ -110,7 +111,7 @@ public class FireBaseClient {
     private class joinEventRequest implements Callable<String> {
         String eventID;
         public joinEventRequest(String eventID) {
-            this.eventID = eventID;
+            this.eventID = eventID.trim();
         }
 
         @Override
@@ -133,7 +134,7 @@ public class FireBaseClient {
                 }
             }); //returns Event Snapshot
 
-            Task<DocumentSnapshot> getUser = targetEvent.get().addOnCompleteListener(task -> {
+            Task<DocumentSnapshot> getUser = targetUser.get().addOnCompleteListener(task -> {
                 if(task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
@@ -148,32 +149,36 @@ public class FireBaseClient {
                 }
             }); //returns User Snapshot
 
-            try {
-                //wait for task completion
-                Tasks.await(getEvent);
-                Tasks.await(getUser);
-                if (getEvent.isSuccessful() && getUser.isSuccessful()) {
-                    DocumentSnapshot user = getUser.getResult();
-                    DocumentSnapshot event = getUser.getResult();
+            //wait for task completion
+            Tasks.await(getEvent);
+            Tasks.await(getUser);
 
-                    ArrayList<String> participants = (ArrayList<String>) event.get("participants");
-                    assert participants != null;
-                    participants.add(getAuth().getUid());
+            DocumentSnapshot user = getUser.getResult();
+            DocumentSnapshot event = getUser.getResult();
+
+            if (event.exists() && getUser.isSuccessful() ) {
+                ArrayList<String> participants = (ArrayList<String>) event.get("participants");
+
+                //Check if event already has the user, if not add them and update the doc
+                if (participants == null) participants = new ArrayList<String>(1);
+                Log.d(TAG, "Checking Event");
+                if (!participants.contains(getAuth().getUid())) participants.add(getAuth().getUid());
                     targetEvent.update("participants", participants);
 
-                    ArrayList<String> eventList = user.exists() ? (ArrayList<String>) user.get("eventList") : new ArrayList<>(1);
-                    assert eventList != null;
+                //Check if user is already a part of the event, if not add them and update the doc
+                Log.d(TAG, "Checking User");
+                ArrayList<String> eventList = user.exists() && (ArrayList<String>) user.get("Events") != null ? (ArrayList<String>) user.get("Events") : new ArrayList<>(1);
+                Log.d(TAG, eventList.toString());
+                if (!eventList.contains(eventID))
                     eventList.add(eventID);
-                    targetUser.update("eventList", eventList);
-                }
-                else return "One or more document fetches failed.";
+                    Task<Void> updateUser =  targetUser.update("Events", eventList);
 
+
+                Tasks.await(updateUser);
+                if (updateUser.isSuccessful()) return "Successfully Joined event";
+                else throw new Exception("Join Event Failed, please try again");
             }
-            catch (Exception e) {
-                Log.d(TAG, e.toString());
-                return "Update Event Failed";
-            }
-            return "user added to event";
+            else throw new Exception("Event Not Found");
         }
     };
 
@@ -253,8 +258,6 @@ public class FireBaseClient {
             }
         }
     };
-
-
 
     //Reads a user from the database with the matching document ID and returns Listenable Future for a user
     public ListenableFuture<User> readUser(String UserID) {

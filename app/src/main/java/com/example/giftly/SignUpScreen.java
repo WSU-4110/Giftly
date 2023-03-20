@@ -115,7 +115,7 @@ public class SignUpScreen extends AppCompatActivity {
 
     //Signing in exceptions and configurations
     private void handleSignUp(){
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(editEmail.getText().toString(),editPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(editEmail.getText().toString().trim(),editPassword.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){

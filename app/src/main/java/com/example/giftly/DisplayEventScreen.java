@@ -2,14 +2,11 @@ package com.example.giftly;
 
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
-import static java.security.AccessController.getContext;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,10 +18,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
 import com.example.giftly.handler.Event;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
