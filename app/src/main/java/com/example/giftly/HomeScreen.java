@@ -8,9 +8,11 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,16 +53,22 @@ public class HomeScreen extends AppCompatActivity {
         addEventBtn = (Button) findViewById(R.id.addEventBtn);
         joinEventBtn = (Button)findViewById(R.id.joinEvent);
 
-        joinEventBtn.setOnClickListener(new View.OnClickListener() {
-            //Pop Up when join event button is clicked
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(HomeScreen.this);
-                builder.setMessage("Enter Event ID")
-                        .setTitle("Join Event");
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
+        joinEventBtn.setOnClickListener(view -> {
+            EditText input = new EditText(HomeScreen.this);
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+
+            new AlertDialog.Builder(HomeScreen.this)
+                    .setTitle("Join Event")
+                    .setMessage("Input Join Event ID")
+                    .setView(input)
+                    .setPositiveButton("Join", (dialog, which) -> {
+                        String eventId = input.getText().toString();
+                        // TODO: Handle the event ID entered by the user
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
+                    .show();
         });
+
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
