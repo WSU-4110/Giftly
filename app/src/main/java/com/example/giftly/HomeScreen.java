@@ -11,9 +11,11 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -80,6 +82,7 @@ public class HomeScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         addEventBtn.setOnClickListener(new View.OnClickListener() {
             @Override
