@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -108,7 +109,8 @@ public class HomeScreen extends AppCompatActivity {
                                                 LinearLayout eventList = findViewById(R.id.events);
                                                 Log.d(TAG, "Adding Events to List:");
 
-                                                //Loops through arraylist of events and makes a new button for each event.
+                                                GridLayout gridLayout = new GridLayout(eventList.getContext());
+                                                gridLayout.setColumnCount(2); // set the number of columns you want
                                                 for (int i = 0; i < events.size(); i++) {
                                                     Button button = new Button(eventList.getContext());
                                                     button.setId(i);
@@ -116,16 +118,19 @@ public class HomeScreen extends AppCompatActivity {
                                                     button.setText(events.get(i).getEventName());
                                                     //Add button layout modification stuff to make it look nice here (target button)
                                                     button.setOnClickListener(new handleClick(events.get(i).getEventID()));
-                                                    eventList.addView(button);
-                                                    //Assuming your button is in a LinearLayout as stated
-                                                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) button.getLayoutParams();
-                                                    params.setMargins(0, -5, 0, 18); //left, top, right, bottom
+                                                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                                                    params.setMargins(16, 16, 16, 16); //left, top, right, bottom
+                                                    params.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                    params.height = GridLayout.LayoutParams.WRAP_CONTENT;
                                                     button.setLayoutParams(params);
                                                     button.setBackgroundColor(Color.parseColor("#4B4B4B"));
                                                     button.setTextColor(Color.WHITE);
                                                     button.setTextSize(16);
                                                     button.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
+                                                    gridLayout.addView(button);
                                                 }
+                                                eventList.addView(gridLayout);
+
                                             }
 
                                             class handleClick implements View.OnClickListener {
