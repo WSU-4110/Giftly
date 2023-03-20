@@ -9,7 +9,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Join Event"
+            android:text="Enter Event ID"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -19,7 +19,7 @@
             android:id="@+id/event_id_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Event ID"
+            android:hint="Enter ID to join event"
             android:inputType="text"
             android:textSize="16sp"
             android:textColor="@color/black"
