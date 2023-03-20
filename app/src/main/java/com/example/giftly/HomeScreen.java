@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,43 @@ public class HomeScreen extends AppCompatActivity {
                         .setView(dialogView)
                         .setPositiveButton("Join", (dialog, which) -> {
                             String eventId = input.getText().toString();
-                            // TODO: Handle the event ID entered by the user
+
+                            Futures.addCallback(
+                                    client.joinEvent(eventId),
+                                    new FutureCallback<String>() {
+
+                                        @Override
+                                        public void onSuccess(String result) {
+                                            Log.d(TAG, "Successfully joined event");
+
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(HomeScreen.this, result, Toast.LENGTH_SHORT).show();
+                                                    finish();
+                                                    overridePendingTransition(0, 0);
+                                                    startActivity(getIntent());
+                                                    overridePendingTransition(0, 0);
+                                                }
+                                            });
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Throwable thrown) {
+
+                                            String message = (thrown.getMessage().isEmpty() ? "There was a problem joining the Event" : thrown.getMessage());
+
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(HomeScreen.this, message, Toast.LENGTH_SHORT).  show();
+                                                }
+                                            });
+                                            Log.d(TAG, thrown.toString());
+                                        }
+                                    }, Giftly.service);
+
                         })
                         .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
                         .show();
