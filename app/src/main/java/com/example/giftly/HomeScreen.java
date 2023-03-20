@@ -135,6 +135,7 @@ public class HomeScreen extends AppCompatActivity {
                                                     // Capitalize the first letter of the event name
                                                     eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
 
+
                                                     button.setText(eventName);
 
                                                     //Add button layout modification stuff to make it look nice here (target button)
@@ -142,7 +143,7 @@ public class HomeScreen extends AppCompatActivity {
                                                     GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                                                     params.setMargins(16, 16, 16, 32); //left, top, right, bottom
                                                     params.width = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                    params.height = 300;
+                                                    params.height = 350;
                                                     button.setLayoutParams(params);
 
                                                     // Set the button background to a drawable with rounded corners
@@ -153,14 +154,14 @@ public class HomeScreen extends AppCompatActivity {
                                                     button.setBackground(shape);
 
                                                     button.setTextColor(Color.WHITE);
-                                                    button.setTextSize(16);
+                                                    button.setTextSize(15);
                                                     button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
                                                     gridLayout.addView(button);
                                                 }
                                                 GridLayout.LayoutParams paramsGridLayout = new GridLayout.LayoutParams();
                                                 paramsGridLayout.width = GridLayout.LayoutParams.WRAP_CONTENT;
                                                 paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                paramsGridLayout.setMargins(32, 0, 0, 0); //left, top, right, bottom
+                                                paramsGridLayout.setMargins(32, 0, 32, 0); //left, top, right, bottom
                                                 gridLayout.setLayoutParams(paramsGridLayout);
                                                 eventList.addView(gridLayout);
 
