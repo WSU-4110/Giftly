@@ -2,11 +2,14 @@ package com.example.giftly;
 
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
+import static java.security.AccessController.getContext;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -14,20 +17,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import com.example.giftly.handler.Event;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -39,12 +41,20 @@ public class DisplayEventScreen extends AppCompatActivity {
 
     ListView participantList;
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_event_screen);
+
+        // MAPVIEW TEST
+        String lon = "-83.0717"; //get longitude
+        String lat = "42.3502"; // get latitude
+        String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
+
+        ImageView mapView = (ImageView) findViewById(R.id.static_map);
+        Picasso.get().load(url).into(mapView);
+
 
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -176,5 +186,7 @@ public class DisplayEventScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
 
