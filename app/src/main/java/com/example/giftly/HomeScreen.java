@@ -7,17 +7,23 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.giftly.handler.*;
 import com.google.common.util.concurrent.FutureCallback;
@@ -36,6 +42,8 @@ public class HomeScreen extends AppCompatActivity {
     public Button addEventBtn;
 
     public Button addGiftBtn;
+
+    public Button joinEventBtn;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -49,7 +57,25 @@ public class HomeScreen extends AppCompatActivity {
         settingsBtn = (Button) findViewById(R.id.SettingsBtn);
         settingsBtn.setBackgroundColor(Color.TRANSPARENT);
         addEventBtn = (Button) findViewById(R.id.addEventBtn);
-        settingsBtn.setOnClickListener(new View.OnClickListener() {
+        joinEventBtn = (Button)findViewById(R.id.joinEvent);
+
+            //Pop up when clicking join event
+            joinEventBtn.setOnClickListener(view -> {
+                View dialogView = LayoutInflater.from(HomeScreen.this).inflate(R.layout.join_event_dialog, null);
+                EditText input = dialogView.findViewById(R.id.event_id_input);
+
+                new AlertDialog.Builder(HomeScreen.this)
+                        .setView(dialogView)
+                        .setPositiveButton("Join", (dialog, which) -> {
+                            String eventId = input.getText().toString();
+                            // TODO: Handle the event ID entered by the user
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
+                        .show();
+            });
+
+
+            settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeScreen.this, SettingsScreen.class);
@@ -88,24 +114,62 @@ public class HomeScreen extends AppCompatActivity {
                                                 LinearLayout eventList = findViewById(R.id.events);
                                                 Log.d(TAG, "Adding Events to List:");
 
-                                                //Loops through arraylist of events and makes a new button for each event.
+                                                TextView header = new TextView(eventList.getContext());
+                                                header.setText("Ongoing Events");
+                                                header.setTextSize(20);
+                                                header.setPadding(32, 32, 0, 32);
+                                                header.setGravity(Gravity.CENTER_VERTICAL);
+                                                header.setTextColor(Color.WHITE);
+                                                header.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
+                                                GridLayout.LayoutParams paramsHeader = new GridLayout.LayoutParams();
+                                                paramsHeader.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                paramsHeader.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                paramsHeader.setMargins(32, 0, 0, 0); //left, top, right, bottom
+                                                header.setLayoutParams(paramsHeader);
+                                                eventList.addView(header);
+
+                                                GridLayout gridLayout = new GridLayout(eventList.getContext());
+                                                gridLayout.setColumnCount(2); // set the number of columns you want
                                                 for (int i = 0; i < events.size(); i++) {
                                                     Button button = new Button(eventList.getContext());
                                                     button.setId(i);
-                                                    Log.d(TAG, String.format("Added event %d name %s", i, events.get(i)));
-                                                    button.setText(events.get(i).getEventName());
+                                                    // Set the event name to lowercase
+                                                    String eventName = events.get(i).getEventName().toLowerCase();
+                                                    // Capitalize the first letter of the event name
+                                                    eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
+
+
+                                                    button.setText(eventName);
+
                                                     //Add button layout modification stuff to make it look nice here (target button)
                                                     button.setOnClickListener(new handleClick(events.get(i).getEventID()));
-                                                    eventList.addView(button);
-                                                    //Assuming your button is in a LinearLayout as stated
-                                                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) button.getLayoutParams();
-                                                    params.setMargins(0, -5, 0, 18); //left, top, right, bottom
+                                                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                                                    params.setMargins(16, 16, 16, 32); //left, top, right, bottom
+                                                    params.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                    params.height = 350;
                                                     button.setLayoutParams(params);
-                                                    button.setBackgroundColor(Color.parseColor("#4B4B4B"));
+
+                                                    // Set the button background to a drawable with rounded corners
+                                                    GradientDrawable shape = new GradientDrawable();
+                                                    shape.setShape(GradientDrawable.RECTANGLE);
+                                                    shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
+                                                    shape.setColor(Color.parseColor("#4B4B4B"));
+                                                    button.setBackground(shape);
+
                                                     button.setTextColor(Color.WHITE);
-                                                    button.setTextSize(16);
-                                                    button.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
+                                                    button.setTextSize(15);
+                                                    button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                                                    gridLayout.addView(button);
                                                 }
+                                                GridLayout.LayoutParams paramsGridLayout = new GridLayout.LayoutParams();
+                                                paramsGridLayout.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                paramsGridLayout.setMargins(32, 0, 32, 0); //left, top, right, bottom
+                                                gridLayout.setLayoutParams(paramsGridLayout);
+                                                eventList.addView(gridLayout);
+
+
+
                                             }
 
                                             class handleClick implements View.OnClickListener {
