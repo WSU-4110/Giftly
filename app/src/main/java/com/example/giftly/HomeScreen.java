@@ -57,6 +57,7 @@ public class HomeScreen extends AppCompatActivity {
             EditText input = new EditText(HomeScreen.this);
             input.setInputType(InputType.TYPE_CLASS_TEXT);
 
+            //Pop up when clicking join event
             new AlertDialog.Builder(HomeScreen.this)
                     .setTitle("Join Event")
                     .setMessage("Input Join Event ID")
