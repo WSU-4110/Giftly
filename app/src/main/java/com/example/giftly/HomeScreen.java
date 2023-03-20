@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,24 +54,23 @@ public class HomeScreen extends AppCompatActivity {
         addEventBtn = (Button) findViewById(R.id.addEventBtn);
         joinEventBtn = (Button)findViewById(R.id.joinEvent);
 
-        joinEventBtn.setOnClickListener(view -> {
-            EditText input = new EditText(HomeScreen.this);
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
-
             //Pop up when clicking join event
-            new AlertDialog.Builder(HomeScreen.this)
-                    .setTitle("Join Event")
-                    .setMessage("Input Join Event ID")
-                    .setView(input)
-                    .setPositiveButton("Join", (dialog, which) -> {
-                        String eventId = input.getText().toString();
-                        // TODO: Handle the event ID entered by the user
-                    })
-                    .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
-                    .show();
-        });
+            joinEventBtn.setOnClickListener(view -> {
+                View dialogView = LayoutInflater.from(HomeScreen.this).inflate(R.layout.join_event_dialog, null);
+                EditText input = dialogView.findViewById(R.id.event_id_input);
 
-        settingsBtn.setOnClickListener(new View.OnClickListener() {
+                new AlertDialog.Builder(HomeScreen.this)
+                        .setView(dialogView)
+                        .setPositiveButton("Join", (dialog, which) -> {
+                            String eventId = input.getText().toString();
+                            // TODO: Handle the event ID entered by the user
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
+                        .show();
+            });
+
+
+            settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeScreen.this, SettingsScreen.class);
