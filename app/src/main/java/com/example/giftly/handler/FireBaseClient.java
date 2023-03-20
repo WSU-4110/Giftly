@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 public class FireBaseClient {
-    //method wrappers because typing out that class name annoys me
+    //method wrappers for FB Singleton accessors because typing out that class name annoys me
     public FirebaseAuth getAuth() {
         return FirebaseAuth.getInstance();
     }
