@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 
 public class CThemeScreen extends AppCompatActivity {
+
+    //This will overwrite the settings for the background colors for all screens
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -28,13 +30,14 @@ public class CThemeScreen extends AppCompatActivity {
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(CThemeScreen.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
-        //Create theme buttons
+        //Create variables to connect to xml android:id fields
         Button dftThemeBtn = findViewById(R.id.defaultTheme);
         Button glyThemeBtn = findViewById(R.id.giftlyTheme);
         Button vltThemeBtn = findViewById(R.id.valentinesTheme);
         Button etrThemeBtn = findViewById(R.id.easterTheme);
         Button savingit = findViewById(R.id.saveIt);
 
+        //Save button will save the settings and transition back to the home screen
         savingit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,6 +46,7 @@ public class CThemeScreen extends AppCompatActivity {
             }
         });
 
+        //The default theme configuration
         dftThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +56,7 @@ public class CThemeScreen extends AppCompatActivity {
             }
         });
 
+        //Theme color 1 configuration
         glyThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +66,7 @@ public class CThemeScreen extends AppCompatActivity {
             }
         });
 
+        //Theme color 2 configuration
         vltThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +76,7 @@ public class CThemeScreen extends AppCompatActivity {
             }
         });
 
+        //Theme color 3 configuration
         etrThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,17 +86,12 @@ public class CThemeScreen extends AppCompatActivity {
             }
         });
 
-
-
+        //The action bar will display the back button in the header
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-
-
     }
 
-    //Back button configuration
+    //Back button configuration that allows the feature to go back to the previous screen
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

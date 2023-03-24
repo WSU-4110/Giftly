@@ -24,12 +24,14 @@ public class FontSizeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_font_size_screen);
 
+        //Create variables to connect to xml android:id fields
         Button fontSizeButton = findViewById(R.id.fontSizeButton);
         Button fontSizeButton2 = findViewById(R.id.fontSizeButton2);
         Button fontSizeButton3 = findViewById(R.id.fontSizeButton3);
         Button savingit2 = findViewById(R.id.saveIt2);
         SharedPreferences sharedPreferences;
 
+        //Functionality to set the font size with a value of 16
         fontSizeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,6 +45,7 @@ public class FontSizeScreen extends AppCompatActivity {
             }
         });
 
+        //Functionality to set the font size with a value of 20
         fontSizeButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +59,7 @@ public class FontSizeScreen extends AppCompatActivity {
             }
         });
 
+        //Functionality to set the font size with a value of 24
         fontSizeButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,8 +84,7 @@ public class FontSizeScreen extends AppCompatActivity {
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(FontSizeScreen.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
-
-
+        //Save button will save the settings and transition back to the home screen
         savingit2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,13 +93,12 @@ public class FontSizeScreen extends AppCompatActivity {
             }
         });
 
-        //Enable the back-button
+        //The action bar will display the back button in the header
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
     }
 
+    //This will loop through Button and EditText fields in the xml files to change the text sizes
     private void iterateViews(View view, float size) {
         if (view instanceof ViewGroup) {
             ViewGroup viewGroup = (ViewGroup) view;
@@ -109,7 +111,7 @@ public class FontSizeScreen extends AppCompatActivity {
         }
     }
 
-    //Back button configuration
+    //Back button configuration that allows the feature to go back to the previous screen
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -119,6 +121,4 @@ public class FontSizeScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
