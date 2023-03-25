@@ -6,11 +6,13 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-public class Event {
+public class GiftNetworkEvent extends AbstractEvent {
     String eventID;
-    String ownerID;
+    String eventOwner;
 
     //Event Info
     String eventName;
@@ -20,34 +22,45 @@ public class Event {
 
 
     //Local Constructor with ID's confirmed
-    public Event(String eventID, String ownerID, String eventName, Date eventStartDate) {
+    public GiftNetworkEvent(String eventID, String ownerID, String eventName, Date eventStartDate) {
         this.eventID = eventID;
-        this.ownerID = ownerID;
+        this.eventOwner = ownerID;
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;
     }
 
     //Pulls data from document snapshot
-    public Event(DocumentSnapshot event) {
+    public GiftNetworkEvent(DocumentSnapshot event) {
 
         try {
             eventName = event.contains("eventName") ? Objects.requireNonNull(event.get("eventName")).toString() : "No Event Name";
             eventID = event.getId();
             eventStartDate = event.contains("eventStartDate") ? ((Timestamp) Objects.requireNonNull(event.get("eventStartDate"))).toDate() : new Date();
             participants = event.contains("participants") ? (ArrayList<String>) event.get("participants") : new ArrayList<>(1);
-            ownerID = event.contains("ownerID") ? Objects.requireNonNull(event.get("ownerID")).toString() : participants.get(0);
+            eventOwner = event.contains("ownerID") ? Objects.requireNonNull(event.get("ownerID")).toString() : participants.get(0);
         }
         catch (NullPointerException e) {
             Log.d(TAG, e.toString());
         }
     }
 
+    @Override
+    public Map<String, Object> convertToDocument() {
+        Map<String, Object> eventDoc = new HashMap<>();
+        //get basic event data
+        eventDoc.put("eventName", eventName);
+        eventDoc.put("eventStartDate", eventStartDate);
+        eventDoc.put("eventOwner", eventOwner);  //sets the owner to the creator
+        eventDoc.put("participants", participants);  //adds an array list with just the event creator in it
+        return eventDoc;
+    }
+
     //Reg accessors
     public String getEventID() {
         return eventID;
     }
-    public String getOwnerID() {
-        return ownerID;
+    public String getEventOwner() {
+        return eventOwner;
     }
     public String getEventName() {
         return eventName;

@@ -9,13 +9,10 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -139,13 +136,13 @@ public class HomeScreen extends AppCompatActivity {
                         //This call will display the user's name in the greeting message
                         Futures.addCallback(
                                 Giftly.client.readEvent(result.getEvents()),
-                                new FutureCallback<ArrayList<Event>>() {
+                                new FutureCallback<ArrayList<GiftNetworkEvent>>() {
                                     @Override
-                                    public void onSuccess(ArrayList<Event> events) {
+                                    public void onSuccess(ArrayList<GiftNetworkEvent> events) {
                                         //anon class for updating GUI thread
                                         class updateEvents implements Runnable {
-                                            ArrayList<Event> events;
-                                            updateEvents(ArrayList<Event> e) { events = e;}
+                                            ArrayList<GiftNetworkEvent> events;
+                                            updateEvents(ArrayList<GiftNetworkEvent> e) { events = e;}
                                             @Override
                                             public void run() {
                                                 LinearLayout eventList = findViewById(R.id.events);

@@ -24,7 +24,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.giftly.handler.Event;
+import com.example.giftly.handler.GiftNetworkEvent;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -81,11 +81,11 @@ public class DisplayEventScreen extends AppCompatActivity {
 
         Futures.addCallback(
                 client.readEvent(eventID),
-                new FutureCallback<Event>() {
+                new FutureCallback<GiftNetworkEvent>() {
                     class updateEventGui implements Runnable {
-                        final Event event;
+                        final GiftNetworkEvent event;
 
-                        public updateEventGui(Event event) {
+                        public updateEventGui(GiftNetworkEvent event) {
                             this.event = event;
                         }
 
@@ -99,7 +99,7 @@ public class DisplayEventScreen extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccess(Event event) {
+                    public void onSuccess(GiftNetworkEvent event) {
                         Log.d(TAG, "Successfully pulled EventID" + event.getParticipants());
                         runOnUiThread(new updateEventGui(event));
                         ArrayList<String> participants = event.getParticipants();
@@ -133,15 +133,16 @@ public class DisplayEventScreen extends AppCompatActivity {
                     }
                 }, Giftly.service);
 
-        // This section is commented out until we add the edit event page?
-//        button_edit_event = (Button) findViewById(R.id.edit_event);
-//        button_edit_event.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(DisplayEventScreen.this, edit_event_screen.class);
-//                startActivity(intent);
-//            }
-//        });
+        //This section is commented out until we add the edit event page?
+        button_edit_event = (Button) findViewById(R.id.edit_event);
+        button_edit_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DisplayEventScreen.this, AddEventScreen.class);
+                intent.putExtra("eventID", eventID);
+                startActivity(intent);
+            }
+        });
         // The list of participants is displayed on the screen
 
 
