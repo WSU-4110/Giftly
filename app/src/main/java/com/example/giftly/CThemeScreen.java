@@ -31,14 +31,14 @@ public class CThemeScreen extends AppCompatActivity {
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
         //Create variables to connect to xml android:id fields
-        Button dftThemeBtn = findViewById(R.id.defaultTheme);
-        Button glyThemeBtn = findViewById(R.id.giftlyTheme);
-        Button vltThemeBtn = findViewById(R.id.valentinesTheme);
-        Button etrThemeBtn = findViewById(R.id.easterTheme);
-        Button savingit = findViewById(R.id.saveIt);
+        Button defaultThemeButton = findViewById(R.id.defaultTheme);
+        Button color1ThemeButton = findViewById(R.id.giftlyTheme);
+        Button color2ThemeButton = findViewById(R.id.valentinesTheme);
+        Button color3ThemeButton = findViewById(R.id.easterTheme);
+        Button saveButton = findViewById(R.id.saveIt);
 
         //Save button will save the settings and transition back to the home screen
-        savingit.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CThemeScreen.this, HomeScreen.class);
@@ -47,7 +47,7 @@ public class CThemeScreen extends AppCompatActivity {
         });
 
         //The default theme configuration
-        dftThemeBtn.setOnClickListener(new View.OnClickListener() {
+        defaultThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Default_color);
@@ -57,7 +57,7 @@ public class CThemeScreen extends AppCompatActivity {
         });
 
         //Theme color 1 configuration
-        glyThemeBtn.setOnClickListener(new View.OnClickListener() {
+        color1ThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Giftly_color);
@@ -67,7 +67,7 @@ public class CThemeScreen extends AppCompatActivity {
         });
 
         //Theme color 2 configuration
-        vltThemeBtn.setOnClickListener(new View.OnClickListener() {
+        color2ThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Valentines_color);
@@ -77,7 +77,7 @@ public class CThemeScreen extends AppCompatActivity {
         });
 
         //Theme color 3 configuration
-        etrThemeBtn.setOnClickListener(new View.OnClickListener() {
+        color3ThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Easter_color);

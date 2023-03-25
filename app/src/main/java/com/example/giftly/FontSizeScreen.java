@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class FontSizeScreen extends AppCompatActivity {
@@ -24,57 +25,39 @@ public class FontSizeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_font_size_screen);
 
-        //Create variables to connect to xml android:id fields
-        Button fontSizeButton = findViewById(R.id.fontSizeButton);
-        Button fontSizeButton2 = findViewById(R.id.fontSizeButton2);
-        Button fontSizeButton3 = findViewById(R.id.fontSizeButton3);
+        //Variables used for saving settings and change preference settings
         Button savingit2 = findViewById(R.id.saveIt2);
         SharedPreferences sharedPreferences;
 
-        //Functionality to set the font size with a value of 16
-        fontSizeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float newSize = 16; // set the new font size
-                SharedPreferences preferences = getSharedPreferences("prefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putFloat("font_size", newSize);
-                editor.apply();
-                ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
-                iterateViews(rootView, newSize);
-            }
-        });
-
-        //Functionality to set the font size with a value of 20
-        fontSizeButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float newSize = 20; // set the new font size
-                SharedPreferences preferences = getSharedPreferences("prefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putFloat("font_size", newSize);
-                editor.apply();
-                ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
-                iterateViews(rootView, newSize);
-            }
-        });
-
-        //Functionality to set the font size with a value of 24
-        fontSizeButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float newSize = 24; // set the new font size
-                SharedPreferences preferences = getSharedPreferences("prefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putFloat("font_size", newSize);
-                editor.apply();
-                ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
-                iterateViews(rootView, newSize);
-            }
-        });
-
-        //These 4 code lines will change the font size, while calling the iterateViews methods
+        //Font size slider implementation
+        SeekBar fontSizeSeekBar = findViewById(R.id.fontSizeButton);
         SharedPreferences preferences = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        fontSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float newSize = progress;
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putFloat("font_size", newSize);
+                editor.apply();
+                setFontSize(newSize);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                return;
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                return;
+            }
+        });
+
+        // Apply the saved font size on app startup
+        float savedSize = preferences.getFloat("font_size", 16);
+        fontSizeSeekBar.setProgress((int) savedSize);
+        setFontSize(savedSize);
+
+        //These 3 code lines will change the font size, while calling the iterateViews methods
         float fontSize = preferences.getFloat("font_size", getResources().getDimension(R.dimen.fab_margin));
         ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
         iterateViews(rootView, fontSize);
@@ -120,5 +103,24 @@ public class FontSizeScreen extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //Method used to store the font size
+    public void setFontSize(float size) {
+        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().getRootView();
+        iterateTextViews(rootView, size);
+    }
+
+    //Method is used to iterate through the java files to change the font sizes
+    private void iterateTextViews(ViewGroup parent, float size) {
+        for (int i = 0; i < parent.getChildCount(); i++) {
+            View child = parent.getChildAt(i);
+            if (child instanceof ViewGroup) {
+                iterateTextViews((ViewGroup) child, size);
+            } else if (child instanceof TextView) {
+                TextView textView = (TextView) child;
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+            }
+        }
     }
 }
