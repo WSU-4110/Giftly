@@ -120,12 +120,62 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
 
         // Temporary array
         List<String> categories = new ArrayList<>();
-        categories.add("Group Giving");
-        categories.add("Single Recipient");
-        categories.add("Secret Santa");
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+
+        public interface eventType{
+            void pick();
+        }
+
+        public class group_giving implements eventType{
+            @Override
+            public void pick() {
+                categories.add("Group Giving");
+            }
+        }
+
+        public class single_recip implements eventType{
+            @Override
+            public void pick() {
+                categories.add("Single Recipient");
+            }
+        }
+
+        public class secret_santa implements eventType{
+            @Override
+            public void pick() {
+                categories.add("Secret Santa");
+            }
+        }
+        public abstract class eventType_Factory{
+            public eventType pick(){
+                eventType event_picker = pickEventType();
+                event_picker.pick();
+                return event_picker;
+            }
+            protected abstract eventType pickEventType();
+        }
+
+        public class group_giving_factory extends eventType_Factory{
+            protected eventType pickEventType(){
+                return new group_giving();
+            }
+
+        }
+
+        public class single_recip_factory extends eventType_Factory{
+            protected eventType pickEventType(){
+                return new single_recip();
+            }
+        }
+
+        public class secret_santa_factory extends eventType_Factory{
+            protected eventType pickEventType(){
+                return new secret_santa();
+            }
+        }
 
         DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
             @Override
