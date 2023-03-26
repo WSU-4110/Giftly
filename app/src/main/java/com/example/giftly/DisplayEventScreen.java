@@ -24,13 +24,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.giftly.handler.GiftNetworkEvent;
+import com.example.giftly.handler.IEvent;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class DisplayEventScreen extends AppCompatActivity {
@@ -76,16 +77,16 @@ public class DisplayEventScreen extends AppCompatActivity {
         Log.d(TAG, "EventID: " + eventID);
 
         participantList = findViewById(R.id.participant_list);
-        TextView eventTitle = findViewById(R.id.Event_title);
-        TextView eventDate = findViewById(R.id.event_date);
+        TextView eventTitleDisplay = findViewById(R.id.Event_title);
+        TextView eventDateDisplay = findViewById(R.id.event_date);
 
         Futures.addCallback(
                 client.readEvent(eventID),
-                new FutureCallback<GiftNetworkEvent>() {
+                new FutureCallback<IEvent>() {
                     class updateEventGui implements Runnable {
-                        final GiftNetworkEvent event;
+                        final IEvent event;
 
-                        public updateEventGui(GiftNetworkEvent event) {
+                        public updateEventGui(IEvent event) {
                             this.event = event;
                         }
 
@@ -93,13 +94,16 @@ public class DisplayEventScreen extends AppCompatActivity {
                         // Displays event name and date; pulled from database
                         @Override
                         public void run() {
-                            eventTitle.setText(event.getEventName());
-                            eventDate.setText(event.getEventStartDate().toString());
+                            String eventName = event.getEventName();
+                            Date eventDate = event.getEventStartDate();
+
+                            eventTitleDisplay.setText(eventName  == null ? "Unnamed Event" : eventName);
+                            eventDateDisplay.setText(eventDate == null ? "No Date Set" : eventDate.toString());
                         }
                     }
 
                     @Override
-                    public void onSuccess(GiftNetworkEvent event) {
+                    public void onSuccess(IEvent event) {
                         Log.d(TAG, "Successfully pulled EventID" + event.getParticipants());
                         runOnUiThread(new updateEventGui(event));
                         ArrayList<String> participants = event.getParticipants();
@@ -124,8 +128,6 @@ public class DisplayEventScreen extends AppCompatActivity {
                                     public void onFailure(Throwable thrown) {
                                     }
                                 }, Giftly.service);
-
-
                     }
 
                     @Override

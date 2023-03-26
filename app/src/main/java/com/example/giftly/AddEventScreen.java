@@ -6,6 +6,7 @@ import static com.example.giftly.Giftly.client;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
 
 import androidx.annotation.NonNull;
@@ -69,6 +71,9 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         textbox_eventName = (EditText) findViewById(R.id.event_name_entry);
         textbox_eventDate = (EditText) findViewById(R.id.enter_date);
 
+        //Event Type Selector
+        Spinner spinner = (Spinner)findViewById(R.id.event_type_selection);
+        spinner.setOnItemSelectedListener(this);
 
         button_cancel_adding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +94,15 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
                     Log.d(TAG, e.getMessage());
                     eventDate = new Date();
                 }
+
+                HashMap<String, Object> eventMap = new HashMap<>(4);
+                eventMap.put("eventStartDate", eventDate);
+                eventMap.put("eventName", textbox_eventName.getText().toString());
+                eventMap.put("eventType", spinner.getSelectedItemPosition());
+
+
                 Futures.addCallback(
-                        client.createEvent(textbox_eventName.getText().toString(), eventDate),
+                        client.createEvent(eventMap),
                         new FutureCallback<String>() {
 
                             @Override
@@ -112,14 +124,15 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
-        Spinner spinner = (Spinner) findViewById(R.id.event_type_selection);
-        spinner.setOnItemSelectedListener(this);
+
+
+        //TODO UNCOMMENT SPINNER CATEGOREY ADDITIONS AS THEY ARE IMPLEMENTED
 
         // Temporary array
         List<String> categories = new ArrayList<>();
         categories.add("Group Giving");
-        categories.add("Single Recipient");
-        categories.add("Secret Santa");
+        //categories.add("Single Recipient");
+        //categories.add("Secret Santa");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);

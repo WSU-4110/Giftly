@@ -1,15 +1,10 @@
 package com.example.giftly.handler;
-import static android.content.ContentValues.TAG;
 
-import android.util.Log;
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 
-public abstract class AbstractEvent {
+public abstract class Event implements IEvent{
     String eventID;
     String ownerID;
 
@@ -34,7 +29,6 @@ public abstract class AbstractEvent {
     public ArrayList<String> getParticipants() {
         return participants;
     }
-
+    public abstract ArrayList<String> getRecipients();
     public abstract Map<String, Object> convertToDocument();
-
 }

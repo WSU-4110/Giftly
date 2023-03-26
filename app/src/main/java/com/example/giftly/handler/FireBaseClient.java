@@ -22,8 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 public class FireBaseClient {
+
+
+    public static EventBuilder eventBuilder = new EventBuilder();
     //method wrappers because typing out that class name annoys me
     public FirebaseAuth getAuth() {
         return FirebaseAuth.getInstance();
@@ -178,37 +182,33 @@ public class FireBaseClient {
         }
     };
 
-    public ListenableFuture<String> createEvent(String name, Date date) {
-        return service.submit(new createEventRequest(name, date));
+    public ListenableFuture<String> createEvent(Map<String, Object> eventMap) {
+        return service.submit(new createEventRequest(eventMap));
     }
     //Non-Blocking Event Creation Request
+    //TODO Implement dynamic call to create event based on type
     private class createEventRequest implements Callable<String> {
-        String name;
-        Date date;
+    Map<String, Object> eventMap;
 
-        public createEventRequest(String name, Date date) {
-            this.name = name;
-            this.date = date;
+        public createEventRequest(Map<String, Object> eventMap) {
+            this.eventMap = eventMap;
         }
 
         @Override
         public String call() throws Exception {
             Log.d(TAG, "Event Creation Request started");
-            Map<String, Object> eventDoc = new HashMap<>();
             ArrayList<String> participants = new ArrayList<>(1);
             participants.add(getAuth().getUid()); //
             //get basic event data
-            eventDoc.put("eventName", name);
-            eventDoc.put("eventStartDate", date);
-            eventDoc.put("eventOwner", getAuth().getUid());  //sets the owner to the creator
-            eventDoc.put("participants", participants);  //adds an array list with just the event creator in it
+            eventMap.put("eventOwner", getAuth().getUid());  //sets the owner to the creator
+            eventMap.put("participants", participants);  //adds an array list with just the event creator in it
 
             DocumentReference targetUser = getUser().collection("Users").document(Objects.requireNonNull(getAuth().getUid()));
 
 
             Log.d(TAG, "Retrieval Tasks started");
             //log status of document allocation
-            Task<DocumentReference> getEvent =  getUser().collection("Events").add(eventDoc).addOnCompleteListener(task -> {
+            Task<DocumentReference> getEvent =  getUser().collection("Events").add(eventMap).addOnCompleteListener(task -> {
                 if(task.isSuccessful()) {
                     DocumentReference doc = task.getResult();
                 }
@@ -335,15 +335,15 @@ public class FireBaseClient {
     }
 
     //Call event from firebase DB with eid
-    public ListenableFuture<GiftNetworkEvent> readEvent(String eventID) {
+    public ListenableFuture<IEvent> readEvent(String eventID) {
         return service.submit(new eventCallback(eventID));
     }
     //Callable implemented class that returns a Future
-    private class eventCallback implements Callable<GiftNetworkEvent> {
+    private class eventCallback implements Callable<IEvent> {
         String eventID;
         eventCallback(String EID) {eventID = EID;}
 
-        public GiftNetworkEvent call() {
+        public IEvent call() {
             DocumentReference targetEvent = getUser().collection("Events").document(eventID);
 
             //log status of document allocation
@@ -364,7 +364,7 @@ public class FireBaseClient {
 
             try {
                 Tasks.await(callDB);
-                return new GiftNetworkEvent(callDB.getResult());
+                return EventBuilder.createEvent(callDB.getResult());
             }
             catch (Exception e) {
                 Log.d(TAG, e.toString());
@@ -374,11 +374,11 @@ public class FireBaseClient {
     }
 
     //Reads a event from the database with the matching document ID and returns Listenable Future for a user
-    public ListenableFuture<ArrayList<GiftNetworkEvent>> readEvent(ArrayList<String> eventIDs) {
+    public ListenableFuture<ArrayList<IEvent>> readEvent(ArrayList<String> eventIDs) {
         return service.submit(new eventListCallback(eventIDs));
     }
     //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
-    private class eventListCallback implements Callable<ArrayList<GiftNetworkEvent>> {
+    private class eventListCallback implements Callable<ArrayList<IEvent>> {
         ArrayList<String> EventIDList;
 
         eventListCallback(ArrayList<String> EIDs) {
@@ -386,8 +386,8 @@ public class FireBaseClient {
         }
 
         @Override
-        public ArrayList<GiftNetworkEvent> call() {
-            ArrayList<GiftNetworkEvent> retrievedUsers = new ArrayList<>(EventIDList.size());
+        public ArrayList<IEvent> call() {
+            ArrayList<IEvent> retrievedUsers = new ArrayList<>(EventIDList.size());
 
             Task<QuerySnapshot> callDB = getUser().collection("Events").whereIn(FieldPath.documentId(), EventIDList).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -405,9 +405,13 @@ public class FireBaseClient {
             try {
                 Tasks.await(callDB);
                 for (DocumentSnapshot event : callDB.getResult())
-                    retrievedUsers.add(new GiftNetworkEvent(event));
+                    retrievedUsers.add(EventBuilder.createEvent(event));
                 return retrievedUsers;
-            } catch (Exception e) {
+            } catch (ExecutionException e) {
+                Log.d(TAG, "ERROR MAKING EVENT LIST: " + e);
+                return null;
+            }
+            catch (InterruptedException e) {
                 Log.d(TAG, "ERROR MAKING EVENT LIST: " + e);
                 return null;
             }

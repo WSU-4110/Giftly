@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.example.giftly.handler.GiftNetworkEvent;
+import com.example.giftly.handler.IEvent;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
@@ -24,9 +24,9 @@ public class crappyEventViewer extends AppCompatActivity {
 
         Futures.addCallback(
                 Giftly.client.readEvent(eventID),
-                new FutureCallback<GiftNetworkEvent>() {
+                new FutureCallback<IEvent>() {
                     @Override
-                    public void onSuccess(GiftNetworkEvent result) {
+                    public void onSuccess(IEvent result) {
                         runOnUiThread(new displayEvent(result.toString()));
                     }
                     @Override
