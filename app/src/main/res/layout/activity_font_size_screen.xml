@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
+    <SeekBar
         android:id="@+id/fontSizeButton"
         android:layout_width="300dp"
         android:layout_height="68dp"
@@ -33,9 +33,10 @@
         android:drawableRight="@drawable/setting_arrow"
         android:fontFamily="sans-serif-black"
         android:textAlignment="center"
-        android:text="Small"
+        android:progressTint="@color/white"
+        android:max="30"
+        android:progress="20"
         android:textAllCaps="false"
-        android:textSize="@dimen/fab_margin"
         app:backgroundTint="#4B4B4B"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,49 +44,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/fontSizeButton2"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="56dp"
-        android:drawableRight="@drawable/setting_arrow"
-        android:fontFamily="sans-serif-black"
-        android:text="Normal"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textSize="@dimen/fab_margin"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fontSizeButton" />
-
-    <Button
-        android:id="@+id/fontSizeButton3"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="56dp"
-        android:drawableRight="@drawable/setting_arrow"
-        android:fontFamily="sans-serif-black"
-        android:text="Large"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textSize="@dimen/fab_margin"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fontSizeButton2" />
-
-    <Button
         android:id="@+id/saveIt2"
         android:layout_width="157dp"
         android:layout_height="64dp"
         android:layout_marginStart="127dp"
-        android:layout_marginTop="165dp"
+        android:layout_marginTop="176dp"
         android:layout_marginEnd="127dp"
         android:fontFamily="sans-serif-black"
         android:text="Save"
@@ -93,7 +56,9 @@
         android:textSize="20dp"
         app:backgroundTint="#4B4B4B"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fontSizeButton3" />
+        app:layout_constraintTop_toBottomOf="@+id/fontSizeButton" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
