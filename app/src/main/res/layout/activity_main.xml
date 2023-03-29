@@ -1,75 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#1C1C1C"
-    tools:context=".MainActivity">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="212dp"
-        android:layout_height="179dp"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="68dp"
-        android:contentDescription="Giftly Logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/giftly_icon" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1C1C1C"
+        tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="266dp"
-        android:layout_height="95dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="-20dp"
-        android:layout_marginEnd="51dp"
-        android:text="A revolution for the gift giving process"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="212dp"
+            android:layout_height="179dp"
+            android:layout_marginStart="67dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="68dp"
+            android:contentDescription="Giftly Logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/giftly_icon" />
 
-    <Button
-        android:id="@+id/signinbtn"
-        android:layout_width="276dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="68dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Press to Continue"
-        android:textAllCaps="false"
-        android:textSize="17dp"
-        app:backgroundTint="#008CF8"
-        app:cornerRadius="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="266dp"
+            android:layout_height="95dp"
+            android:layout_marginStart="51dp"
+            android:layout_marginTop="-20dp"
+            android:layout_marginEnd="51dp"
+            android:text="A revolution for the gift giving process"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.488"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <!--
-    <Button
-        android:id="@+id/signupbtn"
-        android:layout_width="196dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="107dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="108dp"
-        android:fontFamily="sans-serif-black"
-        android:text="New User"
-        app:backgroundTint="#00000000"
-        app:cornerRadius="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signinbtn"
-        app:strokeColor="#737373"
-        app:strokeWidth="1dp" />-->
-        
+        <Button
+            android:id="@+id/signinbtn"
+            android:layout_width="276dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="67dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="68dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Press to Continue"
+            android:textAllCaps="false"
+            android:textSize="17dp"
+            app:backgroundTint="#008CF8"
+            app:cornerRadius="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!--
+        <Button
+            android:id="@+id/signupbtn"
+            android:layout_width="196dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="107dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="108dp"
+            android:fontFamily="sans-serif-black"
+            android:text="New User"
+            app:backgroundTint="#00000000"
+            app:cornerRadius="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signinbtn"
+            app:strokeColor="#737373"
+            app:strokeWidth="1dp" />-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
