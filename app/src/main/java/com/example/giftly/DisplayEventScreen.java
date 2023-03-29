@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -53,6 +54,12 @@ public class DisplayEventScreen extends AppCompatActivity {
 
         ImageView mapView = (ImageView) findViewById(R.id.static_map);
         Picasso.get().load(url).into(mapView);
+        mapView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMap(lat, lon);
+            }
+        });
 
 
         //Theme: Fetch the current color of the background
@@ -186,6 +193,14 @@ public class DisplayEventScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Method that will open the map app on the users phone.
+    public void openMap(String x, String y){
+        String lon = "-83.0717"; //get longitude
+        String lat = "42.3502"; // get latitude
+        String uri = "https://www.google.com.tw/maps/place/" + lat + "," + lon;
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(intent);
+    }
 
 }
 
