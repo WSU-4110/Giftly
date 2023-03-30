@@ -95,20 +95,3 @@ public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
 }
 
 
-    //Back button
-    //ActionBar actionBar = getSupportActionBar();
-    //actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-
-    //Back button configuration
-   /* @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-}
-*/
