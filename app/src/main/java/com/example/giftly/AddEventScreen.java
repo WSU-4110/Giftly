@@ -6,6 +6,7 @@ import static com.example.giftly.Giftly.client;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -26,16 +27,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
+
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import com.example.giftly.handler.Event;
-import com.example.giftly.handler.User;
+
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import org.w3c.dom.Text;
-
 
 public class AddEventScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     final Calendar myCalendar= Calendar.getInstance();
@@ -45,11 +46,13 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
     private SharedPreferences sharedPreferences;
     public SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
 
+
     public void onCreate(Bundle savedInstanceState) {
+
+        //Grab Event Intent if it exists
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_event);
-
-
 
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -68,6 +71,9 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         textbox_eventName = (EditText) findViewById(R.id.event_name_entry);
         textbox_eventDate = (EditText) findViewById(R.id.enter_date);
 
+        //Event Type Selector
+        Spinner spinner = (Spinner)findViewById(R.id.event_type_selection);
+        spinner.setOnItemSelectedListener(this);
 
         button_cancel_adding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +94,15 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
                     Log.d(TAG, e.getMessage());
                     eventDate = new Date();
                 }
+
+                HashMap<String, Object> eventMap = new HashMap<>(4);
+                eventMap.put("eventStartDate", eventDate);
+                eventMap.put("eventName", textbox_eventName.getText().toString());
+                eventMap.put("eventType", spinner.getSelectedItemPosition());
+
+
                 Futures.addCallback(
-                        client.createEvent(textbox_eventName.getText().toString(), eventDate),
+                        client.createEvent(eventMap),
                         new FutureCallback<String>() {
 
                             @Override
@@ -111,14 +124,15 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
-        Spinner spinner = (Spinner) findViewById(R.id.event_type_selection);
-        spinner.setOnItemSelectedListener(this);
+
+
+        //TODO UNCOMMENT SPINNER CATEGOREY ADDITIONS AS THEY ARE IMPLEMENTED
 
         // Temporary array
         List<String> categories = new ArrayList<>();
         categories.add("Group Giving");
-        categories.add("Single Recipient");
-        categories.add("Secret Santa");
+        //categories.add("Single Recipient");
+        //categories.add("Secret Santa");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
