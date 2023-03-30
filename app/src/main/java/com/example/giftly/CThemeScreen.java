@@ -15,90 +15,84 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class CThemeScreen extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
 
-    //This will overwrite the settings for the background colors for all screens
-    private SharedPreferences sharedPreferences;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ctheme_screen);
+//private SharedPreferences sharedPreferences;
 
-        //Theme: Fetch the current color of the background
-        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(CThemeScreen.this, R.color.Default_color));
-        getWindow().getDecorView().setBackgroundColor(savedColor);
+public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
+        private ThemeSubject themeSubject;
+        private SharedPreferences sharedPreferences;
 
-        //Create variables to connect to xml android:id fields
-        Button defaultThemeButton = findViewById(R.id.defaultTheme);
-        Button color1ThemeButton = findViewById(R.id.giftlyTheme);
-        Button color2ThemeButton = findViewById(R.id.valentinesTheme);
-        Button color3ThemeButton = findViewById(R.id.easterTheme);
-        Button saveButton = findViewById(R.id.saveIt);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_ctheme_screen);
 
-        //Save button will save the settings and transition back to the home screen
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CThemeScreen.this, HomeScreen.class);
-                startActivity(intent);
-            }
-        });
+            themeSubject = new ThemeSubject();
+            themeSubject.registerObserver(this);
 
-        //The default theme configuration
-        defaultThemeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Default_color);
-                sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
-                getWindow().getDecorView().setBackgroundColor(selectedColor);
-            }
-        });
+            sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(CThemeScreen.this, R.color.Default_color));
+            getWindow().getDecorView().setBackgroundColor(savedColor);
 
-        //Theme color 1 configuration
-        color1ThemeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Giftly_color);
-                sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
-                getWindow().getDecorView().setBackgroundColor(selectedColor);
-            }
-        });
+            Button dftThemeBtn = findViewById(R.id.defaultTheme);
+            Button glyThemeBtn = findViewById(R.id.giftlyTheme);
+            Button vltThemeBtn = findViewById(R.id.valentinesTheme);
+            Button etrThemeBtn = findViewById(R.id.easterTheme);
+            Button savingit = findViewById(R.id.saveIt);
 
-        //Theme color 2 configuration
-        color2ThemeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Valentines_color);
-                sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
-                getWindow().getDecorView().setBackgroundColor(selectedColor);
-            }
-        });
+            savingit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(CThemeScreen.this, HomeScreen.class);
+                    startActivity(intent);
+                }
+            });
 
-        //Theme color 3 configuration
-        color3ThemeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Easter_color);
-                sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
-                getWindow().getDecorView().setBackgroundColor(selectedColor);
-            }
-        });
+            dftThemeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Default_color);
+                    sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
+                    themeSubject.notifyObservers(selectedColor);
+                }
+            });
 
-        //The action bar will display the back button in the header
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+            glyThemeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Giftly_color);
+                    sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
+                    themeSubject.notifyObservers(selectedColor);
+                }
+            });
+            //Valentines
+            vltThemeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Valentines_color);
+                    sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
+                    themeSubject.notifyObservers(selectedColor);
+                }
+            });
 
-    //Back button configuration that allows the feature to go back to the previous screen
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+            etrThemeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Easter_color);
+                    sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
+                    themeSubject.notifyObservers(selectedColor);
+                }
+            });
+
         }
-        return super.onOptionsItemSelected(item);
-    }
+
+        @Override
+        public void onThemeChanged(int newColor) {
+            getWindow().getDecorView().setBackgroundColor(newColor);
+        }
 }
+
+
