@@ -171,7 +171,8 @@ public class HomeScreen extends AppCompatActivity {
                                                     // Set the event name to lowercase
                                                     String eventName = events.get(i).getEventName().toLowerCase();
                                                     // Capitalize the first letter of the event name if it has a length
-                                                    if (eventName.length() > 1) eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
+                                                    if (eventName.length() > 1)
+                                                        eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
 
 
                                                     button.setText(eventName);

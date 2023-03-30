@@ -37,13 +37,13 @@ class GiftNetworkEvent extends Event {
 
     @Override
     public Map<String, Object> convertToDocument() {
-        Map<String, Object> eventDoc = new HashMap<>();
+        Map<String, Object> eventDocument = new HashMap<>();
         //get basic event data
-        eventDoc.put("eventName", eventName);
-        eventDoc.put("eventStartDate", eventStartDate);
-        eventDoc.put("eventOwner", ownerID);  //sets the owner to the creator
-        eventDoc.put("participants", participants);  //adds an array list with just the event creator in it
-        return eventDoc;
+        eventDocument.put("eventName", eventName);
+        eventDocument.put("eventStartDate", eventStartDate);
+        eventDocument.put("eventOwner", ownerID);  //sets the owner to the creator
+        eventDocument.put("participants", participants);  //adds an array list with just the event creator in it
+        return eventDocument;
     }
 
     //Reg accessors

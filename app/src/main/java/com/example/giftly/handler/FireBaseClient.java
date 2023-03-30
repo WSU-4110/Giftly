@@ -164,10 +164,11 @@ public class FireBaseClient {
                     targetEvent.update("participants", participants);
                 }
 
-
                 //Check if user is already a part of the event, if not add them and update the doc
                 Log.d(TAG, "Checking User");
-                ArrayList<String> eventList = user.exists() && (ArrayList<String>) user.get("Events") != null ? (ArrayList<String>) user.get("Events") : new ArrayList<>(1);
+                ArrayList<String> eventList = new ArrayList<>(1);
+                if (user.exists() && user.get("Events") != null)
+                    eventList = (ArrayList<String>) user.get("Events");
                 Log.d(TAG, eventList.toString());
                 if (!eventList.contains(eventID))
                     eventList.add(eventID);
@@ -407,11 +408,9 @@ public class FireBaseClient {
                 for (DocumentSnapshot event : callDB.getResult())
                     retrievedUsers.add(EventBuilder.createEvent(event));
                 return retrievedUsers;
-            } catch (ExecutionException e) {
-                Log.d(TAG, "ERROR MAKING EVENT LIST: " + e);
-                return null;
             }
-            catch (InterruptedException e) {
+            //Catches firebase exceptions when retrieving data from the snapshots
+            catch (ExecutionException | InterruptedException e) {
                 Log.d(TAG, "ERROR MAKING EVENT LIST: " + e);
                 return null;
             }
