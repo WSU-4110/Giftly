@@ -1,105 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HomeScreen">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/greetDisplay"
-        android:layout_width="126dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="30dp"
-        android:text="Welcome, "
-        android:textColor="#ffffff"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/userNameDispl"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".HomeScreen">
 
-
-    <TextView
-        android:id="@+id/userNameDispl"
-        android:layout_width="226dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="-17dp"
-        android:layout_marginEnd="29dp"
-        android:text=""
-        android:textColor="#ffffff"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/greetDisplay"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/addEventBtn"
-        android:layout_width="134dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="26dp"
-        android:text="Add Event"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        app:backgroundTint="#008CF8"
-        app:cornerRadius="40dp"
-        app:layout_constraintEnd_toStartOf="@+id/joinEvent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/greetDisplay" />
-
-    <Button
-        android:id="@+id/joinEvent"
-        android:layout_width="134dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="27dp"
-        android:text="Join Event"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        app:backgroundTint="#008CF8"
-        app:cornerRadius="40dp"
-        app:layout_constraintEnd_toStartOf="@+id/SettingsBtn"
-        app:layout_constraintStart_toEndOf="@+id/addEventBtn"
-        app:layout_constraintTop_toBottomOf="@+id/userNameDispl" />
-
-    <Button
-        android:id="@+id/SettingsBtn"
-        android:layout_width="51dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="-30dp"
-        android:layout_marginTop="-10dp"
-        android:layout_marginEnd="20dp"
-        android:drawableTop="@drawable/settings_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/joinEvent"
-        app:layout_constraintTop_toBottomOf="@+id/userNameDispl" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
-        android:clickable="false"
-        android:clipChildren="false"
-        android:hapticFeedbackEnabled="true"
-        app:cardBackgroundColor="#1C1C1C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/joinEvent">
-
-        <LinearLayout
-            android:id="@+id/events"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alwaysDrawnWithCache="false"
-            android:animateLayoutChanges="false"
-            android:orientation="vertical"></LinearLayout>
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/greetDisplay"
+            android:layout_width="126dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="30dp"
+            android:text="Welcome, "
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/userNameDispl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/userNameDispl"
+            android:layout_width="226dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="-17dp"
+            android:layout_marginEnd="29dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/greetDisplay"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/addEventBtn"
+            android:layout_width="134dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="26dp"
+            android:text="Add Event"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            app:backgroundTint="#008CF8"
+            app:cornerRadius="40dp"
+            app:layout_constraintEnd_toStartOf="@+id/joinEvent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greetDisplay" />
+
+        <Button
+            android:id="@+id/joinEvent"
+            android:layout_width="134dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="27dp"
+            android:text="Join Event"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            app:backgroundTint="#008CF8"
+            app:cornerRadius="40dp"
+            app:layout_constraintEnd_toStartOf="@+id/SettingsBtn"
+            app:layout_constraintStart_toEndOf="@+id/addEventBtn"
+            app:layout_constraintTop_toBottomOf="@+id/userNameDispl" />
+
+        <Button
+            android:id="@+id/SettingsBtn"
+            android:layout_width="51dp"
+            android:layout_height="58dp"
+            android:layout_marginStart="-30dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="20dp"
+            android:drawableTop="@drawable/settings_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/joinEvent"
+            app:layout_constraintTop_toBottomOf="@+id/userNameDispl" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:clickable="false"
+            android:clipChildren="false"
+            android:hapticFeedbackEnabled="true"
+            app:cardBackgroundColor="#1C1C1C"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/joinEvent">
+
+            <LinearLayout
+                android:id="@+id/events"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alwaysDrawnWithCache="false"
+                android:animateLayoutChanges="false"
+                android:orientation="vertical"></LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
