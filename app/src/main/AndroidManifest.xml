@@ -46,9 +46,6 @@
             android:name=".SignUpScreen"
             android:exported="false" />
         <activity
-            android:name=".crappyEventViewer"
-            android:exported="false" />
-        <activity
             android:name=".DisplayEventScreen"
             android:exported="false" />
         <activity
