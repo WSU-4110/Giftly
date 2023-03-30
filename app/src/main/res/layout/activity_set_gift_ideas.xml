@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SetGiftIdeas">
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="300dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="390dp"
+            android:layout_marginEnd="56dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="save"/>
+
+        <Button
+            android:id="@+id/button_load"
+            android:layout_width="300dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="470dp"
+            android:layout_marginEnd="56dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Load"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="load"/>
+    </RelativeLayout>
+</ScrollView>

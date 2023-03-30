@@ -1,12 +1,18 @@
 package com.example.giftly.handler;
+
 //all of the beautiful imports
 import static android.content.ContentValues.TAG;
+import static com.example.giftly.Giftly.client;
 import static com.example.giftly.Giftly.service;
 
 import android.util.Log;
 
+import com.example.giftly.DisplayEventScreen;
+import com.example.giftly.Giftly;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -19,8 +25,10 @@ import org.checkerframework.checker.units.qual.A;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 public class FireBaseClient {
@@ -81,20 +89,22 @@ public class FireBaseClient {
                     ArrayList<String> giftList;
                     ArrayList<String> participants = (ArrayList<String>)event.get("participants");
                     //find the index of the current user in the event participants list
+                    assert participants != null;
                     int userIndex = participants.indexOf(getAuth().getUid());
                     if (event.contains(targetUserID)) {
                         giftList = (ArrayList<String>)event.get(targetUserID);
                         //check if the array is currently updated to handle the index of the user
+                        assert giftList != null;
                         giftList.ensureCapacity(userIndex);
                     }
                     else {
                         giftList = new ArrayList<>(userIndex+1);
                     }
-                    giftList.set(userIndex,gift);
+                    giftList.set(userIndex,gift.trim());
                     getUser().collection("Events").document(eventID).update(targetUserID, giftList);
                 }
                 catch (Exception e) {
-                    Log.d(TAG, e.toString());
+                    Log.d(TAG, e.getMessage());
                     return "Update Event Failed";
                 }
                 return "Updated gift list success";
@@ -110,15 +120,14 @@ public class FireBaseClient {
     }
     private class joinEventRequest implements Callable<String> {
         String eventID;
-
         public joinEventRequest(String eventID) {
-            this.eventID = eventID;
+            this.eventID = eventID.trim();
         }
 
         @Override
         public String call() throws Exception {
             DocumentReference targetEvent = getUser().collection("Events").document(eventID);
-            DocumentReference targetUser = getUser().collection("Users").document(getAuth().getUid());
+            DocumentReference targetUser = getUser().collection("Users").document(Objects.requireNonNull(getAuth().getUid()));
             //log status of document allocation
             Task<DocumentSnapshot> getEvent = targetEvent.get().addOnCompleteListener(task -> {
                 if(task.isSuccessful()) {
@@ -135,7 +144,7 @@ public class FireBaseClient {
                 }
             }); //returns Event Snapshot
 
-            Task<DocumentSnapshot> getUser = targetEvent.get().addOnCompleteListener(task -> {
+            Task<DocumentSnapshot> getUser = targetUser.get().addOnCompleteListener(task -> {
                 if(task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
@@ -150,33 +159,115 @@ public class FireBaseClient {
                 }
             }); //returns User Snapshot
 
-            try {
-                //wait for task completion
-                Tasks.await(getEvent);
-                Tasks.await(getUser);
-                if (getEvent.isSuccessful() && getUser.isSuccessful()) {
-                    DocumentSnapshot user = getUser.getResult();
-                    DocumentSnapshot event = getUser.getResult();
+            //wait for task completion
+            Tasks.await(getEvent);
+            Tasks.await(getUser);
 
-                    ArrayList<String> participants = (ArrayList<String>) event.get("participants");
-                    participants.add(getAuth().getUid());
+            DocumentSnapshot user = getUser.getResult();
+            DocumentSnapshot event = getUser.getResult();
+
+            if (event.exists() && getUser.isSuccessful() ) {
+                ArrayList<String> participants = (ArrayList<String>) event.get("participants");
+
+                //Check if event already has the user, if not add them and update the doc
+                if (participants == null) participants = new ArrayList<String>(1);
+                Log.d(TAG, "Checking Event");
+                if (!participants.contains(getAuth().getUid())) participants.add(getAuth().getUid());
                     targetEvent.update("participants", participants);
 
-                    ArrayList<String> eventList = user.exists() ? (ArrayList<String>) user.get("eventList") : new ArrayList<>(1);
+                //Check if user is already a part of the event, if not add them and update the doc
+                Log.d(TAG, "Checking User");
+                ArrayList<String> eventList = user.exists() && (ArrayList<String>) user.get("Events") != null ? (ArrayList<String>) user.get("Events") : new ArrayList<>(1);
+                Log.d(TAG, eventList.toString());
+                if (!eventList.contains(eventID))
                     eventList.add(eventID);
-                    targetUser.update("eventList", eventList);
+                    Task<Void> updateUser =  targetUser.update("Events", eventList);
+
+
+                Tasks.await(updateUser);
+                if (updateUser.isSuccessful()) return "Successfully Joined event";
+                else throw new Exception("Join Event Failed, please try again");
+            }
+            else throw new Exception("Event Not Found");
+        }
+    };
+
+    public ListenableFuture<String> createEvent(String name, Date date) {
+        return service.submit(new createEventRequest(name, date));
+    }
+    //Non-Blocking Event Creation Request
+    private class createEventRequest implements Callable<String> {
+        String name;
+        Date date;
+
+        public createEventRequest(String name, Date date) {
+            this.name = name;
+            this.date = date;
+        }
+
+        @Override
+        public String call() throws Exception {
+            Log.d(TAG, "Event Creation Request started");
+            Map<String, Object> eventDoc = new HashMap<>();
+            ArrayList<String> participants = new ArrayList<>(1);
+            participants.add(getAuth().getUid()); //
+            //get basic event data
+            eventDoc.put("eventName", name);
+            eventDoc.put("eventStartDate", date);
+            eventDoc.put("eventOwner", getAuth().getUid());  //sets the owner to the creator
+            eventDoc.put("participants", participants);  //adds an array list with just the event creator in it
+
+            DocumentReference targetUser = getUser().collection("Users").document(Objects.requireNonNull(getAuth().getUid()));
+
+
+            Log.d(TAG, "Retrieval Tasks started");
+            //log status of document allocation
+            Task<DocumentReference> getEvent =  getUser().collection("Events").add(eventDoc).addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    DocumentReference doc = task.getResult();
                 }
-                else return "One or more document fetches failed.";
+                else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns Event Snapshot
+            Task<DocumentSnapshot> getUser = targetUser.get().addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        Log.d(TAG, "User DocumentSnapshot data: " + doc.getData());
+                    }
+                    else {
+                        Log.d(TAG, "No Such Document");
+                    }
+                }
+                else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns User Snapshot
+
+            try {
+                //wait for task completion
+                Log.d(TAG, "Waiting for Event");
+                Tasks.await(getEvent);
+                Log.d(TAG, "Waiting for User");
+                Tasks.await(getUser);
+
+                if (getEvent.isSuccessful() && getUser.isSuccessful()) {
+                    ArrayList<String> events = (ArrayList<String>)getUser.getResult().getData().get("Events");
+                    assert events != null;
+                    events.add(getEvent.getResult().getId());
+                    targetUser.update("Events", events);
+                    return getEvent.getResult().getId();
+                }
+                else return "Failed to create Document.";
 
             }
             catch (Exception e) {
                 Log.d(TAG, e.toString());
                 return "Update Event Failed";
             }
-            return "user added to event";
         }
     };
-
 
     //Reads a user from the database with the matching document ID and returns Listenable Future for a user
     public ListenableFuture<User> readUser(String UserID) {
@@ -377,7 +468,7 @@ public class FireBaseClient {
                 DocumentSnapshot event = callDB.getResult();
 
                 Log.d(TAG, userID + ": " + event.contains(userID));
-                for (String entry : (ArrayList<String>)event.get(userID)) {
+                for (String entry : (ArrayList<String>) Objects.requireNonNull(event.get(userID))) {
                     giftList.append(entry).append("\n");
                 }
                 return giftList.toString();

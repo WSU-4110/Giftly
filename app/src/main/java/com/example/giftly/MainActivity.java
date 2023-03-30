@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Create variables to connect to xml android:id fields
         button_signin = (Button) findViewById(R.id.signinbtn);
 
         //Response will transition to the sign in/sign up screen
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SignUpScreen.class);
                 startActivity(intent);
-            }
+            }//
         });
     }
 }

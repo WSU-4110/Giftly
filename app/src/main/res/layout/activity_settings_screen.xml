@@ -1,94 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SettingsScreen">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="144dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="163dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="146dp"
-        android:text="Settings"
-        android:textColor="#ffffff"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SettingsScreen">
 
-    <Button
-        android:id="@+id/fontSizeBtn"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:textAllCaps="false"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="56dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Font Size"
-        android:textSize="20dp"
-        android:drawableRight="@drawable/setting_arrow"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="144dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="163dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="146dp"
+            android:text="Settings"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/layoutBtn"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginEnd="56dp"
-        android:drawableRight="@drawable/setting_arrow"
-        android:fontFamily="sans-serif-black"
-        android:text="Layout"
-        android:textAllCaps="false"
-        android:textSize="20dp"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fontSizeBtn" />
+        <Button
+            android:id="@+id/fontSizeBtn"
+            android:layout_width="300dp"
+            android:layout_height="68dp"
+            android:textAllCaps="false"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="56dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Font Size"
+            android:textSize="20dp"
+            android:drawableRight="@drawable/setting_arrow"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Button
-        android:id="@+id/themeBtn"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginEnd="56dp"
-        android:drawableRight="@drawable/setting_arrow"
-        android:fontFamily="sans-serif-black"
-        android:text="Theme"
-        android:textAllCaps="false"
-        android:textSize="20dp"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutBtn" />
+        <Button
+            android:id="@+id/layoutBtn"
+            android:layout_width="300dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="56dp"
+            android:drawableRight="@drawable/setting_arrow"
+            android:fontFamily="sans-serif-black"
+            android:text="Layout"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fontSizeBtn" />
+
+        <Button
+            android:id="@+id/themeBtn"
+            android:layout_width="300dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="56dp"
+            android:drawableRight="@drawable/setting_arrow"
+            android:fontFamily="sans-serif-black"
+            android:text="Theme"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutBtn" />
 
 
-    <Button
-        android:id="@+id/button_log_out"
-        android:layout_width="244dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="83dp"
-        android:layout_marginTop="207dp"
-        android:layout_marginEnd="84dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Log Out"
-        android:textAllCaps="false"
-        android:textSize="20dp"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/themeBtn" />
+        <Button
+            android:id="@+id/button_log_out"
+            android:layout_width="244dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="83dp"
+            android:layout_marginTop="207dp"
+            android:layout_marginEnd="84dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Log Out"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/themeBtn" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

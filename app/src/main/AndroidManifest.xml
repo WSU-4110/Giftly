@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Giftly"
         tools:targetApi="31">
         <activity
+            android:name=".SetGiftIdeas"
+            android:exported="false" />
+        <activity
+            android:name=".FontSizeScreen"
+            android:exported="false" />
+        <activity
             android:name=".EditGiftListIdeas"
             android:exported="false" />
         <activity

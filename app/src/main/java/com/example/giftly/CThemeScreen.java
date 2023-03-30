@@ -86,6 +86,7 @@ public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
                     themeSubject.notifyObservers(selectedColor);
                 }
             });
+
         }
 
         @Override
