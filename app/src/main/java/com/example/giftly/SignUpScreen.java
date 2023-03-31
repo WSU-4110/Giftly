@@ -30,10 +30,10 @@ import java.util.Map;
 
 
 public class SignUpScreen extends AppCompatActivity {
+
+    //Create variables to connect to xml android:id fields
     private EditText editName, editPassword, editEmail, editInterests;
     private Button btnSubmit;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private TextView txtLoginInfo;
     private boolean isSigningUp = true;
 
@@ -42,20 +42,7 @@ public class SignUpScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_screen);
 
-        //Write the feed onto real-time
-        //Real-time database management
-        /*
-        mAuth = FirebaseAuth.getInstance();
-        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                Intent intent = new Intent(SignUpScreen.this, HomeScreen.class);
-                startActivity(intent);
-                finish();
-                return;
-            }
-        };*/
-        
+        //Connect the variables with the xml android:ids
         editName = (EditText) findViewById(R.id.editUsername);
         editPassword = (EditText) findViewById(R.id.editPassword);
         editEmail = (EditText) findViewById(R.id.editEmail);
@@ -63,22 +50,22 @@ public class SignUpScreen extends AppCompatActivity {
         txtLoginInfo = findViewById(R.id.txtLoginInfo);
         editInterests = (EditText) findViewById(R.id.userInterests);
 
-        //Auto sign in if the user hasn't logged out
-
+        //Auto sign in feaure
         if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
             startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
             finish();
         }
 
+        //The action bar will display the back button in the header
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        //This will change the screen between log in/sign up
         txtLoginInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isSigningUp) {
                     isSigningUp = false;
-                    //Hide the visibility of the text
                     editName.setVisibility(View.GONE);
                     editInterests.setVisibility(View.GONE);
                     btnSubmit.setText("Log in");
@@ -88,11 +75,12 @@ public class SignUpScreen extends AppCompatActivity {
                     editName.setVisibility(View.VISIBLE);
                     editInterests.setVisibility(View.VISIBLE);
                     btnSubmit.setText("Sign up");
-                    txtLoginInfo.setText("Alre" +
-                            "ady have an account? Log in");
+                    txtLoginInfo.setText("Already have an account? Log in");
                 }
             }
         });
+
+        //When the user presses the submit button, execute handleSignUp() or handleLogin() methods
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +90,6 @@ public class SignUpScreen extends AppCompatActivity {
                         return;
                     }
                 }
-
                 if(isSigningUp){
                     handleSignUp();
                 }else{
@@ -110,7 +97,6 @@ public class SignUpScreen extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     //Signing in exceptions and configurations
@@ -119,23 +105,8 @@ public class SignUpScreen extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    //After signing up, transition to the home screen
-
-                    //client.createProfile(new User());
-
                     startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
                     Toast.makeText(SignUpScreen.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
-
-                    //Real-time database management
-                    /*
-                    String user_id = mAuth.getCurrentUser().getUid();
-                    DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
-                    String name = editName.getText().toString();
-                    String interests = editInterests.getText().toString();
-                    Map newPost = new HashMap();
-                    newPost.put("name", name);
-                    newPost.put("interests",interests);
-                    current_user_db.setValue(newPost);*/
                 }else{
                     Toast.makeText(SignUpScreen.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -149,7 +120,6 @@ public class SignUpScreen extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    //After logging in, transition to the home screen
                     startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
                     Toast.makeText(SignUpScreen.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
                 }else{
@@ -159,7 +129,7 @@ public class SignUpScreen extends AppCompatActivity {
         });
     }
 
-    //Back button configuration
+    //Back button configuration that allows the feature to go back to the previous screen
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -169,5 +139,4 @@ public class SignUpScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

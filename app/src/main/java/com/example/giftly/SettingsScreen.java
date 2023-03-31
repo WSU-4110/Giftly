@@ -20,9 +20,9 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsScreen extends AppCompatActivity {
+    //Create variables to connect to xml android:id fields
     private Button btnLogOut;
-    public Button choosingThemeBtn;
-    public Button choosingFontSizeBtn;
+    public Button choosingThemeBtn, choosingFontSizeBtn;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -41,6 +41,7 @@ public class SettingsScreen extends AppCompatActivity {
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(SettingsScreen.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
+        //Connect the variables with the xml android:ids
         btnLogOut = findViewById(R.id.button_log_out);
         choosingThemeBtn = findViewById(R.id.themeBtn);
         choosingFontSizeBtn = findViewById(R.id.fontSizeBtn);
@@ -73,13 +74,13 @@ public class SettingsScreen extends AppCompatActivity {
             }
         });
 
-        //Enable the back-button
+        //The action bar will display the back button in the header
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
 
-    //Back button configuration
+    //Back button configuration that allows the feature to go back to the previous screen
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -90,6 +91,7 @@ public class SettingsScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //This will loop through Button and EditText fields in the xml files to change the text sizes
     private void iterateViews(View view, float size) {
         if (view instanceof ViewGroup) {
             ViewGroup viewGroup = (ViewGroup) view;

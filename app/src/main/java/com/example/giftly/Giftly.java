@@ -14,7 +14,7 @@ public class Giftly extends Application {
 
     public static ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
     //multithreading
-    public static FireBaseClient client = new FireBaseClient();
+    public static FireBaseClient client = FireBaseClient.getClient();
 }
 
 /*todo

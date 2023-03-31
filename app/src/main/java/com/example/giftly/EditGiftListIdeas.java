@@ -15,7 +15,7 @@ public class EditGiftListIdeas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
 
-        button = (Button) findViewById(R.id.themeBtn);
+        button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

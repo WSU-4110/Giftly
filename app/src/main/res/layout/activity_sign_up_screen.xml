@@ -1,108 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#1C1C1C"
-    tools:context=".SignUpScreen">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="172dp"
-        android:layout_height="137dp"
-        android:layout_marginStart="119dp"
-        android:layout_marginEnd="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/giftly_icon" />
-        
-    <EditText
-        android:id="@+id/editUsername"
-        android:layout_width="309dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="-10dp"
-        android:layout_marginEnd="37dp"
-        android:fontFamily="sans-serif-medium"
-        android:hint="Name"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-        
-    <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="309dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="-10dp"
-        android:layout_marginEnd="37dp"
-        android:fontFamily="sans-serif-medium"
-        android:hint="Email"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editUsername" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1C1C1C"
+        tools:context=".SignUpScreen">
 
-    <EditText
-        android:id="@+id/editPassword"
-        android:layout_width="309dp"
-        android:layout_height="78dp"
-        android:inputType="textPassword"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="-10dp"
-        android:layout_marginEnd="37dp"
-        android:fontFamily="sans-serif-medium"
-        android:hint="Password"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editEmail" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="172dp"
+            android:layout_height="137dp"
+            android:layout_marginStart="119dp"
+            android:layout_marginEnd="120dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/giftly_icon" />
 
-    <EditText
-        android:id="@+id/userInterests"
-        android:layout_width="309dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="-17dp"
-        android:layout_marginEnd="36dp"
-        android:fontFamily="sans-serif-medium"
-        android:hint="Enter Your Interests"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
+        <EditText
+            android:id="@+id/editUsername"
+            android:layout_width="309dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="37dp"
+            android:fontFamily="sans-serif-medium"
+            android:hint="Name"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="197dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="107dp"
-        android:layout_marginEnd="107dp"
-        android:text="Sign Up"
-        app:backgroundTint="#008CF8"
-        app:cornerRadius="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userInterests" />
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="309dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="37dp"
+            android:fontFamily="sans-serif-medium"
+            android:hint="Email"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editUsername" />
 
-    <TextView
-        android:id="@+id/txtLoginInfo"
-        android:layout_width="205dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="103dp"
-        android:layout_marginEnd="103dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Already have an account? Log in"
-        android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSubmit" />
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="309dp"
+            android:layout_height="78dp"
+            android:inputType="textPassword"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="37dp"
+            android:fontFamily="sans-serif-medium"
+            android:hint="Password"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editEmail" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/userInterests"
+            android:layout_width="309dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="66dp"
+            android:layout_marginTop="-17dp"
+            android:layout_marginEnd="36dp"
+            android:fontFamily="sans-serif-medium"
+            android:hint="Enter Your Interests"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editPassword" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="197dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="107dp"
+            android:layout_marginEnd="107dp"
+            android:text="Sign Up"
+            app:backgroundTint="#008CF8"
+            app:cornerRadius="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userInterests" />
+
+        <TextView
+            android:id="@+id/txtLoginInfo"
+            android:layout_width="205dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="103dp"
+            android:layout_marginEnd="103dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Already have an account? Log in"
+            android:textColor="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSubmit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
