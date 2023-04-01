@@ -1,7 +1,8 @@
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <TextView
         android:id="@+id/text_vi"
@@ -37,7 +38,9 @@
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="10dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#4B4B4B"
+            >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -70,7 +73,9 @@
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="10dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#4B4B4B"
+            >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -103,7 +108,9 @@
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="10dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#4B4B4B"
+            >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -138,7 +145,9 @@
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="10dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#4B4B4B"
+            >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -173,7 +182,9 @@
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="10dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#4B4B4B"
+            >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -208,7 +219,9 @@
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="10dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#4B4B4B"
+            >
 
             <LinearLayout
                 android:layout_width="wrap_content"
