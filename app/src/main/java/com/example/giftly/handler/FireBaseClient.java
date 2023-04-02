@@ -197,7 +197,6 @@ public class FireBaseClient {
         return service.submit(new createEventRequest(eventMap));
     }
     //Non-Blocking Event Creation Request
-    //TODO Implement dynamic call to create event based on type
     private class createEventRequest implements Callable<String> {
     Map<String, Object> eventMap;
 
@@ -398,13 +397,13 @@ public class FireBaseClient {
 
         @Override
         public ArrayList<IEvent> call() {
-            ArrayList<IEvent> retrievedUsers = new ArrayList<>(EventIDList.size());
+            ArrayList<IEvent> retrievedEvents = new ArrayList<>(EventIDList.size());
 
             Task<QuerySnapshot> callDB = getUser().collection("Events").whereIn(FieldPath.documentId(), EventIDList).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     QuerySnapshot docs = task.getResult();
                     if (docs.size() > 0) {
-                        Log.d(TAG, "Retrieved " + docs.size() + " from firebase");
+                        Log.d(TAG, "Retrieved " + docs.size() + " documents from firebase");
                     } else {
                         Log.d(TAG, "No Documents Retrieved");
                     }
@@ -416,8 +415,9 @@ public class FireBaseClient {
             try {
                 Tasks.await(callDB);
                 for (DocumentSnapshot event : callDB.getResult())
-                    retrievedUsers.add(EventBuilder.createEvent(event));
-                return retrievedUsers;
+                    retrievedEvents.add(EventBuilder.createEvent(event));
+                Log.d(TAG, "Passing " + retrievedEvents.size() + " events to UI.");
+                return retrievedEvents;
             }
             //Catches firebase exceptions when retrieving data from the snapshots
             catch (ExecutionException | InterruptedException e) {

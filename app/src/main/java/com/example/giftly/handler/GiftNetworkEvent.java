@@ -31,6 +31,7 @@ public class GiftNetworkEvent extends Event {
         catch (NullPointerException e) {
             Log.d(TAG, e.toString());
         }
+        Log.d(TAG, this.toString());
     }
 
     @Override

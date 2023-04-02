@@ -28,6 +28,7 @@ public class EventBuilder {
             }
 
         } catch (NullPointerException e) {
+            Log.d(TAG, "Invalid Document Data.");
             return null;
         }
     }
