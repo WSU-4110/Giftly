@@ -2,7 +2,6 @@ package com.example.giftly;
 
 import static androidx.fragment.app.FragmentManager.TAG;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 
 import android.util.Log;
 
@@ -40,22 +39,26 @@ public class EventBuilderTests {
         benchMap.remove("eventID");
     }
 
+    //Test that EventBuilder creates the correct class
     @Test
     public void EventFactoryTest() {
         Log.d(TAG, test.getClass().toString());
         assertEquals(GiftNetworkEvent.class, test.getClass());
     }
 
+    //Check participants matches expected when loading from document
     @Test
     public void participantsTest() {
         assertEquals(new ArrayList<String>(1), test.getParticipants());
     }
 
+    //Test ID is returned
     @Test
     public void eventIDTest() {
         assertEquals("TestID", test.getEventID());
     }
 
+    //Test Conversion returns the exact same object
     @Test
     public void convertToDocument() {
         Map<String, Object> testDocument = test.convertToDocument();
@@ -66,6 +69,8 @@ public class EventBuilderTests {
         assertEquals(benchMap.get("participants"), testDocument.get("participants"));
     }
 
+
+    //Test Name modification
     @Test
     public void modifyName() {
         test.setEventName("");
@@ -76,6 +81,23 @@ public class EventBuilderTests {
 
         test.setEventName("Birthday");
         assertEquals(test.getEventName(), "Birthday");
+
+        test.setEventName(null);
+        test.setEventName("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
+
+    @Test
+    public void addParticipant() {
+        ArrayList<String> benchmark = new ArrayList<String>(1);
+        benchmark.add("Test ID");
+
+        test.addParticipant("Test ID");
+        assertEquals(test.getParticipants(), benchmark);
+
+        test.addParticipant("Test ID");
+        assertEquals(test.getParticipants(), benchmark);
+
+        test.addParticipant(null);
     }
 
 

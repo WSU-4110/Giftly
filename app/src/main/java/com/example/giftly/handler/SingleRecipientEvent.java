@@ -33,7 +33,7 @@ public class SingleRecipientEvent extends Event {
             eventID = event.get("eventID").toString();
             eventStartDate = ((Date)(event.getOrDefault("eventStartDate", null)));
             participants = (ArrayList<String>) event.getOrDefault("participants", new ArrayList<>(1));
-            ownerID = (event.getOrDefault("ownerID", "No Owner Found")).toString();
+            ownerID = (Objects.requireNonNull(event.getOrDefault("ownerID", "No Owner Found"))).toString();
         }
         catch (NullPointerException e) {
             Log.d(TAG, e.toString());

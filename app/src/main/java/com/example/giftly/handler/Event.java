@@ -34,7 +34,7 @@ public abstract class Event implements IEvent{
     public abstract ArrayList<String> addParticipant(String userID);
 
     public void setEventName(String name) {
-        if (name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             eventName = name.substring(0, Math.min(name.length(), 20));
         }
         else {
