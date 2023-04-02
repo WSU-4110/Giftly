@@ -20,18 +20,16 @@ public class GiftNetworkEvent extends Event {
 
     //Pulls data from document snapshot
     GiftNetworkEvent(Map<String, Object> event) {
-
         try {
             eventName = (Objects.requireNonNull(event.getOrDefault("eventName", "Unnamed Event"))).toString();
-            eventID = event.get("eventID").toString();
+            eventID = Objects.requireNonNull(event.getOrDefault("eventID", "No ID")).toString();
             eventStartDate = ((Date)(event.getOrDefault("eventStartDate", null)));
             participants = (ArrayList<String>) event.getOrDefault("participants", new ArrayList<>(1));
-            ownerID = (event.getOrDefault("ownerID", "No Owner Found")).toString();
+            ownerID = (Objects.requireNonNull(event.getOrDefault("ownerID", "No Owner Found"))).toString();
         }
         catch (NullPointerException e) {
-            Log.d(TAG, e.toString());
+            Log.d(TAG, "Invalid Document Data: " + e.toString());
         }
-        Log.d(TAG, this.toString());
     }
 
     @Override
@@ -47,7 +45,6 @@ public class GiftNetworkEvent extends Event {
     }
 
     //Reg accessors
-
     @Override
     public ArrayList<String> getRecipients() {
         return participants;

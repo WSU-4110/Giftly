@@ -26,8 +26,6 @@ import java.util.concurrent.ExecutionException;
 
 public class FireBaseClient {
 
-
-    public static EventBuilder eventBuilder = new EventBuilder();
     //method wrappers because typing out that class name annoys me
     public FirebaseAuth getAuth() {
         return FirebaseAuth.getInstance();
@@ -390,7 +388,6 @@ public class FireBaseClient {
     //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
     private class eventListCallback implements Callable<ArrayList<IEvent>> {
         ArrayList<String> EventIDList;
-
         eventListCallback(ArrayList<String> EIDs) {
             EventIDList = EIDs;
         }
@@ -398,7 +395,6 @@ public class FireBaseClient {
         @Override
         public ArrayList<IEvent> call() {
             ArrayList<IEvent> retrievedEvents = new ArrayList<>(EventIDList.size());
-
             Task<QuerySnapshot> callDB = getUser().collection("Events").whereIn(FieldPath.documentId(), EventIDList).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     QuerySnapshot docs = task.getResult();
@@ -414,8 +410,11 @@ public class FireBaseClient {
 
             try {
                 Tasks.await(callDB);
-                for (DocumentSnapshot event : callDB.getResult())
+                for (DocumentSnapshot event : callDB.getResult()) {
+                    Log.d(TAG, event.toString());
                     retrievedEvents.add(EventBuilder.createEvent(event));
+                    Log.d(TAG, retrievedEvents.get(retrievedEvents.size()-1).toString());
+                }
                 Log.d(TAG, "Passing " + retrievedEvents.size() + " events to UI.");
                 return retrievedEvents;
             }
@@ -439,7 +438,7 @@ public class FireBaseClient {
         public giftListCallback(String eventID, String userID) {
             this.eventID = eventID;
             this.userID = userID;
-        }
+    }
 
         public String call() {
             StringBuilder giftList = new StringBuilder();
@@ -478,5 +477,4 @@ public class FireBaseClient {
             }
         }
     }
-
 }
