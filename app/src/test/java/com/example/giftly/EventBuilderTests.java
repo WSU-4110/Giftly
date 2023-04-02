@@ -27,6 +27,7 @@ public class EventBuilderTests {
 
     @Before
     public void setUp() {
+        System.out.println("Setting up test...");
         benchMap = new HashMap<>(4);
         benchMap.put("eventStartDate", new Date());
         benchMap.put("eventName", "Birthday");
@@ -37,19 +38,25 @@ public class EventBuilderTests {
 
         benchMap.put("participants", new ArrayList<String>(1));
         benchMap.remove("eventID");
+
+        System.out.println("Setup complete with dummy date: " + test.toString());
+
     }
 
     //Test that EventBuilder creates the correct class
     @Test
     public void EventFactoryTest() {
-        Log.d(TAG, test.getClass().toString());
+        System.out.println("EventBuilder Built class: " + test.getClass());
         assertEquals(GiftNetworkEvent.class, test.getClass());
+        System.out.println("EventBuilderType Passed");
     }
 
     //Check participants matches expected when loading from document
     @Test
     public void participantsTest() {
+        System.out.println("Retrieve Participants test:");
         assertEquals(new ArrayList<String>(1), test.getParticipants());
+        System.out.println("Test passed");
     }
 
     //Test ID is returned
@@ -67,6 +74,8 @@ public class EventBuilderTests {
         assertEquals(benchMap.get("ownerID"), testDocument.get("ownerID"));
         assertEquals(benchMap.get("eventStartDate"), testDocument.get("eventStartDate"));
         assertEquals(benchMap.get("participants"), testDocument.get("participants"));
+
+        System.out.println("Test passed");
     }
 
 
@@ -76,14 +85,20 @@ public class EventBuilderTests {
         test.setEventName("");
         assertEquals(test.getEventName(), "No Name Found");
 
+        System.out.println("Over Limit Test...");
         test.setEventName("LOKINHFYEGTHELROWKERasfafaewfawefawefawef");
         assertEquals(test.getEventName(), "LOKINHFYEGTHELROWKER");
 
+        System.out.println("Normal Operation...");
         test.setEventName("Birthday");
         assertEquals(test.getEventName(), "Birthday");
 
+        System.out.println("Null test...");
         test.setEventName(null);
+        System.out.println("Buffer Test");
         test.setEventName("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
+        System.out.println("Test passed");
     }
 
     @Test
@@ -91,13 +106,18 @@ public class EventBuilderTests {
         ArrayList<String> benchmark = new ArrayList<String>(1);
         benchmark.add("Test ID");
 
+        System.out.println("Initial addition...");
         test.addParticipant("Test ID");
         assertEquals(test.getParticipants(), benchmark);
 
+        System.out.println("Duplicate test...");
         test.addParticipant("Test ID");
         assertEquals(test.getParticipants(), benchmark);
 
+        System.out.println("Null test...");
         test.addParticipant(null);
+
+        System.out.println("Test passed");
     }
 
 
