@@ -48,11 +48,13 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
     private SharedPreferences sharedPreferences;
     public SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
 
+
     public void onCreate(Bundle savedInstanceState) {
+
         //Grab Event Intent if it exists
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_event);
-
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(AddEventScreen.this, R.color.Default_color));
