@@ -31,4 +31,13 @@ public abstract class Event implements IEvent{
     }
     public abstract ArrayList<String> getRecipients();
     public abstract Map<String, Object> convertToDocument();
+
+    public void setEventName(String name) {
+        if (name.length() > 0) {
+            eventName = name.substring(0, Math.min(name.length(), 20));
+        }
+        else {
+            eventName = "No Name Found";
+        }
+    }
 }

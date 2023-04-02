@@ -1,25 +1,32 @@
 package com.example.giftly.handler;
+
 import static android.content.ContentValues.TAG;
 
 import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class GiftNetworkEvent extends Event {
+public class SingleRecipientEvent extends Event {
     //Local Constructor with ID's confirmed
+    ArrayList<String> subject;
 
-    GiftNetworkEvent(String eventID, String ownerID, String eventName, Date eventStartDate) {
+
+    SingleRecipientEvent(String eventID, String ownerID, String eventName, Date eventStartDate, String subject) {
         this.eventID = eventID;
         this.ownerID = ownerID;
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;
+        ArrayList<String> recipients = new ArrayList<>(1);
+        recipients.add(subject);
+        this.subject = recipients;
     }
 
     //Pulls data from document snapshot
-    GiftNetworkEvent(Map<String, Object> event) {
+    SingleRecipientEvent(Map<String, Object> event) {
 
         try {
             eventName = (Objects.requireNonNull(event.getOrDefault("eventName", "Unnamed Event"))).toString();
@@ -49,6 +56,6 @@ public class GiftNetworkEvent extends Event {
 
     @Override
     public ArrayList<String> getRecipients() {
-        return participants;
+        return (subject);
     }
 }
