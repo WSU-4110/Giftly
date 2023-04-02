@@ -158,19 +158,13 @@ public class FireBaseClient {
             Tasks.await(getUser);
 
             DocumentSnapshot user = getUser.getResult();
-            DocumentSnapshot event = getUser.getResult();
+            DocumentSnapshot eventSnapshot = getUser.getResult();
 
-            if (event.exists() && getUser.isSuccessful() ) {
-                ArrayList<String> participants = (ArrayList<String>) event.get("participants");
+            if (eventSnapshot.exists() && getUser.isSuccessful() ) {
 
-                //Check if event already has the user, if not add them and update the doc
-                if (participants == null)
-                    participants = new ArrayList<String>(1);
-                Log.d(TAG, "Checking Event");
-                if (!participants.contains(getAuth().getUid())) {
-                    participants.add(getAuth().getUid());
-                    targetEvent.update("participants", participants);
-                }
+                IEvent event = EventBuilder.createEvent(eventSnapshot);
+                event.addParticipant(getAuth().getUid());
+                targetEvent.update("participants", event.getParticipants());
 
                 //Check if user is already a part of the event, if not add them and update the doc
                 Log.d(TAG, "Checking User");

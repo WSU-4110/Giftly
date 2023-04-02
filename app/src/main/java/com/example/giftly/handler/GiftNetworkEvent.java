@@ -23,11 +23,10 @@ public class GiftNetworkEvent extends Event {
         try {
             eventName = (Objects.requireNonNull(event.getOrDefault("eventName", "Unnamed Event"))).toString();
             eventID = Objects.requireNonNull(event.getOrDefault("eventID", "No ID")).toString();
-            eventStartDate = ((Date)(event.getOrDefault("eventStartDate", null)));
+            eventStartDate = ((Date) (event.getOrDefault("eventStartDate", null)));
             participants = (ArrayList<String>) event.getOrDefault("participants", new ArrayList<>(1));
             ownerID = (Objects.requireNonNull(event.getOrDefault("ownerID", "No Owner Found"))).toString();
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             Log.d(TAG, "Invalid Document Data: " + e.toString());
         }
     }
@@ -42,6 +41,18 @@ public class GiftNetworkEvent extends Event {
         eventDocument.put("participants", participants);  //adds an array list with just the event creator in it
         eventDocument.put("eventType", 0);
         return eventDocument;
+    }
+
+    @Override
+    public ArrayList<String> addParticipant(String userID) {
+        //Check if event already has the user, if not add them and update the doc
+        if (participants == null)
+            participants = new ArrayList<String>(1);
+        Log.d(TAG, "Checking Event");
+        if (!participants.contains(userID)) {
+            participants.add(userID);
+        }
+        return participants;
     }
 
     //Reg accessors

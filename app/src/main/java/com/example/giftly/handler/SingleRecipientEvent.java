@@ -58,4 +58,10 @@ public class SingleRecipientEvent extends Event {
     public ArrayList<String> getRecipients() {
         return (subject);
     }
+
+    //TODO IMPLEMENT METHOD
+    @Override
+    public ArrayList<String> addParticipant(String userID) {
+        return null;
+    }
 }

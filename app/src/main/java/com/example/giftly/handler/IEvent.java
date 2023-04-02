@@ -15,5 +15,6 @@ public interface IEvent {
     public Map<String, Object> convertToDocument();
     //Reg Modifiers
     public void setEventName(String name);
+    public ArrayList<String> addParticipant(String userID);
 
 }
