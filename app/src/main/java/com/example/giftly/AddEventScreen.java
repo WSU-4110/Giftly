@@ -28,15 +28,17 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.example.giftly.handler.Event;
+import com.example.giftly.handler.User;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import org.w3c.dom.Text;
 
 public class AddEventScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     final Calendar myCalendar= Calendar.getInstance();
@@ -53,7 +55,6 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_event);
-
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(AddEventScreen.this, R.color.Default_color));
