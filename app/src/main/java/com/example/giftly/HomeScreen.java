@@ -174,14 +174,25 @@ public class HomeScreen extends AppCompatActivity {
                                                     if (eventName.length() > 1)
                                                         eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
 
+                                                    eventName = eventName.toLowerCase();
+                                                    eventName = Character.toString(eventName.charAt(0)).toUpperCase()+eventName.substring(1);
 
-                                                    button.setText(eventName);
+                                                    String[] temp = eventName.split(" ");
+                                                    StringBuilder  results = new StringBuilder();
+                                                    int L = temp.length;
+                                                    for (int k = 0; k < L; k++) {
+                                                        results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
+                                                    }
+                                                    String Event_name = results.toString();
+                                                    button.setText(Event_name);
+
+                                                    button.setTransformationMethod(null);
 
                                                     //Add button layout modification stuff to make it look nice here (target button)
                                                     button.setOnClickListener(new handleClick(events.get(i).getEventID()));
                                                     GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                                                     params.setMargins(16, 16, 16, 32); //left, top, right, bottom
-                                                    params.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                    params.width =440;
                                                     params.height = 350;
                                                     button.setLayoutParams(params);
 
@@ -198,9 +209,9 @@ public class HomeScreen extends AppCompatActivity {
                                                     gridLayout.addView(button);
                                                 }
                                                 GridLayout.LayoutParams paramsGridLayout = new GridLayout.LayoutParams();
-                                                paramsGridLayout.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                paramsGridLayout.width = GridLayout.LayoutParams.MATCH_PARENT;
                                                 paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                paramsGridLayout.setMargins(32, 0, 32, 0); //left, top, right, bottom
+                                                paramsGridLayout.setMargins(50, 0, 32, 0); //left, top, right, bottom
                                                 gridLayout.setLayoutParams(paramsGridLayout);
                                                 eventList.addView(gridLayout);
 
