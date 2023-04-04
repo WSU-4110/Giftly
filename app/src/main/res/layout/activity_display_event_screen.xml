@@ -130,7 +130,7 @@
 
         <!-- Leave Event Button -->
         <Button
-            android:id="@+id/leaveEventBtn"
+            android:id="@+id/leave_event"
             android:layout_width="134dp"
             android:layout_height="41dp"
             android:layout_marginStart="36dp"
