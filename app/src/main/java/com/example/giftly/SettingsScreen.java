@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SettingsScreen extends AppCompatActivity {
     //Create variables to connect to xml android:id fields
     private Button btnLogOut;
-    public Button choosingThemeBtn, choosingFontSizeBtn;
+    public Button choosingThemeBtn, choosingFontSizeBtn, choosingLayoutBtn;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -45,6 +45,7 @@ public class SettingsScreen extends AppCompatActivity {
         btnLogOut = findViewById(R.id.button_log_out);
         choosingThemeBtn = findViewById(R.id.themeBtn);
         choosingFontSizeBtn = findViewById(R.id.fontSizeBtn);
+        choosingLayoutBtn = findViewById(R.id.layoutBtn);
 
         //Creating a button response for themes
         choosingThemeBtn.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +61,15 @@ public class SettingsScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SettingsScreen.this, FontSizeScreen.class);
+                startActivity(intent);
+            }
+        });
+
+        //Creating a button response for layouts
+        choosingLayoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsScreen.this, LayoutScreen.class);
                 startActivity(intent);
             }
         });

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LayoutScreen">
+
+    <TextView
+        android:id="@+id/LayouttextView"
+        android:layout_width="287dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="62dp"
+        android:text="Select a Layout Style"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Layout1xml"
+        android:layout_width="229dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="102dp"
+        android:layout_marginEnd="91dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Layout 1"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LayouttextView" />
+
+    <Button
+        android:id="@+id/Layout2xml"
+        android:layout_width="229dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="91dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Layout 2"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Layout1xml" />
+
+    <Button
+        android:id="@+id/LayoutsaveIt"
+        android:layout_width="129dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="141dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Layout2xml" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
