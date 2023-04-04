@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -37,6 +38,7 @@ import java.util.Date;
 public class DisplayEventScreen extends AppCompatActivity {
 
     public Button button_edit_event;
+    public Button leaveEventBtn;
     private SharedPreferences sharedPreferences;
 
     ListView participantList;
@@ -55,6 +57,7 @@ public class DisplayEventScreen extends AppCompatActivity {
         ImageView mapView = (ImageView) findViewById(R.id.static_map);
         Picasso.get().load(url).into(mapView);
 
+        leaveEventBtn = (Button) findViewById(R.id.leave_event);
 
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -147,8 +150,17 @@ public class DisplayEventScreen extends AppCompatActivity {
         });
         // The list of participants is displayed on the screen
 
-
-
+        leaveEventBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //Pop Up for leaving an event
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(DisplayEventScreen.this);
+                builder.setMessage("You've left this event")
+                        .setTitle("Leave Event Request");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
     class updateParticipants implements Runnable {
         String[] participantNames;
