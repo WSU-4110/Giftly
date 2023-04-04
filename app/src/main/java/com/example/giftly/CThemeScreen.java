@@ -38,9 +38,7 @@ public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
             getWindow().getDecorView().setBackgroundColor(savedColor);
 
             Button dftThemeBtn = findViewById(R.id.defaultTheme);
-            Button glyThemeBtn = findViewById(R.id.giftlyTheme);
-            Button vltThemeBtn = findViewById(R.id.valentinesTheme);
-            Button etrThemeBtn = findViewById(R.id.easterTheme);
+            Button lightMode = findViewById(R.id.lightTheme);
             Button savingit = findViewById(R.id.saveIt);
 
             savingit.setOnClickListener(new View.OnClickListener() {
@@ -60,32 +58,15 @@ public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
                 }
             });
 
-            glyThemeBtn.setOnClickListener(new View.OnClickListener() {
+            lightMode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Giftly_color);
-                    sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
-                    themeSubject.notifyObservers(selectedColor);
-                }
-            });
-            //Valentines
-            vltThemeBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Valentines_color);
+                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Light_color);
                     sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
                     themeSubject.notifyObservers(selectedColor);
                 }
             });
 
-            etrThemeBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Easter_color);
-                    sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
-                    themeSubject.notifyObservers(selectedColor);
-                }
-            });
 
         }
 

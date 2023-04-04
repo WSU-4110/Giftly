@@ -161,7 +161,6 @@ public class HomeScreen extends AppCompatActivity {
                                                 paramsHeader.setMargins(32, 0, 0, 0); //left, top, right, bottom
                                                 header.setLayoutParams(paramsHeader);
                                                 eventList.addView(header);
-
                                                 GridLayout gridLayout = new GridLayout(eventList.getContext());
                                                 gridLayout.setColumnCount(2); // set the number of columns you want
                                                 for (int i = 0; i < events.size(); i++) {
@@ -208,6 +207,7 @@ public class HomeScreen extends AppCompatActivity {
                                                     button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
                                                     gridLayout.addView(button);
                                                 }
+
                                                 GridLayout.LayoutParams paramsGridLayout = new GridLayout.LayoutParams();
                                                 paramsGridLayout.width = GridLayout.LayoutParams.MATCH_PARENT;
                                                 paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
