@@ -26,8 +26,6 @@ import java.util.concurrent.ExecutionException;
 
 public class FireBaseClient {
 
-
-    public static EventBuilder eventBuilder = new EventBuilder();
     //method wrappers because typing out that class name annoys me
     public FirebaseAuth getAuth() {
         return FirebaseAuth.getInstance();
@@ -160,19 +158,13 @@ public class FireBaseClient {
             Tasks.await(getUser);
 
             DocumentSnapshot user = getUser.getResult();
-            DocumentSnapshot event = getUser.getResult();
+            DocumentSnapshot eventSnapshot = getUser.getResult();
 
-            if (event.exists() && getUser.isSuccessful() ) {
-                ArrayList<String> participants = (ArrayList<String>) event.get("participants");
+            if (eventSnapshot.exists() && getUser.isSuccessful() ) {
 
-                //Check if event already has the user, if not add them and update the doc
-                if (participants == null)
-                    participants = new ArrayList<String>(1);
-                Log.d(TAG, "Checking Event");
-                if (!participants.contains(getAuth().getUid())) {
-                    participants.add(getAuth().getUid());
-                    targetEvent.update("participants", participants);
-                }
+                IEvent event = EventBuilder.createEvent(eventSnapshot);
+                event.addParticipant(getAuth().getUid());
+                targetEvent.update("participants", event.getParticipants());
 
                 //Check if user is already a part of the event, if not add them and update the doc
                 Log.d(TAG, "Checking User");
@@ -197,7 +189,6 @@ public class FireBaseClient {
         return service.submit(new createEventRequest(eventMap));
     }
     //Non-Blocking Event Creation Request
-    //TODO Implement dynamic call to create event based on type
     private class createEventRequest implements Callable<String> {
     Map<String, Object> eventMap;
 
@@ -391,20 +382,18 @@ public class FireBaseClient {
     //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
     private class eventListCallback implements Callable<ArrayList<IEvent>> {
         ArrayList<String> EventIDList;
-
         eventListCallback(ArrayList<String> EIDs) {
             EventIDList = EIDs;
         }
 
         @Override
         public ArrayList<IEvent> call() {
-            ArrayList<IEvent> retrievedUsers = new ArrayList<>(EventIDList.size());
-
+            ArrayList<IEvent> retrievedEvents = new ArrayList<>(EventIDList.size());
             Task<QuerySnapshot> callDB = getUser().collection("Events").whereIn(FieldPath.documentId(), EventIDList).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     QuerySnapshot docs = task.getResult();
                     if (docs.size() > 0) {
-                        Log.d(TAG, "Retrieved " + docs.size() + " from firebase");
+                        Log.d(TAG, "Retrieved " + docs.size() + " documents from firebase");
                     } else {
                         Log.d(TAG, "No Documents Retrieved");
                     }
@@ -415,9 +404,13 @@ public class FireBaseClient {
 
             try {
                 Tasks.await(callDB);
-                for (DocumentSnapshot event : callDB.getResult())
-                    retrievedUsers.add(EventBuilder.createEvent(event));
-                return retrievedUsers;
+                for (DocumentSnapshot event : callDB.getResult()) {
+                    Log.d(TAG, event.toString());
+                    retrievedEvents.add(EventBuilder.createEvent(event));
+                    Log.d(TAG, retrievedEvents.get(retrievedEvents.size()-1).toString());
+                }
+                Log.d(TAG, "Passing " + retrievedEvents.size() + " events to UI.");
+                return retrievedEvents;
             }
             //Catches firebase exceptions when retrieving data from the snapshots
             catch (ExecutionException | InterruptedException e) {
@@ -439,7 +432,7 @@ public class FireBaseClient {
         public giftListCallback(String eventID, String userID) {
             this.eventID = eventID;
             this.userID = userID;
-        }
+    }
 
         public String call() {
             StringBuilder giftList = new StringBuilder();
@@ -478,5 +471,4 @@ public class FireBaseClient {
             }
         }
     }
-
 }
