@@ -161,61 +161,122 @@ public class HomeScreen extends AppCompatActivity {
                                                 paramsHeader.setMargins(32, 0, 0, 0); //left, top, right, bottom
                                                 header.setLayoutParams(paramsHeader);
                                                 eventList.addView(header);
+
+                                                //Layout setting feature
+                                                int value = getIntent().getIntExtra("VALUE", 0);
+
                                                 GridLayout gridLayout = new GridLayout(eventList.getContext());
-                                                gridLayout.setColumnCount(2); // set the number of columns you want
-                                                for (int i = 0; i < events.size(); i++) {
-                                                    Button button = new Button(eventList.getContext());
-                                                    button.setId(i);
-
-                                                    // Set the event name to lowercase
-                                                    String eventName = events.get(i).getEventName().toLowerCase();
-                                                    // Capitalize the first letter of the event name if it has a length
-                                                    if (eventName.length() > 1)
-                                                        eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
-
-                                                    eventName = eventName.toLowerCase();
-                                                    eventName = Character.toString(eventName.charAt(0)).toUpperCase()+eventName.substring(1);
-
-                                                    String[] temp = eventName.split(" ");
-                                                    StringBuilder  results = new StringBuilder();
-                                                    int L = temp.length;
-                                                    for (int k = 0; k < L; k++) {
-                                                        results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
-                                                    }
-                                                    String Event_name = results.toString();
-                                                    button.setText(Event_name);
-
-                                                    button.setTransformationMethod(null);
-
-                                                    //Add button layout modification stuff to make it look nice here (target button)
-                                                    button.setOnClickListener(new handleClick(events.get(i).getEventID()));
-                                                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                                                    params.setMargins(16, 16, 16, 32); //left, top, right, bottom
-                                                    params.width =440;
-                                                    params.height = 350;
-                                                    button.setLayoutParams(params);
-
-                                                    // Set the button background to a drawable with rounded corners
-                                                    GradientDrawable shape = new GradientDrawable();
-                                                    shape.setShape(GradientDrawable.RECTANGLE);
-                                                    shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
-                                                    shape.setColor(Color.parseColor("#4B4B4B"));
-                                                    button.setBackground(shape);
-
-                                                    button.setTextColor(Color.WHITE);
-                                                    button.setTextSize(15);
-                                                    button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-                                                    gridLayout.addView(button);
-                                                }
-
                                                 GridLayout.LayoutParams paramsGridLayout = new GridLayout.LayoutParams();
-                                                paramsGridLayout.width = GridLayout.LayoutParams.MATCH_PARENT;
-                                                paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                paramsGridLayout.setMargins(50, 0, 32, 0); //left, top, right, bottom
-                                                gridLayout.setLayoutParams(paramsGridLayout);
-                                                eventList.addView(gridLayout);
+                                                switch (value) {
+                                                    case 0:
+                                                        // code block: this is the grid builder view
+                                                        gridLayout.setColumnCount(2); // set the number of columns you want
+                                                        for (int i = 0; i < events.size(); i++) {
+                                                            Button button = new Button(eventList.getContext());
+                                                            button.setId(i);
 
+                                                            // Set the event name to lowercase
+                                                            String eventName = events.get(i).getEventName().toLowerCase();
+                                                            // Capitalize the first letter of the event name if it has a length
+                                                            if (eventName.length() > 1)
+                                                                eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
 
+                                                            eventName = eventName.toLowerCase();
+                                                            eventName = Character.toString(eventName.charAt(0)).toUpperCase() + eventName.substring(1);
+
+                                                            String[] temp = eventName.split(" ");
+                                                            StringBuilder results = new StringBuilder();
+                                                            int L = temp.length;
+                                                            for (int k = 0; k < L; k++) {
+                                                                results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
+                                                            }
+                                                            String Event_name = results.toString();
+                                                            button.setText(Event_name);
+
+                                                            button.setTransformationMethod(null);
+
+                                                            //Add button layout modification stuff to make it look nice here (target button)
+                                                            button.setOnClickListener(new handleClick(events.get(i).getEventID()));
+                                                            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                                                            params.setMargins(16, 16, 16, 32); //left, top, right, bottom
+                                                            params.width = 440;
+                                                            params.height = 350;
+                                                            button.setLayoutParams(params);
+
+                                                            // Set the button background to a drawable with rounded corners
+                                                            GradientDrawable shape = new GradientDrawable();
+                                                            shape.setShape(GradientDrawable.RECTANGLE);
+                                                            shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
+                                                            shape.setColor(Color.parseColor("#4B4B4B"));
+                                                            button.setBackground(shape);
+
+                                                            button.setTextColor(Color.WHITE);
+                                                            button.setTextSize(15);
+                                                            button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                                                            gridLayout.addView(button);
+                                                        }
+                                                        paramsGridLayout.width = GridLayout.LayoutParams.MATCH_PARENT;
+                                                        paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                        paramsGridLayout.setMargins(50, 0, 32, 0); //left, top, right, bottom
+                                                        gridLayout.setLayoutParams(paramsGridLayout);
+                                                        eventList.addView(gridLayout);
+                                                        break;
+                                                    case 1:
+                                                        // code block: this is the column builder view
+                                                        gridLayout.setColumnCount(1); // set the number of columns you want
+                                                        for (int i = 0; i < events.size(); i++) {
+                                                            Button button = new Button(eventList.getContext());
+                                                            button.setId(i);
+
+                                                            // Set the event name to lowercase
+                                                            String eventName = events.get(i).getEventName().toLowerCase();
+                                                            // Capitalize the first letter of the event name if it has a length
+                                                            if (eventName.length() > 1)
+                                                                eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
+
+                                                            eventName = eventName.toLowerCase();
+                                                            eventName = Character.toString(eventName.charAt(0)).toUpperCase()+eventName.substring(1);
+
+                                                            String[] temp = eventName.split(" ");
+                                                            StringBuilder  results = new StringBuilder();
+                                                            int L = temp.length;
+                                                            for (int k = 0; k < L; k++) {
+                                                                results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
+                                                            }
+                                                            String Event_name = results.toString();
+                                                            button.setText(Event_name);
+
+                                                            button.setTransformationMethod(null);
+
+                                                            //Add button layout modification stuff to make it look nice here (target button)
+                                                            button.setOnClickListener(new handleClick(events.get(i).getEventID()));
+                                                            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                                                            params.setMargins(16, 16, 16, 32); //left, top, right, bottom
+                                                            params.width =900;
+                                                            params.height = 350;
+                                                            button.setLayoutParams(params);
+
+                                                            // Set the button background to a drawable with rounded corners
+                                                            GradientDrawable shape = new GradientDrawable();
+                                                            shape.setShape(GradientDrawable.RECTANGLE);
+                                                            shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
+                                                            shape.setColor(Color.parseColor("#4B4B4B"));
+                                                            button.setBackground(shape);
+
+                                                            button.setTextColor(Color.WHITE);
+                                                            button.setTextSize(15);
+                                                            button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                                                            gridLayout.addView(button);
+                                                        }
+                                                        paramsGridLayout.width = GridLayout.LayoutParams.MATCH_PARENT;
+                                                        paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                        paramsGridLayout.setMargins(50, 0, 32, 0); //left, top, right, bottom
+                                                        gridLayout.setLayoutParams(paramsGridLayout);
+                                                        eventList.addView(gridLayout);
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
 
                                             }
 
@@ -273,7 +334,6 @@ public class HomeScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }
