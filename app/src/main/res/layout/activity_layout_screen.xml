@@ -13,7 +13,7 @@
         android:layout_marginStart="111dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="112dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="190dp"
         android:text="Select a Layout Style"
         android:textAlignment="center"
         android:textColor="#ffffff"

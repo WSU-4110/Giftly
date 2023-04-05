@@ -1,7 +1,9 @@
 package com.example.giftly;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +19,10 @@ public class LayoutScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_screen);
+        //Theme: Fetch the current color of the background
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(LayoutScreen.this, R.color.Default_color));
+        getWindow().getDecorView().setBackgroundColor(savedColor);
 
         layout_1_Btn = findViewById(R.id.Layout1xml);
         layout_2_Btn = findViewById(R.id.Layout2xml);
