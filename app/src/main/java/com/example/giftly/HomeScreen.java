@@ -3,6 +3,7 @@ package com.example.giftly;
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -143,6 +144,7 @@ public class HomeScreen extends AppCompatActivity {
                                         class updateEvents implements Runnable {
                                             ArrayList<IEvent> events;
                                             updateEvents(ArrayList<IEvent> e) { events = e;}
+                                            @SuppressLint("SuspiciousIndentation")
                                             @Override
                                             public void run() {
                                                 LinearLayout eventList = findViewById(R.id.events);

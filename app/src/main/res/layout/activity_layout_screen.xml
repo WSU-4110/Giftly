@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LayoutScreen">
+
+    <TextView
+        android:id="@+id/LayouttextView"
+        android:layout_width="287dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="111dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="112dp"
+        android:layout_marginBottom="200dp"
+        android:text="Select a Layout Style"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Layout1xml"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Layout1xml"
+        android:layout_width="210dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="68dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Grid View"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/Layout2xml"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+         />
+
+    <Button
+        android:id="@+id/Layout2xml"
+        android:layout_width="210dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="68dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Linear View"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:backgroundTint="#4B4B4B"
+        app:cornerRadius="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Layout1xml" />
+</androidx.constraintlayout.widget.ConstraintLayout>
