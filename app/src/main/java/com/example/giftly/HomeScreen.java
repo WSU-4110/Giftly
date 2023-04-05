@@ -253,20 +253,20 @@ public class HomeScreen extends AppCompatActivity {
                                                     //Add button layout modification stuff to make it look nice here (target button)
                                                     button.setOnClickListener(new handleClick(events.get(i).getEventID()));
                                                     GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                                                    params.setMargins(16, 16, 16, 32); //left, top, right, bottom
-                                                    params.width =440;
-                                                    params.height = 350;
+                                                    params.setMargins(90, 16, 16, 32); //left, top, right, bottom
+                                                    params.width =750;
+                                                    params.height = 650;
                                                     button.setLayoutParams(params);
 
                                                     // Set the button background to a drawable with rounded corners
                                                     GradientDrawable shape = new GradientDrawable();
                                                     shape.setShape(GradientDrawable.RECTANGLE);
-                                                    shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
+                                                    shape.setCornerRadii(new float[]{30, 30, 30, 30, 30, 30, 30, 30});
                                                     shape.setColor(Color.parseColor("#4B4B4B"));
                                                     button.setBackground(shape);
 
                                                     button.setTextColor(Color.WHITE);
-                                                    button.setTextSize(15);
+                                                    button.setTextSize(27);
                                                     button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
                                                     gridLayout.addView(button);
                                                 }
