@@ -225,7 +225,7 @@ public class HomeScreen extends AppCompatActivity {
                                                 }*/
 
                                                 GridLayout gridLayout = new GridLayout(eventList.getContext());
-                                                gridLayout.setColumnCount(2); // set the number of columns you want
+                                                gridLayout.setColumnCount(1); // set the number of columns you want
                                                 for (int i = 0; i < events.size(); i++) {
                                                     Button button = new Button(eventList.getContext());
                                                     button.setId(i);
