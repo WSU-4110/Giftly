@@ -5,6 +5,7 @@ import static com.example.giftly.Giftly.client;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -195,15 +196,23 @@ public class DisplayEventScreen extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(DisplayEventScreen.this);
                 builder.setMessage("You've left this event")
-                        .setTitle("Leave Event Request");
+                        .setTitle("Leave Event Request")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(DisplayEventScreen.this, HomeScreen.class);
+                                startActivity(intent);
+                            }
+                        });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-                Intent i = new Intent(DisplayEventScreen.this, HomeScreen.class);
-                startActivity(i);
-                DisplayEventScreen.this.finish();
+
+
             }
 
-    });
+
+        });
     }
     class updateParticipants implements Runnable {
         String[] participantNames;
