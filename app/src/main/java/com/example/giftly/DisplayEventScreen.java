@@ -198,6 +198,9 @@ public class DisplayEventScreen extends AppCompatActivity {
                         .setTitle("Leave Event Request");
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                Intent i = new Intent(DisplayEventScreen.this, HomeScreen.class);
+                startActivity(i);
+                DisplayEventScreen.this.finish();
             }
 
     });
