@@ -82,7 +82,7 @@ public class FontSizeScreen extends AppCompatActivity {
     }
 
     //This will loop through Button and EditText fields in the xml files to change the text sizes
-    private void iterateViews(View view, float size) {
+    void iterateViews(View view, float size) {
         if (view instanceof ViewGroup) {
             ViewGroup viewGroup = (ViewGroup) view;
             for (int i = 0; i < viewGroup.getChildCount(); i++) {
