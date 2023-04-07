@@ -158,7 +158,7 @@ public class FireBaseClient {
             Tasks.await(getUser);
 
             DocumentSnapshot user = getUser.getResult();
-            DocumentSnapshot eventSnapshot = getUser.getResult();
+            DocumentSnapshot eventSnapshot = getEvent.getResult();
 
             if (eventSnapshot.exists() && getUser.isSuccessful() ) {
 
@@ -235,7 +235,7 @@ public class FireBaseClient {
             Tasks.await(getUser);
 
             DocumentSnapshot user = getUser.getResult();
-            DocumentSnapshot eventSnapshot = getUser.getResult();
+            DocumentSnapshot eventSnapshot = getEvent.getResult();
 
             if (eventSnapshot.exists() && getUser.isSuccessful() ) {
 
