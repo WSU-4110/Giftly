@@ -169,10 +169,21 @@ public class DisplayEventScreen extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         Toast.makeText(DisplayEventScreen.this, result, Toast.LENGTH_SHORT).show();
-                                        finish();
-                                        overridePendingTransition(0, 0);
-                                        startActivity(getIntent());
-                                        overridePendingTransition(0, 0);
+                                        //Pop up to leave event
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(DisplayEventScreen.this);
+                                        builder.setMessage("You've left this event")
+                                                .setTitle("Leave Event Request")
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        Intent intent = new Intent(DisplayEventScreen.this, HomeScreen.class);
+                                                        startActivity(intent);
+                                                    }
+                                                });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
                                     }
                                 });
 
@@ -194,19 +205,6 @@ public class DisplayEventScreen extends AppCompatActivity {
                         }, Giftly.service);
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(DisplayEventScreen.this);
-                builder.setMessage("You've left this event")
-                        .setTitle("Leave Event Request")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(DisplayEventScreen.this, HomeScreen.class);
-                                startActivity(intent);
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
 
 
             }
