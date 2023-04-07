@@ -150,17 +150,57 @@ public class DisplayEventScreen extends AppCompatActivity {
         });
         // The list of participants is displayed on the screen
 
+
         leaveEventBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             //Pop Up for leaving an event
             public void onClick(View v) {
+
+                Futures.addCallback(
+                        client.leaveEvent(eventID),
+                        new FutureCallback<String>() {
+
+                            @Override
+                            public void onSuccess(String result) {
+                                Log.d(TAG, "Successfully left event");
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(DisplayEventScreen.this, result, Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        overridePendingTransition(0, 0);
+                                        startActivity(getIntent());
+                                        overridePendingTransition(0, 0);
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onFailure(Throwable thrown) {
+
+                                String message = (thrown.getMessage().isEmpty() ? "There was a problem leaving the event" : thrown.getMessage());
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(DisplayEventScreen.this, message, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                Log.d(TAG, thrown.toString());
+                            }
+                        }, Giftly.service);
+
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(DisplayEventScreen.this);
                 builder.setMessage("You've left this event")
                         .setTitle("Leave Event Request");
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
-        });
+
+    });
     }
     class updateParticipants implements Runnable {
         String[] participantNames;
@@ -188,8 +228,9 @@ public class DisplayEventScreen extends AppCompatActivity {
                 }
             });
         }
-    }
 
+
+}
     //Back button configuration
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -200,7 +241,5 @@ public class DisplayEventScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
 

@@ -11,6 +11,7 @@ public interface IEvent {
     public String getEventName();
     public Date getEventStartDate();
     public ArrayList<String> getParticipants();
+    public ArrayList<String> removeParticipant(String userID);
     //Convert to Doc
     public Map<String, Object> convertToDocument();
     //Reg Modifiers

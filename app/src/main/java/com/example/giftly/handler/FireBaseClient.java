@@ -185,6 +185,81 @@ public class FireBaseClient {
         }
     };
 
+
+    public ListenableFuture<String> leaveEvent(String eventID) {
+        return service.submit(new leaveEventRequest(eventID));
+    }
+    private class leaveEventRequest implements Callable<String> {
+        String eventID;
+        public leaveEventRequest(String eventID) {
+            this.eventID = eventID.trim();
+        }
+
+        @Override
+        public String call() throws Exception {
+            DocumentReference targetEvent = getUser().collection("Events").document(eventID);
+            DocumentReference targetUser = getUser().collection("Users").document(Objects.requireNonNull(getAuth().getUid()));
+            //log status of document allocation
+            Task<DocumentSnapshot> getEvent = targetEvent.get().addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + doc.getData());
+                    }
+                    else {
+                        Log.d(TAG, "No Such Document");
+                    }
+                }
+                else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns Event Snapshot
+
+            Task<DocumentSnapshot> getUser = targetUser.get().addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + doc.getData());
+                    }
+                    else {
+                        Log.d(TAG, "No Such Document");
+                    }
+                }
+                else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns User Snapshot
+
+            //wait for task completion
+            Tasks.await(getEvent);
+            Tasks.await(getUser);
+
+            DocumentSnapshot user = getUser.getResult();
+            DocumentSnapshot eventSnapshot = getUser.getResult();
+
+            if (eventSnapshot.exists() && getUser.isSuccessful() ) {
+
+                IEvent event = EventBuilder.createEvent(eventSnapshot);
+                event.removeParticipant(getAuth().getUid());
+                targetEvent.update("participants", event.getParticipants());
+
+
+                Log.d(TAG, "Checking User");
+                ArrayList<String> eventList = new ArrayList<>(1);
+                if (user.exists() && user.get("Events") != null)
+                    eventList = (ArrayList<String>) user.get("Events");
+                Log.d(TAG, eventList.toString());
+                eventList.remove(eventID);
+
+                Task<Void> updateUser =  targetUser.update("Events", eventList);
+                Tasks.await(updateUser);
+                if (updateUser.isSuccessful()) return "Successfully left event";
+                else throw new Exception("Leave Event Failed, please try again");
+            }
+            else throw new Exception("Event Not Found");
+        }
+    };
+
     public ListenableFuture<String> createEvent(Map<String, Object> eventMap) {
         return service.submit(new createEventRequest(eventMap));
     }
