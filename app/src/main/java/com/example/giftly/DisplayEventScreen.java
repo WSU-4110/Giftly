@@ -5,6 +5,7 @@ import static com.example.giftly.Giftly.client;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -150,16 +151,65 @@ public class DisplayEventScreen extends AppCompatActivity {
         });
         // The list of participants is displayed on the screen
 
+
         leaveEventBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             //Pop Up for leaving an event
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(DisplayEventScreen.this);
-                builder.setMessage("You've left this event")
-                        .setTitle("Leave Event Request");
-                AlertDialog dialog = builder.create();
-                dialog.show();
+
+                Futures.addCallback(
+                        client.leaveEvent(eventID),
+                        new FutureCallback<String>() {
+
+                            @Override
+                            public void onSuccess(String result) {
+                                Log.d(TAG, "Successfully left event");
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(DisplayEventScreen.this, result, Toast.LENGTH_SHORT).show();
+                                        //Pop up to leave event
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(DisplayEventScreen.this);
+                                        builder.setMessage("You've left this event")
+                                                .setTitle("Leave Event Request")
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        Intent intent = new Intent(DisplayEventScreen.this, HomeScreen.class);
+                                                        startActivity(intent);
+                                                    }
+                                                });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onFailure(Throwable thrown) {
+
+                                String message = (thrown.getMessage().isEmpty() ? "There was a problem leaving the event" : thrown.getMessage());
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(DisplayEventScreen.this, message, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                Log.d(TAG, thrown.toString());
+                            }
+                        }, Giftly.service);
+
+
+
+
             }
+
+
         });
     }
     class updateParticipants implements Runnable {
@@ -188,8 +238,9 @@ public class DisplayEventScreen extends AppCompatActivity {
                 }
             });
         }
-    }
 
+
+}
     //Back button configuration
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -200,7 +251,5 @@ public class DisplayEventScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
 

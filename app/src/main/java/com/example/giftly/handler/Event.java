@@ -29,6 +29,13 @@ public abstract class Event implements IEvent{
     public ArrayList<String> getParticipants() {
         return participants;
     }
+    public ArrayList<String> removeParticipant (String userID) {
+
+        if (participants != null)
+            participants.remove(userID);
+
+        return participants;
+    }
     public abstract ArrayList<String> getRecipients();
     public abstract Map<String, Object> convertToDocument();
     public abstract ArrayList<String> addParticipant(String userID);
