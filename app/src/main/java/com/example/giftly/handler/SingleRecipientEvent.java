@@ -64,4 +64,9 @@ public class SingleRecipientEvent extends Event {
     public ArrayList<String> addParticipant(String userID) {
         return null;
     }
+
+    @Override
+    public int getEventType() {
+        return 1;
+    }
 }

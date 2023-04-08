@@ -60,4 +60,9 @@ public class GiftNetworkEvent extends Event {
     public ArrayList<String> getRecipients() {
         return participants;
     }
+
+    @Override
+    public int getEventType() {
+        return 0;
+    }
 }

@@ -201,6 +201,5 @@ public class DisplayEventScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
 }
 

@@ -16,5 +16,6 @@ public interface IEvent {
     //Reg Modifiers
     public void setEventName(String name);
     public ArrayList<String> addParticipant(String userID);
+    public int getEventType();
 
 }
