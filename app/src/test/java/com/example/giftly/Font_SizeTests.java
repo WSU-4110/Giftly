@@ -36,7 +36,7 @@ public class Font_SizeTests {
         System.out.println("Testing testOnCreate()");
         FontSizeScreen activity = Robolectric.setupActivity(FontSizeScreen.class);
         assertNotNull(activity);
-        System.out.println("Test passed");
+        System.out.println("Test passed for testOnCreate method test.");
     }
 
     @Test
@@ -50,7 +50,7 @@ public class Font_SizeTests {
         SharedPreferences preferences = activity.getSharedPreferences("prefs", Context.MODE_PRIVATE);
         float savedSize = preferences.getFloat("font_size", 16);
         assertEquals(14f, savedSize, 0.01f);
-        System.out.println("Test passed");
+        System.out.println("Test passed for testFontSizeSeekBar method test.");
     }
 
     @Test
@@ -72,7 +72,7 @@ public class Font_SizeTests {
         assertEquals(textSize, textView.getTextSize(), 0);
         assertEquals(textSize, editText.getTextSize(), 0);
         assertEquals(textSize, button.getTextSize(), 0);
-        System.out.println("Test passed");
+        System.out.println("Test passed for testIterateViews method test.");
     }
 
     @Test
@@ -88,7 +88,7 @@ public class Font_SizeTests {
         float textSize = 14.0f;
         activity.setFontSize(textSize);
         assertEquals(textSize, textView.getTextSize(), 0);
-        System.out.println("Test passed");
+        System.out.println("Test passed for testSetFontSize method test.");
     }
 
     @Test
@@ -101,7 +101,7 @@ public class Font_SizeTests {
         Intent expectedIntent = new Intent(activity, HomeScreen.class);
         Intent actualIntent = shadowOf(RuntimeEnvironment.application).getNextStartedActivity();
         assertEquals(expectedIntent.getComponent(), actualIntent.getComponent());
-        System.out.println("Test passed");
+        System.out.println("Test passed for testSaveButton method test.");
     }
 
     @Test
@@ -124,6 +124,6 @@ public class Font_SizeTests {
         float resetSize = textView.getTextSize() / fontSizeScreen.getResources().getDisplayMetrics().scaledDensity;
 
         assertEquals(initialSize, resetSize, 0.01f);
-        System.out.println("Test passed");
+        System.out.println("Test passed for testFontSizeSlider method test.");
     }
 }
