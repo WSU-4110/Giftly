@@ -24,6 +24,9 @@ public class EventBuilder {
                 case 0:
                     Log.d(TAG, "Gift Event ");
                     return new GiftNetworkEvent(eventMap);
+                case 1:
+                    Log.d(TAG, "Single Recipient Event ");
+                    return new SingleRecipientEvent(eventMap);
                 default:
                     Log.d(TAG, "Invalid EventType ID");
                     return null;
