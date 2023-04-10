@@ -31,6 +31,7 @@ public class Font_SizeTests {
         System.out.println("Setup complete");
     }
 
+    //Testing on whether the user is able to go into the font size setting
     @Test
     public void testOnCreate() {
         System.out.println("Testing testOnCreate()");
@@ -39,6 +40,7 @@ public class Font_SizeTests {
         System.out.println("Test passed for testOnCreate method test.");
     }
 
+    //Test whether the value is being entered while using the font size slider
     @Test
     public void testFontSizeSeekBar() {
         System.out.println("Testing testFontSizeSeekBar()");
@@ -53,6 +55,7 @@ public class Font_SizeTests {
         System.out.println("Test passed for testFontSizeSeekBar method test.");
     }
 
+    //Test whether the font size will change for the xml fields: testView, editTest, and button
     @Test
     public void testIterateViews() {
         System.out.println("Testing testIterateViews");
@@ -75,6 +78,7 @@ public class Font_SizeTests {
         System.out.println("Test passed for testIterateViews method test.");
     }
 
+    //Testing whether the font size actually changes with certain value
     @Test
     public void testSetFontSize() {
         System.out.println("Testing testSetFontSize");
@@ -91,6 +95,7 @@ public class Font_SizeTests {
         System.out.println("Test passed for testSetFontSize method test.");
     }
 
+    //Testing whether the save button works
     @Test
     public void testSaveButton() {
         System.out.println("Testing testSaveButton()");
@@ -104,6 +109,7 @@ public class Font_SizeTests {
         System.out.println("Test passed for testSaveButton method test.");
     }
 
+    //Testing whether the slider works
     @Test
     public void testFontSizeSlider() {
         System.out.println("Testing testFontSizeSlider()");
