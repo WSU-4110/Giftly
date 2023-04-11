@@ -50,7 +50,7 @@ public class SignUpScreen extends AppCompatActivity {
         txtLoginInfo = findViewById(R.id.txtLoginInfo);
         editInterests = (EditText) findViewById(R.id.userInterests);
 
-        //Auto sign in feaure
+        //Auto sign in feature
         if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
             startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
             finish();

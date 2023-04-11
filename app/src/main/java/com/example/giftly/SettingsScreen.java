@@ -50,7 +50,7 @@ public class SettingsScreen extends AppCompatActivity {
         choosingThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SettingsScreen.this, CThemeScreen.class);
+                Intent intent = new Intent(SettingsScreen.this, ThemeScreen.class);
                 startActivity(intent);
             }
         });

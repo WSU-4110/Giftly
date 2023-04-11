@@ -5,17 +5,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class CThemeScreen extends AppCompatActivity {
+public class ThemeScreen extends AppCompatActivity {
 
     //This will overwrite the settings for the background colors for all screens
     private SharedPreferences sharedPreferences;
@@ -23,11 +21,11 @@ public class CThemeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ctheme_screen);
+        setContentView(R.layout.theme_screen);
 
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(CThemeScreen.this, R.color.Default_color));
+        int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(ThemeScreen.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
         //Create variables to connect to xml android:id fields
@@ -41,7 +39,7 @@ public class CThemeScreen extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CThemeScreen.this, HomeScreen.class);
+                Intent intent = new Intent(ThemeScreen.this, HomeScreen.class);
                 startActivity(intent);
             }
         });
@@ -50,7 +48,7 @@ public class CThemeScreen extends AppCompatActivity {
         defaultThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Default_color);
+                int selectedColor = ContextCompat.getColor(ThemeScreen.this, R.color.Default_color);
                 sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
                 getWindow().getDecorView().setBackgroundColor(selectedColor);
             }
@@ -60,7 +58,7 @@ public class CThemeScreen extends AppCompatActivity {
         color1ThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Giftly_color);
+                int selectedColor = ContextCompat.getColor(ThemeScreen.this, R.color.Giftly_color);
                 sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
                 getWindow().getDecorView().setBackgroundColor(selectedColor);
             }
@@ -70,7 +68,7 @@ public class CThemeScreen extends AppCompatActivity {
         color2ThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Valentines_color);
+                int selectedColor = ContextCompat.getColor(ThemeScreen.this, R.color.Valentines_color);
                 sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
                 getWindow().getDecorView().setBackgroundColor(selectedColor);
             }
@@ -80,7 +78,7 @@ public class CThemeScreen extends AppCompatActivity {
         color3ThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Easter_color);
+                int selectedColor = ContextCompat.getColor(ThemeScreen.this, R.color.Easter_color);
                 sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
                 getWindow().getDecorView().setBackgroundColor(selectedColor);
             }

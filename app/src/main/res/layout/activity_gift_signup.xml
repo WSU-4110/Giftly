@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/event_name2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,50 +27,34 @@
             android:textColorHint="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/event_name"
+            app:layout_constraintBottom_toTopOf="@+id/gift_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/event_name"
-            android:layout_width="352dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="43dp"
-            android:layout_marginEnd="33dp"
-            android:background="@drawable/gray_background"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="fill"
-            android:hint="   Event Name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/white"
-            android:textColorHighlight="@color/white"
-            android:textColorHint="@color/light_gray"
-            android:textColorLink="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header" />
 
         <TextView
-            android:id="@+id/locatiopn_entry"
+            android:id="@+id/gift_list"
             android:layout_width="348dp"
-            android:layout_height="252dp"
+            android:layout_height="350dp"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="144dp"
             android:layout_marginEnd="35dp"
             android:background="@drawable/gray_background"
             android:fontFamily="sans-serif-medium"
             android:hint="   Gift List"
+            android:paddingStart="10dp"
             android:textColor="@color/white"
             android:textColorHighlight="@color/white"
             android:textColorHint="@color/light_gray"
             android:textColorLink="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_name" />
+            app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header"
+            android:paddingTop="20dp" /> <!-- Adjust the paddingTop value to lower the text -->
+
 
         <EditText
             android:id="@+id/event_name_entry"
@@ -91,7 +75,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.75"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locatiopn_entry" />
+            app:layout_constraintTop_toBottomOf="@+id/gift_list" />
 
         <Button
             android:id="@+id/button_add_event"
