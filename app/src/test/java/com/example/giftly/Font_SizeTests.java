@@ -33,7 +33,7 @@ public class Font_SizeTests {
 
     //Testing on whether the user is able to go into the font size setting
     @Test
-    public void testOnCreate() {
+    public void testAccessFontSizeFeature() {
         System.out.println("Testing testOnCreate()");
         FontSizeScreen activity = Robolectric.setupActivity(FontSizeScreen.class);
         assertNotNull(activity);
@@ -99,10 +99,10 @@ public class Font_SizeTests {
     @Test
     public void testSaveButton() {
         System.out.println("Testing testSaveButton()");
-        Button savingit2 = activity.findViewById(R.id.saveIt2);
-        assertNotNull(savingit2);
+        Button saveButton = activity.findViewById(R.id.saveIt2);
+        assertNotNull(saveButton);
 
-        savingit2.performClick();
+        saveButton.performClick();
         Intent expectedIntent = new Intent(activity, HomeScreen.class);
         Intent actualIntent = shadowOf(RuntimeEnvironment.application).getNextStartedActivity();
         assertEquals(expectedIntent.getComponent(), actualIntent.getComponent());
