@@ -7,14 +7,19 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 
@@ -35,6 +40,10 @@ public class DisplayEventScreen extends AppCompatActivity {
 
     public Button button_edit_event;
     private SharedPreferences sharedPreferences;
+    private PopupWindow popupWindow;
+    private LayoutInflater inflater;
+    private RelativeLayout relativeLayout;
+
 
     // Temporary List of Participants; array to be filled in by database info
     ListView participantList;
@@ -64,6 +73,8 @@ public class DisplayEventScreen extends AppCompatActivity {
         participantList = findViewById(R.id.participant_list);
         TextView eventTitle = findViewById(R.id.Event_title);
         TextView eventDate = findViewById(R.id.event_date);
+
+
 
         Futures.addCallback(
                 client.readEvent(eventID),
@@ -160,7 +171,39 @@ public class DisplayEventScreen extends AppCompatActivity {
             });
         }
     }
-
+    // Show popup window with profile information
+    private void showProfilePopup(String participantID) {
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_profile, null);
+        // Find views in the popup layout
+        TextView profileName = popupView.findViewById(R.id.profile_name);
+        TextView profileEmail = popupView.findViewById(R.id.profile_email);
+        TextView whatTheyreBringing = popupView.findViewById(R.id.what_theyre_bringing);
+        TextView bringingItems = popupView.findViewById(R.id.bringing_items);
+        Button buttonClose = popupView.findViewById(R.id.button_close);
+        // Set profile information
+        // Replace with your logic to retrieve and set participant information
+        String name = "John Doe";
+        String email = "johndoe@example.com";
+        String items = "Item 1, Item 2, Item 3"; // Replace with your logic to retrieve items
+        profileName.setText(name);
+        profileEmail.setText(email);
+        bringingItems.setText(items);
+        // Close button click listener
+        buttonClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (popupWindow != null && popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
+            }
+        });
+        // Create and show the popup window
+        popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(DisplayEventScreen.this, android.R.color.transparent)));
+        popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(relativeLayout, Gravity.CENTER, 0, 0);
+    }
     //Back button configuration
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
