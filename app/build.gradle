@@ -71,6 +71,15 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.2.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    // Dependencies for Autocomplete & Search features
+    implementation "com.mapbox.search:autofill:1.0.0-rc.2"
+    implementation "com.mapbox.search:discover:1.0.0-rc.2"
+    implementation "com.mapbox.search:place-autocomplete:1.0.0-rc.2"
+    implementation "com.mapbox.search:offline:1.0.0-rc.2"
+    implementation "com.mapbox.search:mapbox-search-android:1.0.0-rc.2"
+    implementation "com.mapbox.search:mapbox-search-android-ui:1.0.0-rc.2"
+
     //implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
     //implementation 'de.hdodenhof:circleimageview:3.0.0'
     //implementation 'com.google.firebase:firebase-storage:11.0.4'
