@@ -13,7 +13,7 @@ import android.widget.Button;
 
 //private SharedPreferences sharedPreferences;
 
-public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
+public class ThemeScreen extends AppCompatActivity implements ThemeObserver {
         private ThemeSubject themeSubject;
         private SharedPreferences sharedPreferences;
 
@@ -26,7 +26,7 @@ public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
             themeSubject.registerObserver(this);
 
             sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-            int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(CThemeScreen.this, R.color.Default_color));
+            int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(ThemeScreen.this, R.color.Default_color));
             getWindow().getDecorView().setBackgroundColor(savedColor);
 
             Button dftThemeBtn = findViewById(R.id.defaultTheme);
@@ -36,7 +36,7 @@ public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
             savingit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(CThemeScreen.this, HomeScreen.class);
+                    Intent intent = new Intent(ThemeScreen.this, HomeScreen.class);
                     startActivity(intent);
                 }
             });
@@ -44,7 +44,7 @@ public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
             dftThemeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Default_color);
+                    int selectedColor = ContextCompat.getColor(ThemeScreen.this, R.color.Default_color);
                     sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
                     themeSubject.notifyObservers(selectedColor);
                 }
@@ -53,7 +53,7 @@ public class CThemeScreen extends AppCompatActivity implements ThemeObserver {
             lightMode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int selectedColor = ContextCompat.getColor(CThemeScreen.this, R.color.Light_color);
+                    int selectedColor = ContextCompat.getColor(ThemeScreen.this, R.color.Light_color);
                     sharedPreferences.edit().putInt("BackgroundColor", selectedColor).apply();
                     themeSubject.notifyObservers(selectedColor);
                 }
