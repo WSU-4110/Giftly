@@ -206,6 +206,7 @@ public class HomeScreen extends AppCompatActivity {
                                                             //This will change the background of the CardView
                                                             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                                                             int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(HomeScreen.this, R.color.Default_color));
+
                                                             // Create a GradientDrawable with the desired background color
                                                             GradientDrawable shape = new GradientDrawable();
                                                             shape.setShape(GradientDrawable.RECTANGLE);
@@ -271,10 +272,11 @@ public class HomeScreen extends AppCompatActivity {
                                                             //This will change the background of the CardView
                                                             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                                                             int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(HomeScreen.this, R.color.Default_color));
+
                                                             // Create a GradientDrawable with the desired background color
                                                             GradientDrawable shape = new GradientDrawable();
                                                             shape.setShape(GradientDrawable.RECTANGLE);
-                                                            shape.setCornerRadii(new float[]{30, 30, 30, 30, 30, 30, 30, 30});
+                                                            shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
                                                             shape.setColor(savedColor);
                                                             cardView.setBackground(shape);
 
