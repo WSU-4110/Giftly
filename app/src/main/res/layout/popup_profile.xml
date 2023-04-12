@@ -23,10 +23,10 @@
 
     <!-- What they're bringing -->
     <TextView
-        android:id="@+id/what_theyre_bringing"
+        android:id="@+id/phone_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="What They're Bringing:"
+        android:text="Phone Number:"
         android:textSize="14sp"
         android:padding="16dp"
         android:layout_below="@id/profile_email" />
@@ -38,7 +38,7 @@
         android:text="Items List"
         android:textSize="14sp"
         android:padding="16dp"
-        android:layout_below="@id/what_theyre_bringing" />
+        android:layout_below="@id/phone_number" />
 
     <!-- Close button -->
     <Button
