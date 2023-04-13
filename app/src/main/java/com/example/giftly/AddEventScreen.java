@@ -109,7 +109,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
                             @Override
                             public void onSuccess(String eventID) {
                                 Log.d(TAG, "Successfully Created Event");
-                                Intent intent = new Intent(AddEventScreen.this, DisplayEventScreen.class);
+                                Intent intent = new Intent(AddEventScreen.this, HomeScreen.class);
                                 intent.putExtra("eventID",eventID);
                                 intent.putExtra("new",true);
                                 startActivity(intent);
@@ -132,7 +132,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         // Temporary array
         List<String> categories = new ArrayList<>();
         categories.add("Group Giving");
-        //categories.add("Single Recipient");
+        categories.add("Single Recipient");
         //categories.add("Secret Santa");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

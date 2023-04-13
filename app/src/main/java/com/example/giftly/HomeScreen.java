@@ -39,9 +39,7 @@ import java.util.ArrayList;
 public class HomeScreen extends AppCompatActivity {
     public Button settingsBtn;
     public Button addEventBtn;
-
     public Button addGiftBtn;
-
     public Button joinEventBtn;
     private SharedPreferences sharedPreferences;
 
