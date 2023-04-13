@@ -34,6 +34,11 @@ public class GiftNetworkEvent extends Event {
     }
 
     @Override
+    public String getEventLocation() {
+        return null;
+    }
+
+    @Override
     public Map<String, Object> convertToDocument() {
         Map<String, Object> eventDocument = new HashMap<>();
         //get basic event data
