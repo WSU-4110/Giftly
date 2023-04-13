@@ -52,13 +52,4 @@ public abstract class Event implements IEvent{
         }
     }
 
-    public void setEventLocation(String location) {
-        if (location != null && !location.isEmpty()) {
-            eventLocation = location.substring(0, Math.min(location.length(), 40));
-        }
-        else {
-            eventLocation = "No Location Found";
-        }
-    }
-
 }

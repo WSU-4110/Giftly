@@ -30,10 +30,19 @@ import com.example.giftly.handler.IEvent;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.geojson.Point;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DisplayEventScreen extends AppCompatActivity {
@@ -49,16 +58,6 @@ public class DisplayEventScreen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_event_screen);
-
-        // MAPVIEW TEST
-        String lon = "-83.0717"; //get longitude
-        String lat = "42.3502"; // get latitude
-        String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
-
-
-
-        ImageView mapView = (ImageView) findViewById(R.id.static_map);
-        Picasso.get().load(url).into(mapView);
 
         leaveEventBtn = (Button) findViewById(R.id.leave_event);
 
@@ -79,13 +78,55 @@ public class DisplayEventScreen extends AppCompatActivity {
             Toast.makeText(DisplayEventScreen.this, "Event Successfully Created", Toast.LENGTH_SHORT).show();
         }
 
-
         Log.d(TAG, "EventID: " + eventID);
 
         participantList = findViewById(R.id.participant_list);
         TextView eventTitleDisplay = findViewById(R.id.Event_title);
         TextView eventDateDisplay = findViewById(R.id.event_date);
         TextView eventLocationDisplay = findViewById(R.id.locatiopn_entry);
+
+
+        // Implemented Geocoding Functionality
+        MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+                .accessToken(getString(R.string.mapbox_access_token))
+                .query(eventLocationDisplay.toString())
+                .build();
+        mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+            @Override
+            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+                List<CarmenFeature> results = response.body().features();
+
+                if (results.size() > 0) {
+
+                    Point firstResultPoint = results.get(0).center();
+                    Log.d(TAG, "LONGITUDE: " + firstResultPoint.longitude());
+                    Log.d(TAG, "LATITUDE: " + firstResultPoint.latitude());
+                    String lon = String.valueOf(firstResultPoint.longitude());
+                    String lat = String.valueOf(firstResultPoint.longitude());
+
+                    //Testing Values
+                    //String lon = "-83.0717"; //get longitude
+                    //String lat = "42.3502"; // get latitude
+
+                    // Call to API, uses above values to accurately display location
+                    String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
+
+                    // View of Static Map on Page
+                    ImageView mapView = (ImageView) findViewById(R.id.static_map);
+                    Picasso.get().load(url).into(mapView);
+
+                } else {
+
+                    Log.d(TAG, "ERROR: No results found");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GeocodingResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
         Futures.addCallback(
                 client.readEvent(eventID),
