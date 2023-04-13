@@ -19,6 +19,7 @@ public class SingleRecipientEvent extends Event {
         this.eventID = eventID;
         this.ownerID = ownerID;
         this.eventName = eventName;
+        this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
         ArrayList<String> recipients = new ArrayList<>(1);
         recipients.add(subject);
@@ -30,6 +31,7 @@ public class SingleRecipientEvent extends Event {
 
         try {
             eventName = (Objects.requireNonNull(event.getOrDefault("eventName", "Unnamed Event"))).toString();
+            eventLocation = (Objects.requireNonNull(event.getOrDefault("eventLocation", "No Location"))).toString();
             eventID = event.get("eventID").toString();
             eventStartDate = ((Date)(event.getOrDefault("eventStartDate", null)));
             participants = (ArrayList<String>) event.getOrDefault("participants", new ArrayList<>(1));
@@ -41,10 +43,16 @@ public class SingleRecipientEvent extends Event {
     }
 
     @Override
+    public String getEventLocation() {
+        return null;
+    }
+
+    @Override
     public Map<String, Object> convertToDocument() {
         Map<String, Object> eventDocument = new HashMap<>();
         //get basic event data
         eventDocument.put("eventName", eventName);
+        eventDocument.put("eventLocation", eventLocation);
         eventDocument.put("eventStartDate", eventStartDate);
         eventDocument.put("ownerID", ownerID);  //sets the owner to the creator
         eventDocument.put("participants", participants);  //adds an array list with just the event creator in it
