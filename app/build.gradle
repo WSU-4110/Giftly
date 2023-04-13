@@ -79,6 +79,7 @@ dependencies {
     implementation "com.mapbox.search:offline:1.0.0-rc.2"
     implementation "com.mapbox.search:mapbox-search-android:1.0.0-rc.2"
     implementation "com.mapbox.search:mapbox-search-android-ui:1.0.0-rc.2"
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:6.11.0'
 
     //implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
     //implementation 'de.hdodenhof:circleimageview:3.0.0'

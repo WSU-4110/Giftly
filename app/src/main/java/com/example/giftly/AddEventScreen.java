@@ -38,13 +38,24 @@ import com.example.giftly.handler.Event;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.mapbox.api.directions.v5.DirectionsCriteria;
+import com.mapbox.api.directions.v5.MapboxDirections;
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.geojson.Point;
+
 import org.w3c.dom.Text;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddEventScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     final Calendar myCalendar= Calendar.getInstance();
 
     public Button button_create_event, button_cancel_adding;
-    public TextView textbox_eventName, textbox_eventDate;
+    public TextView textbox_eventName, textbox_eventDate, textbox_eventLocation;
     private SharedPreferences sharedPreferences;
     public SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
 
@@ -55,6 +66,49 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_event);
+
+        // Testing Geocoding Functionality
+        String Address = "Wayne State University";
+        //String test = "https://api.mapbox.com/search/geocode/v6/forward?q="+Address;
+
+
+        MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+                .accessToken(getString(R.string.mapbox_access_token))
+                .query(Address)
+                .build();
+
+        TextView tv1 = (TextView)findViewById(R.id.testAddress);
+
+        mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+            @Override
+            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+                List<CarmenFeature> results = response.body().features();
+
+
+                if (results.size() > 0) {
+
+                    // Log the first results Point.
+                    Point firstResultPoint = results.get(0).center();
+                    Log.d(TAG, "LONGITUDE: " + firstResultPoint.longitude());
+                    Log.d(TAG, "LATITUDE: " + firstResultPoint.latitude());
+                    String lon = String.valueOf(firstResultPoint.longitude());
+                    String lat = String.valueOf(firstResultPoint.longitude());
+                    tv1.setText(lon);
+
+                } else {
+
+                    // No result for your request were found.
+                    Log.d(TAG, "onResponse: No result found");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GeocodingResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(AddEventScreen.this, R.color.Default_color));
@@ -71,6 +125,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         //Text Entries
         textbox_eventName = (EditText) findViewById(R.id.event_name_entry);
         textbox_eventDate = (EditText) findViewById(R.id.enter_date);
+        textbox_eventLocation = (EditText) findViewById(R.id.locatiopn_entry);
 
         //Event Type Selector
         Spinner spinner = (Spinner)findViewById(R.id.event_type_selection);
@@ -100,6 +155,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
                 eventMap.put("eventStartDate", eventDate);
                 eventMap.put("eventName", textbox_eventName.getText().toString());
                 eventMap.put("eventType", spinner.getSelectedItemPosition());
+                //eventMap.put("eventLocation",textbox_eventLocation.getText().toString());
 
 
                 Futures.addCallback(
