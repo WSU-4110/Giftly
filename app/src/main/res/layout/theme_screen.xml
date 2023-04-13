@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CThemeScreen">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="287dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="111dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="112dp"
+            android:text="Select a Theme Color"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/defaultTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/defaultTheme"
+            android:layout_width="210dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="67dp"
+            android:layout_marginTop="125dp"
+            android:layout_marginEnd="68dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Dark Mode"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/lightTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <Button
+            android:id="@+id/lightTheme"
+            android:layout_width="208dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="67dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="68dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Light Mode"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            app:backgroundTint="#C1BDBD"
+            app:cornerRadius="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/defaultTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/defaultTheme" />
+
+        <Button
+            android:id="@+id/saveIt"
+            android:layout_width="129dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="127dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="127dp"
+            android:layout_marginBottom="57dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lightTheme" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

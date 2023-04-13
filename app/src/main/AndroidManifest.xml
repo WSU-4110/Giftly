@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Giftly"
         tools:targetApi="31">
         <activity
+            android:name=".LayoutScreen"
+            android:exported="false" />
+        <activity
             android:name=".SetGiftIdeas"
             android:exported="false" />
         <activity
@@ -46,13 +49,7 @@
             android:name=".SignUpScreen"
             android:exported="false" />
         <activity
-            android:name=".crappyEventViewer"
-            android:exported="false" />
-        <activity
             android:name=".DisplayEventScreen"
-            android:exported="false" />
-        <activity
-            android:name=".GiftSignup"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

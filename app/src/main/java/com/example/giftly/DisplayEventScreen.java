@@ -5,6 +5,7 @@ import static com.example.giftly.Giftly.client;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -22,21 +23,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.giftly.handler.Event;
+import com.example.giftly.handler.IEvent;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class DisplayEventScreen extends AppCompatActivity {
 
     public Button button_edit_event;
+    public Button leaveEventBtn;
     private SharedPreferences sharedPreferences;
 
     ListView participantList;
@@ -61,6 +65,7 @@ public class DisplayEventScreen extends AppCompatActivity {
             }
         });
 
+        leaveEventBtn = (Button) findViewById(R.id.leave_event);
 
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -83,16 +88,16 @@ public class DisplayEventScreen extends AppCompatActivity {
         Log.d(TAG, "EventID: " + eventID);
 
         participantList = findViewById(R.id.participant_list);
-        TextView eventTitle = findViewById(R.id.Event_title);
-        TextView eventDate = findViewById(R.id.event_date);
+        TextView eventTitleDisplay = findViewById(R.id.Event_title);
+        TextView eventDateDisplay = findViewById(R.id.event_date);
 
         Futures.addCallback(
                 client.readEvent(eventID),
-                new FutureCallback<Event>() {
+                new FutureCallback<IEvent>() {
                     class updateEventGui implements Runnable {
-                        final Event event;
+                        final IEvent event;
 
-                        public updateEventGui(Event event) {
+                        public updateEventGui(IEvent event) {
                             this.event = event;
                         }
 
@@ -100,13 +105,16 @@ public class DisplayEventScreen extends AppCompatActivity {
                         // Displays event name and date; pulled from database
                         @Override
                         public void run() {
-                            eventTitle.setText(event.getEventName());
-                            eventDate.setText(event.getEventStartDate().toString());
+                            String eventName = event.getEventName();
+                            Date eventDate = event.getEventStartDate();
+
+                            eventTitleDisplay.setText(eventName  == null ? "Unnamed Event" : eventName);
+                            eventDateDisplay.setText(eventDate == null ? "No Date Set" : eventDate.toString());
                         }
                     }
 
                     @Override
-                    public void onSuccess(Event event) {
+                    public void onSuccess(IEvent event) {
                         Log.d(TAG, "Successfully pulled EventID" + event.getParticipants());
                         runOnUiThread(new updateEventGui(event));
                         ArrayList<String> participants = event.getParticipants();
@@ -131,8 +139,6 @@ public class DisplayEventScreen extends AppCompatActivity {
                                     public void onFailure(Throwable thrown) {
                                     }
                                 }, Giftly.service);
-
-
                     }
 
                     @Override
@@ -140,19 +146,78 @@ public class DisplayEventScreen extends AppCompatActivity {
                     }
                 }, Giftly.service);
 
-        // This section is commented out until we add the edit event page?
-//        button_edit_event = (Button) findViewById(R.id.edit_event);
-//        button_edit_event.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(DisplayEventScreen.this, edit_event_screen.class);
-//                startActivity(intent);
-//            }
-//        });
+        //This section is commented out until we add the edit event page?
+        button_edit_event = (Button) findViewById(R.id.edit_event);
+        button_edit_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DisplayEventScreen.this, AddEventScreen.class);
+                intent.putExtra("eventID", eventID);
+                startActivity(intent);
+            }
+        });
         // The list of participants is displayed on the screen
 
 
+        leaveEventBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //Pop Up for leaving an event
+            public void onClick(View v) {
 
+                Futures.addCallback(
+                        client.leaveEvent(eventID),
+                        new FutureCallback<String>() {
+
+                            @Override
+                            public void onSuccess(String result) {
+                                Log.d(TAG, "Successfully left event");
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(DisplayEventScreen.this, result, Toast.LENGTH_SHORT).show();
+                                        //Pop up to leave event
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(DisplayEventScreen.this);
+                                        builder.setMessage("You've left this event")
+                                                .setTitle("Leave Event Request")
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        Intent intent = new Intent(DisplayEventScreen.this, HomeScreen.class);
+                                                        startActivity(intent);
+                                                    }
+                                                });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onFailure(Throwable thrown) {
+
+                                String message = (thrown.getMessage().isEmpty() ? "There was a problem leaving the event" : thrown.getMessage());
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(DisplayEventScreen.this, message, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                Log.d(TAG, thrown.toString());
+                            }
+                        }, Giftly.service);
+
+
+
+
+            }
+
+
+        });
     }
     class updateParticipants implements Runnable {
         String[] participantNames;
@@ -180,8 +245,9 @@ public class DisplayEventScreen extends AppCompatActivity {
                 }
             });
         }
-    }
 
+
+}
     //Back button configuration
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -194,11 +260,10 @@ public class DisplayEventScreen extends AppCompatActivity {
     }
 
     // Method that will open the map app on the users phone.
-    public void openMap(String x, String y){
-        String lon = "-83.0717"; //get longitude
-        String lat = "42.3502"; // get latitude
+    //Open Map
+    public void openMap(String lon, String lat) {
         String uri = "https://www.google.com.tw/maps/place/" + lat + "," + lon;
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(intent);
     }
 

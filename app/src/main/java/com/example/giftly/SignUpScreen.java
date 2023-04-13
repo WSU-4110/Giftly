@@ -86,7 +86,11 @@ public class SignUpScreen extends AppCompatActivity {
             public void onClick(View view) {
                 if(editEmail.getText().toString().isEmpty() || editPassword.getText().toString().isEmpty()){
                     if(isSigningUp && editName.getText().toString().isEmpty()){
-                        Toast.makeText(SignUpScreen.this, "Invalid input", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpScreen.this, "Empty field(s) detected", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else{
+                        Toast.makeText(SignUpScreen.this, "Empty field(s) detected", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }

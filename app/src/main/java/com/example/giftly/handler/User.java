@@ -17,14 +17,11 @@ public class User {
     ArrayList<String> events;
     URL profilePicture; //TODO
 
-
-
     //Test Constructor
     public User() {
         fullName = "John Doe";
         interests = new ArrayList<>(0);
     }
-
 
     public User(String fullName, ArrayList<String> interests, ArrayList<String> events) {
         this.fullName = fullName;

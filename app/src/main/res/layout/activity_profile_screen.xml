@@ -1,97 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ProfileScreen">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/profilePic"
-        android:layout_width="249dp"
-        android:layout_height="281dp"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="58dp"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/upload" />
+    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ProfileScreen">
 
-    <Button
-        android:id="@+id/layoutBtn"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="56dp"
-        android:drawableLeft="@drawable/edit_name"
-        android:drawableRight="@drawable/setting_arrow"
-        android:fontFamily="sans-serif-black"
-        android:text="Profile Picture"
-        android:textAllCaps="false"
-        android:textSize="10dp"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <ImageView
+            android:id="@+id/profilePic"
+            android:layout_width="249dp"
+            android:layout_height="281dp"
+            android:layout_marginStart="95dp"
+            android:layout_marginTop="58dp"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/upload" />
 
-    <Button
-        android:id="@+id/fontSizeBtn"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="316dp"
-        android:layout_marginEnd="56dp"
-        android:drawableLeft="@drawable/edit_name"
-        android:drawableRight="@drawable/setting_arrow"
-        android:fontFamily="sans-serif-black"
-        android:text="Edit Name"
-        android:textAllCaps="false"
-        android:textSize="10dp"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <Button
+            android:id="@+id/layoutBtn"
+            android:layout_width="300dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="56dp"
+            android:drawableLeft="@drawable/edit_name"
+            android:drawableRight="@drawable/setting_arrow"
+            android:fontFamily="sans-serif-black"
+            android:text="Profile Picture"
+            android:gravity="left|center_vertical"
+            android:textAllCaps="false"
+            android:textSize="10dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="390dp"
-        android:layout_marginEnd="56dp"
-        android:drawableLeft="@drawable/gift_idea"
-        android:drawableRight="@drawable/setting_arrow"
-        android:fontFamily="sans-serif-black"
-        android:text="Edit Gift Ideas"
-        android:textAllCaps="false"
-        android:textSize="10dp"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutBtn" />
+        <Button
+            android:id="@+id/fontSizeBtn"
+            android:layout_width="300dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="316dp"
+            android:layout_marginEnd="56dp"
+            android:drawableLeft="@drawable/edit_name"
+            android:drawableRight="@drawable/setting_arrow"
+            android:fontFamily="sans-serif-black"
+            android:text="Edit Name"
+            android:gravity="left|center_vertical"
+            android:textAllCaps="false"
+            android:textSize="10dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="300dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="390dp"
+            android:layout_marginEnd="56dp"
+            android:drawableLeft="@drawable/gift_idea"
+            android:drawableRight="@drawable/setting_arrow"
+            android:fontFamily="sans-serif-black"
+            android:text="Edit Gift Ideas"
+            android:gravity="left|center_vertical"
+            android:textAllCaps="false"
+            android:textSize="10dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutBtn" />
 
 
-    <Button
-        android:id="@+id/anonymity_opt"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="465dp"
-        android:layout_marginEnd="56dp"
-        android:drawableLeft="@drawable/anonymity_icon"
-        android:drawableRight="@drawable/setting_arrow"
-        android:fontFamily="sans-serif-black"
-        android:text="Anonymity"
-        android:textAllCaps="false"
-        android:textSize="10dp"
-        app:backgroundTint="#4B4B4B"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/anonymity_opt"
+            android:layout_width="300dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="465dp"
+            android:layout_marginEnd="56dp"
+            android:drawableLeft="@drawable/anonymity_icon"
+            android:drawableRight="@drawable/setting_arrow"
+            android:fontFamily="sans-serif-black"
+            android:text="Anonymity"
+            android:gravity="left|center_vertical"
+            android:textAllCaps="false"
+            android:textSize="10dp"
+            app:backgroundTint="#4B4B4B"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
 

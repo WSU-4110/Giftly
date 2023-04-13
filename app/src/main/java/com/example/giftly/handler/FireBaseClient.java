@@ -1,18 +1,13 @@
 package com.example.giftly.handler;
-//TODO Add cusotm exception definitions for eventAlreadyExists, noDocFound so I don't have to add a general Exception catcher
-//all of by beautiful imports
+
+//all of the beautiful imports
 import static android.content.ContentValues.TAG;
-import static com.example.giftly.Giftly.client;
 import static com.example.giftly.Giftly.service;
 
 import android.util.Log;
 
-import com.example.giftly.DisplayEventScreen;
-import com.example.giftly.Giftly;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,17 +16,16 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.checkerframework.checker.units.qual.A;
-import org.w3c.dom.Document;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 public class FireBaseClient {
+
     //method wrappers because typing out that class name annoys me
     public FirebaseAuth getAuth() {
         return FirebaseAuth.getInstance();
@@ -39,6 +33,16 @@ public class FireBaseClient {
     public FirebaseFirestore getUser() {
         return FirebaseFirestore.getInstance();
     }
+    //Private instance object and constructor
+    private static FireBaseClient instance;
+    private FireBaseClient() {}
+    //Public instance accessor
+    public static FireBaseClient getClient() {
+        if (instance == null)
+            instance = new FireBaseClient();
+        return instance;
+    }
+
 
     //sets firebase user doc corresponding to current Auth login to user
     public void createProfile(User newUser) {
@@ -154,20 +158,19 @@ public class FireBaseClient {
             Tasks.await(getUser);
 
             DocumentSnapshot user = getUser.getResult();
-            DocumentSnapshot event = getUser.getResult();
+            DocumentSnapshot eventSnapshot = getEvent.getResult();
 
-            if (event.exists() && getUser.isSuccessful() ) {
-                ArrayList<String> participants = (ArrayList<String>) event.get("participants");
+            if (eventSnapshot.exists() && getUser.isSuccessful() ) {
 
-                //Check if event already has the user, if not add them and update the doc
-                if (participants == null) participants = new ArrayList<String>(1);
-                Log.d(TAG, "Checking Event");
-                if (!participants.contains(getAuth().getUid())) participants.add(getAuth().getUid());
-                    targetEvent.update("participants", participants);
+                IEvent event = EventBuilder.createEvent(eventSnapshot);
+                event.addParticipant(getAuth().getUid());
+                targetEvent.update("participants", event.getParticipants());
 
                 //Check if user is already a part of the event, if not add them and update the doc
                 Log.d(TAG, "Checking User");
-                ArrayList<String> eventList = user.exists() && (ArrayList<String>) user.get("Events") != null ? (ArrayList<String>) user.get("Events") : new ArrayList<>(1);
+                ArrayList<String> eventList = new ArrayList<>(1);
+                if (user.exists() && user.get("Events") != null)
+                    eventList = (ArrayList<String>) user.get("Events");
                 Log.d(TAG, eventList.toString());
                 if (!eventList.contains(eventID))
                     eventList.add(eventID);
@@ -182,37 +185,107 @@ public class FireBaseClient {
         }
     };
 
-    public ListenableFuture<String> createEvent(String name, Date date) {
-        return service.submit(new createEventRequest(name, date));
+
+    public ListenableFuture<String> leaveEvent(String eventID) {
+        return service.submit(new leaveEventRequest(eventID));
+    }
+    private class leaveEventRequest implements Callable<String> {
+        String eventID;
+        public leaveEventRequest(String eventID) {
+            this.eventID = eventID.trim();
+        }
+
+        @Override
+        public String call() throws Exception {
+            DocumentReference targetEvent = getUser().collection("Events").document(eventID);
+            DocumentReference targetUser = getUser().collection("Users").document(Objects.requireNonNull(getAuth().getUid()));
+            //log status of document allocation
+            Task<DocumentSnapshot> getEvent = targetEvent.get().addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + doc.getData());
+                    }
+                    else {
+                        Log.d(TAG, "No Such Document");
+                    }
+                }
+                else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns Event Snapshot
+
+            Task<DocumentSnapshot> getUser = targetUser.get().addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + doc.getData());
+                    }
+                    else {
+                        Log.d(TAG, "No Such Document");
+                    }
+                }
+                else {
+                    Log.d(TAG, "get failed with" + task.getException());
+                }
+            }); //returns User Snapshot
+
+            //wait for task completion
+            Tasks.await(getEvent);
+            Tasks.await(getUser);
+
+            DocumentSnapshot user = getUser.getResult();
+            DocumentSnapshot eventSnapshot = getEvent.getResult();
+
+            if (eventSnapshot.exists() && getUser.isSuccessful() ) {
+
+                IEvent event = EventBuilder.createEvent(eventSnapshot);
+                event.removeParticipant(getAuth().getUid());
+                targetEvent.update("participants", event.getParticipants());
+
+
+                Log.d(TAG, "Checking User");
+                ArrayList<String> eventList = new ArrayList<>(1);
+                if (user.exists() && user.get("Events") != null)
+                    eventList = (ArrayList<String>) user.get("Events");
+                Log.d(TAG, eventList.toString());
+                eventList.remove(eventID);
+
+                Task<Void> updateUser =  targetUser.update("Events", eventList);
+                Tasks.await(updateUser);
+                if (updateUser.isSuccessful()) return "Successfully left event";
+                else throw new Exception("Leave Event Failed, please try again");
+            }
+            else throw new Exception("Event Not Found");
+        }
+    };
+
+    public ListenableFuture<String> createEvent(Map<String, Object> eventMap) {
+        return service.submit(new createEventRequest(eventMap));
     }
     //Non-Blocking Event Creation Request
     private class createEventRequest implements Callable<String> {
-        String name;
-        Date date;
+    Map<String, Object> eventMap;
 
-        public createEventRequest(String name, Date date) {
-            this.name = name;
-            this.date = date;
+        public createEventRequest(Map<String, Object> eventMap) {
+            this.eventMap = eventMap;
         }
 
         @Override
         public String call() throws Exception {
             Log.d(TAG, "Event Creation Request started");
-            Map<String, Object> eventDoc = new HashMap<>();
             ArrayList<String> participants = new ArrayList<>(1);
             participants.add(getAuth().getUid()); //
             //get basic event data
-            eventDoc.put("eventName", name);
-            eventDoc.put("eventStartDate", date);
-            eventDoc.put("eventOwner", getAuth().getUid());  //sets the owner to the creator
-            eventDoc.put("participants", participants);  //adds an array list with just the event creator in it
+            eventMap.put("eventOwner", getAuth().getUid());  //sets the owner to the creator
+            eventMap.put("participants", participants);  //adds an array list with just the event creator in it
 
             DocumentReference targetUser = getUser().collection("Users").document(Objects.requireNonNull(getAuth().getUid()));
 
 
             Log.d(TAG, "Retrieval Tasks started");
             //log status of document allocation
-            Task<DocumentReference> getEvent =  getUser().collection("Events").add(eventDoc).addOnCompleteListener(task -> {
+            Task<DocumentReference> getEvent =  getUser().collection("Events").add(eventMap).addOnCompleteListener(task -> {
                 if(task.isSuccessful()) {
                     DocumentReference doc = task.getResult();
                 }
@@ -339,15 +412,15 @@ public class FireBaseClient {
     }
 
     //Call event from firebase DB with eid
-    public ListenableFuture<Event> readEvent(String eventID) {
+    public ListenableFuture<IEvent> readEvent(String eventID) {
         return service.submit(new eventCallback(eventID));
     }
     //Callable implemented class that returns a Future
-    private class eventCallback implements Callable<Event> {
+    private class eventCallback implements Callable<IEvent> {
         String eventID;
         eventCallback(String EID) {eventID = EID;}
 
-        public Event call() {
+        public IEvent call() {
             DocumentReference targetEvent = getUser().collection("Events").document(eventID);
 
             //log status of document allocation
@@ -368,7 +441,7 @@ public class FireBaseClient {
 
             try {
                 Tasks.await(callDB);
-                return new Event(callDB.getResult());
+                return EventBuilder.createEvent(callDB.getResult());
             }
             catch (Exception e) {
                 Log.d(TAG, e.toString());
@@ -378,26 +451,24 @@ public class FireBaseClient {
     }
 
     //Reads a event from the database with the matching document ID and returns Listenable Future for a user
-    public ListenableFuture<ArrayList<Event>> readEvent(ArrayList<String> eventIDs) {
+    public ListenableFuture<ArrayList<IEvent>> readEvent(ArrayList<String> eventIDs) {
         return service.submit(new eventListCallback(eventIDs));
     }
     //callable class that makes a request to FireBase and constructs a user when it gets a response, fulfilling the future
-    private class eventListCallback implements Callable<ArrayList<Event>> {
+    private class eventListCallback implements Callable<ArrayList<IEvent>> {
         ArrayList<String> EventIDList;
-
         eventListCallback(ArrayList<String> EIDs) {
             EventIDList = EIDs;
         }
 
         @Override
-        public ArrayList<Event> call() {
-            ArrayList<Event> retrievedUsers = new ArrayList<>(EventIDList.size());
-
+        public ArrayList<IEvent> call() {
+            ArrayList<IEvent> retrievedEvents = new ArrayList<>(EventIDList.size());
             Task<QuerySnapshot> callDB = getUser().collection("Events").whereIn(FieldPath.documentId(), EventIDList).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     QuerySnapshot docs = task.getResult();
                     if (docs.size() > 0) {
-                        Log.d(TAG, "Retrieved " + docs.size() + " from firebase");
+                        Log.d(TAG, "Retrieved " + docs.size() + " documents from firebase");
                     } else {
                         Log.d(TAG, "No Documents Retrieved");
                     }
@@ -408,10 +479,16 @@ public class FireBaseClient {
 
             try {
                 Tasks.await(callDB);
-                for (DocumentSnapshot event : callDB.getResult())
-                    retrievedUsers.add(new Event(event));
-                return retrievedUsers;
-            } catch (Exception e) {
+                for (DocumentSnapshot event : callDB.getResult()) {
+                    Log.d(TAG, event.toString());
+                    retrievedEvents.add(EventBuilder.createEvent(event));
+                    Log.d(TAG, retrievedEvents.get(retrievedEvents.size()-1).toString());
+                }
+                Log.d(TAG, "Passing " + retrievedEvents.size() + " events to UI.");
+                return retrievedEvents;
+            }
+            //Catches firebase exceptions when retrieving data from the snapshots
+            catch (ExecutionException | InterruptedException e) {
                 Log.d(TAG, "ERROR MAKING EVENT LIST: " + e);
                 return null;
             }
@@ -430,7 +507,7 @@ public class FireBaseClient {
         public giftListCallback(String eventID, String userID) {
             this.eventID = eventID;
             this.userID = userID;
-        }
+    }
 
         public String call() {
             StringBuilder giftList = new StringBuilder();
@@ -469,5 +546,4 @@ public class FireBaseClient {
             }
         }
     }
-
 }

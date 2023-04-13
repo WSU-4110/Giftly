@@ -3,19 +3,17 @@ package com.example.giftly;
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -41,9 +39,7 @@ import java.util.ArrayList;
 public class HomeScreen extends AppCompatActivity {
     public Button settingsBtn;
     public Button addEventBtn;
-
     public Button addGiftBtn;
-
     public Button joinEventBtn;
     private SharedPreferences sharedPreferences;
 
@@ -139,13 +135,14 @@ public class HomeScreen extends AppCompatActivity {
                         //This call will display the user's name in the greeting message
                         Futures.addCallback(
                                 Giftly.client.readEvent(result.getEvents()),
-                                new FutureCallback<ArrayList<Event>>() {
+                                new FutureCallback<ArrayList<IEvent>>() {
                                     @Override
-                                    public void onSuccess(ArrayList<Event> events) {
+                                    public void onSuccess(ArrayList<IEvent> events) {
                                         //anon class for updating GUI thread
                                         class updateEvents implements Runnable {
-                                            ArrayList<Event> events;
-                                            updateEvents(ArrayList<Event> e) { events = e;}
+                                            ArrayList<IEvent> events;
+                                            updateEvents(ArrayList<IEvent> e) { events = e;}
+                                            @SuppressLint("SuspiciousIndentation")
                                             @Override
                                             public void run() {
                                                 LinearLayout eventList = findViewById(R.id.events);
@@ -165,47 +162,122 @@ public class HomeScreen extends AppCompatActivity {
                                                 header.setLayoutParams(paramsHeader);
                                                 eventList.addView(header);
 
-                                                GridLayout gridLayout = new GridLayout(eventList.getContext());
-                                                gridLayout.setColumnCount(2); // set the number of columns you want
-                                                for (int i = 0; i < events.size(); i++) {
-                                                    Button button = new Button(eventList.getContext());
-                                                    button.setId(i);
-                                                    // Set the event name to lowercase
-                                                    String eventName = events.get(i).getEventName().toLowerCase();
-                                                    // Capitalize the first letter of the event name
-                                                    eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
+                                                int value = getIntent().getIntExtra("VALUE", 0);
+                                                switch (value) {
+                                                    case 0:
+                                                        // code block
+                                                        GridLayout gridLayout = new GridLayout(eventList.getContext());
+                                                        gridLayout.setColumnCount(2); // set the number of columns you want
+                                                        for (int i = 0; i < events.size(); i++) {
+                                                            Button button = new Button(eventList.getContext());
+                                                            button.setId(i);
 
+                                                            // Set the event name to lowercase
+                                                            String eventName = events.get(i).getEventName().toLowerCase();
+                                                            // Capitalize the first letter of the event name if it has a length
+                                                            if (eventName.length() > 1)
+                                                                eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
 
-                                                    button.setText(eventName);
+                                                            eventName = eventName.toLowerCase();
+                                                            eventName = Character.toString(eventName.charAt(0)).toUpperCase() + eventName.substring(1);
 
-                                                    //Add button layout modification stuff to make it look nice here (target button)
-                                                    button.setOnClickListener(new handleClick(events.get(i).getEventID()));
-                                                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                                                    params.setMargins(16, 16, 16, 32); //left, top, right, bottom
-                                                    params.width = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                    params.height = 350;
-                                                    button.setLayoutParams(params);
+                                                            String[] temp = eventName.split(" ");
+                                                            StringBuilder results = new StringBuilder();
+                                                            int L = temp.length;
+                                                            for (int k = 0; k < L; k++) {
+                                                                results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
+                                                            }
+                                                            String Event_name = results.toString();
+                                                            button.setText(Event_name);
 
-                                                    // Set the button background to a drawable with rounded corners
-                                                    GradientDrawable shape = new GradientDrawable();
-                                                    shape.setShape(GradientDrawable.RECTANGLE);
-                                                    shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
-                                                    shape.setColor(Color.parseColor("#4B4B4B"));
-                                                    button.setBackground(shape);
+                                                            button.setTransformationMethod(null);
 
-                                                    button.setTextColor(Color.WHITE);
-                                                    button.setTextSize(15);
-                                                    button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-                                                    gridLayout.addView(button);
+                                                            //Add button layout modification stuff to make it look nice here (target button)
+                                                            button.setOnClickListener(new handleClick(events.get(i).getEventID()));
+                                                            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                                                            params.setMargins(16, 16, 16, 32); //left, top, right, bottom
+                                                            params.width = 440;
+                                                            params.height = 350;
+                                                            button.setLayoutParams(params);
+
+                                                            // Set the button background to a drawable with rounded corners
+                                                            GradientDrawable shape = new GradientDrawable();
+                                                            shape.setShape(GradientDrawable.RECTANGLE);
+                                                            shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
+                                                            shape.setColor(Color.parseColor("#4B4B4B"));
+                                                            button.setBackground(shape);
+
+                                                            button.setTextColor(Color.WHITE);
+                                                            button.setTextSize(20);
+                                                            button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                                                            gridLayout.addView(button);
+                                                        }
+                                                        GridLayout.LayoutParams paramsGridLayout = new GridLayout.LayoutParams();
+                                                        paramsGridLayout.width = GridLayout.LayoutParams.MATCH_PARENT;
+                                                        paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                        paramsGridLayout.setMargins(40, 0, 32, 0); //left, top, right, bottom
+                                                        gridLayout.setLayoutParams(paramsGridLayout);
+                                                        eventList.addView(gridLayout);
+                                                        break;
+                                                    case 1:
+                                                        // code block
+                                                        GridLayout linearLayout = new GridLayout(eventList.getContext());
+                                                        linearLayout.setColumnCount(1); // set the number of columns you want
+                                                        for (int i = 0; i < events.size(); i++) {
+                                                        Button button = new Button(eventList.getContext());
+                                                        button.setId(i);
+
+                                                        // Set the event name to lowercase
+                                                        String eventName = events.get(i).getEventName().toLowerCase();
+                                                        //Capitalize the first letter of the event name if it has a length
+                                                        if (eventName.length() > 1)
+                                                        eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
+
+                                                        eventName = eventName.toLowerCase();
+                                                        eventName = Character.toString(eventName.charAt(0)).toUpperCase()+eventName.substring(1);
+
+                                                        String[] temp = eventName.split(" ");
+                                                        StringBuilder  results = new StringBuilder();
+                                                        int L = temp.length;
+                                                        for (int k = 0; k < L; k++) {
+                                                            results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
+                                                        }
+                                                        String Event_name = results.toString();
+                                                        button.setText(Event_name);
+
+                                                        button.setTransformationMethod(null);
+
+                                                        //Add button layout modification stuff to make it look nice here (target button)
+                                                        button.setOnClickListener(new handleClick(events.get(i).getEventID()));
+                                                        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                                                        params.setMargins(90, 16, 16, 32); //left, top, right, bottom
+                                                        params.width =750;
+                                                        params.height = 650;
+                                                        button.setLayoutParams(params);
+
+                                                        // Set the button background to a drawable with rounded corners
+                                                        GradientDrawable shape = new GradientDrawable();
+                                                        shape.setShape(GradientDrawable.RECTANGLE);
+                                                        shape.setCornerRadii(new float[]{30, 30, 30, 30, 30, 30, 30, 30});
+                                                        shape.setColor(Color.parseColor("#4B4B4B"));
+                                                        button.setBackground(shape);
+
+                                                        button.setTextColor(Color.WHITE);
+                                                        button.setTextSize(27);
+                                                        button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                                                        linearLayout.addView(button);
+                                                    }
+
+                                                    GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+                                                    layoutParams.width = GridLayout.LayoutParams.MATCH_PARENT;
+                                                    layoutParams.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                    layoutParams.setMargins(50, 0, 32, 0); //left, top, right, bottom
+                                                    linearLayout.setLayoutParams(layoutParams);
+                                                    eventList.addView(linearLayout);
+
+                                                        break;
+                                                    default:
                                                 }
-                                                GridLayout.LayoutParams paramsGridLayout = new GridLayout.LayoutParams();
-                                                paramsGridLayout.width = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                paramsGridLayout.height = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                paramsGridLayout.setMargins(32, 0, 32, 0); //left, top, right, bottom
-                                                gridLayout.setLayoutParams(paramsGridLayout);
-                                                eventList.addView(gridLayout);
-
-
 
                                             }
 
@@ -263,8 +335,5 @@ public class HomeScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
 }
 
