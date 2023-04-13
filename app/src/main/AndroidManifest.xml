@@ -15,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Giftly"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/apikey" />
+
         <activity
             android:name=".LayoutScreen"
             android:exported="false" />
