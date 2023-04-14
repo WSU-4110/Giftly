@@ -48,7 +48,8 @@ dependencies {
         exclude group: 'group_name', module: 'module_name'
     }
 
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
@@ -76,7 +77,6 @@ dependencies {
     //implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
     //implementation 'de.hdodenhof:circleimageview:3.0.0'
     //implementation 'com.google.firebase:firebase-storage:11.0.4'
-    //implementation 'com.squareup.picasso:picasso:2.71828'
     // TODO: Add the dependencies for Firebase products we'll need (RT DB)'
     // When using the BoM, don't specify versions in Firebase dependencies
 }
