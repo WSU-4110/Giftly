@@ -155,7 +155,6 @@ public class ThemeTest {
         assertEquals(textSize, button.getTextSize(), 0);
         System.out.println("Test passed for IterateViews.");
     }
-
     @Test
     public void testBackButton(){
 
