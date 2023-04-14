@@ -2,7 +2,6 @@ package com.example.giftly;
 
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,19 +19,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
+import com.bumptech.glide.Glide;
 import com.example.giftly.handler.IEvent;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -57,7 +53,10 @@ public class DisplayEventScreen extends AppCompatActivity {
         String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
 
         ImageView mapView = (ImageView) findViewById(R.id.static_map);
-        Picasso.get().load(url).into(mapView);
+        Glide.with(this)
+                .load(url)
+                .into(mapView);
+
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
