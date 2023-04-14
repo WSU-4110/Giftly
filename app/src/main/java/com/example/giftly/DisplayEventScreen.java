@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -57,6 +58,12 @@ public class DisplayEventScreen extends AppCompatActivity {
 
         ImageView mapView = (ImageView) findViewById(R.id.static_map);
         Picasso.get().load(url).into(mapView);
+        mapView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMap(lat, lon);
+            }
+        });
 
         leaveEventBtn = (Button) findViewById(R.id.leave_event);
 
@@ -251,5 +258,14 @@ public class DisplayEventScreen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // Method that will open the map app on the users phone.
+    //Open Map
+    public void openMap(String lon, String lat) {
+        String uri = "https://www.google.com.tw/maps/place/" + lat + "," + lon;
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(intent);
+    }
+
 }
 
