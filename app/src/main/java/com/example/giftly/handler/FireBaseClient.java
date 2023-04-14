@@ -17,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -45,16 +44,34 @@ public class FireBaseClient {
 
 
     //sets firebase user doc corresponding to current Auth login to user
-    public void createProfile(User newUser) {
-        //create a Map with user data using firebase doc Schema
-        Map<String, Object> user = new HashMap<>();
-        user.put("Name", newUser.fullName);
-        user.put("Events", newUser.events);
-        user.put("Interests", newUser.interests);
-        //reference the collection and call a set event using the authorized users ID
-        if (getAuth().getUid() != null)
-            getUser().collection("Users").document(getAuth().getUid()).set(user);
+                                                public ListenableFuture<String> createProfile(User user) {
+                                                    return service.submit(new createProfileRequest(user));
     }
+    //Non-Blocking Event Creation Request
+    private class createProfileRequest implements Callable<String> {
+
+        HashMap<String, Object> userMap;
+        public createProfileRequest(User user) {
+            //create a Map with user data using firebase doc Schema
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("Name", user.fullName);
+            userMap.put("Events", user.events);
+            userMap.put("Interests", user.interests);
+        }
+
+        @Override
+        public String call() throws Exception {
+            Task<Void> getResult = getUser().collection("Users").document(Objects.requireNonNull(getAuth().getUid())).set(userMap);
+            Tasks.await(getResult);
+
+            if (getResult.isSuccessful()) {
+                return "Profile Successfully Created";
+            }
+            else return "Profile Creation Failed";
+        }
+
+    };
+
 
     //Sets the corresponding element of the array in firebase to the provided string
     public ListenableFuture<String> setGift(String targetUserID, String eventID, String gift) {

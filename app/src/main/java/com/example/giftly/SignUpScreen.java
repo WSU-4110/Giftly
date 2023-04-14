@@ -1,5 +1,6 @@
 package com.example.giftly;
 
+import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,12 +21,16 @@ import com.example.giftly.handler.FireBaseClient;
 import com.example.giftly.handler.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +56,7 @@ public class SignUpScreen extends AppCompatActivity {
         txtLoginInfo = findViewById(R.id.txtLoginInfo);
         editInterests = (EditText) findViewById(R.id.userInterests);
 
-        //Auto sign in feaure
+        //Auto sign in feature
         if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
             startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
             finish();
@@ -109,8 +115,27 @@ public class SignUpScreen extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
-                    Toast.makeText(SignUpScreen.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+
+                    //Turn the interests box editable object into an arraylist using funky town
+                    ArrayList<String> interests = new ArrayList<>(Arrays.asList(editInterests.getText().toString().split("\\n")));
+                    //Create a user object from info
+                    User user = new User(editName.getText().toString(), interests, new ArrayList<>(0));
+                    Futures.addCallback(
+                            client.createProfile(user), new FutureCallback<String>() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
+                                    Toast.makeText(SignUpScreen.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    Log.d(TAG, t.toString());
+                                    Toast.makeText(SignUpScreen.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }, Giftly.service
+
+                    );
                 }else{
                     Toast.makeText(SignUpScreen.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }

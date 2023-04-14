@@ -65,7 +65,7 @@ public class HomeScreen extends AppCompatActivity {
                         .setView(dialogView)
                         .setPositiveButton("Join", (dialog, which) -> {
                             String eventId = input.getText().toString();
-
+                            //Create Async Future
                             Futures.addCallback(
                                     client.joinEvent(eventId),
                                     new FutureCallback<String>() {
