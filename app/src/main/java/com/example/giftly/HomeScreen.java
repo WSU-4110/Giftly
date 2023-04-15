@@ -28,6 +28,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
 import androidx.core.content.ContextCompat;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.view.Menu;
@@ -48,13 +49,13 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-
         //find Users name and display it to test readUser data
         TextView display = findViewById(R.id.userNameDispl);
         settingsBtn = (Button) findViewById(R.id.SettingsBtn);
         settingsBtn.setBackgroundColor(Color.TRANSPARENT);
         addEventBtn = (Button) findViewById(R.id.addEventBtn);
         joinEventBtn = (Button)findViewById(R.id.joinEvent);
+        CardView cardView = findViewById(R.id.cardList);
 
             //Pop up when clicking join event
             joinEventBtn.setOnClickListener(view -> {
@@ -200,12 +201,23 @@ public class HomeScreen extends AppCompatActivity {
                                                             params.height = 350;
                                                             button.setLayoutParams(params);
 
-                                                            // Set the button background to a drawable with rounded corners
+                                                            //This will change the background of the CardView
+                                                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                                            int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(HomeScreen.this, R.color.Default_color));
+
+                                                            // Create a GradientDrawable with the desired background color
                                                             GradientDrawable shape = new GradientDrawable();
                                                             shape.setShape(GradientDrawable.RECTANGLE);
                                                             shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
-                                                            shape.setColor(Color.parseColor("#4B4B4B"));
-                                                            button.setBackground(shape);
+                                                            shape.setColor(savedColor);
+                                                            cardView.setBackground(shape);
+
+                                                            //This will change the background of the event blocks on the home screen
+                                                            GradientDrawable shape2 = new GradientDrawable();
+                                                            shape2.setShape(GradientDrawable.RECTANGLE);
+                                                            shape2.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
+                                                            shape2.setColor(Color.parseColor("#4B4B4B"));
+                                                            button.setBackground(shape2);
 
                                                             button.setTextColor(Color.WHITE);
                                                             button.setTextSize(20);
@@ -224,57 +236,67 @@ public class HomeScreen extends AppCompatActivity {
                                                         GridLayout linearLayout = new GridLayout(eventList.getContext());
                                                         linearLayout.setColumnCount(1); // set the number of columns you want
                                                         for (int i = 0; i < events.size(); i++) {
-                                                        Button button = new Button(eventList.getContext());
-                                                        button.setId(i);
+                                                            Button button = new Button(eventList.getContext());
+                                                            button.setId(i);
 
-                                                        // Set the event name to lowercase
-                                                        String eventName = events.get(i).getEventName().toLowerCase();
-                                                        //Capitalize the first letter of the event name if it has a length
-                                                        if (eventName.length() > 1)
-                                                        eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
+                                                            // Set the event name to lowercase
+                                                            String eventName = events.get(i).getEventName().toLowerCase();
+                                                            //Capitalize the first letter of the event name if it has a length
+                                                            if (eventName.length() > 1)
+                                                                eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
 
-                                                        eventName = eventName.toLowerCase();
-                                                        eventName = Character.toString(eventName.charAt(0)).toUpperCase()+eventName.substring(1);
+                                                            eventName = eventName.toLowerCase();
+                                                            eventName = Character.toString(eventName.charAt(0)).toUpperCase()+eventName.substring(1);
 
-                                                        String[] temp = eventName.split(" ");
-                                                        StringBuilder  results = new StringBuilder();
-                                                        int L = temp.length;
-                                                        for (int k = 0; k < L; k++) {
-                                                            results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
+                                                            String[] temp = eventName.split(" ");
+                                                            StringBuilder  results = new StringBuilder();
+                                                            int L = temp.length;
+                                                            for (int k = 0; k < L; k++) {
+                                                                results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
+                                                            }
+                                                            String Event_name = results.toString();
+                                                            button.setText(Event_name);
+
+                                                            button.setTransformationMethod(null);
+
+                                                            //Add button layout modification stuff to make it look nice here (target button)
+                                                            button.setOnClickListener(new handleClick(events.get(i).getEventID()));
+                                                            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                                                            params.setMargins(90, 16, 16, 32); //left, top, right, bottom
+                                                            params.width =750;
+                                                            params.height = 650;
+                                                            button.setLayoutParams(params);
+
+                                                            //This will change the background of the CardView
+                                                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                                            int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(HomeScreen.this, R.color.Default_color));
+
+                                                            // Create a GradientDrawable with the desired background color
+                                                            GradientDrawable shape = new GradientDrawable();
+                                                            shape.setShape(GradientDrawable.RECTANGLE);
+                                                            shape.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
+                                                            shape.setColor(savedColor);
+                                                            cardView.setBackground(shape);
+
+                                                            //This will change the background of the event blocks on the home screen
+                                                            GradientDrawable shape2 = new GradientDrawable();
+                                                            shape2.setShape(GradientDrawable.RECTANGLE);
+                                                            shape2.setCornerRadii(new float[]{20, 20, 20, 20, 20, 20, 20, 20});
+                                                            shape2.setColor(Color.parseColor("#4B4B4B"));
+                                                            button.setBackground(shape2);
+
+                                                            button.setTextColor(Color.WHITE);
+                                                            button.setTextSize(27);
+                                                            button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                                                            linearLayout.addView(button);
                                                         }
-                                                        String Event_name = results.toString();
-                                                        button.setText(Event_name);
 
-                                                        button.setTransformationMethod(null);
-
-                                                        //Add button layout modification stuff to make it look nice here (target button)
-                                                        button.setOnClickListener(new handleClick(events.get(i).getEventID()));
-                                                        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                                                        params.setMargins(90, 16, 16, 32); //left, top, right, bottom
-                                                        params.width =750;
-                                                        params.height = 650;
-                                                        button.setLayoutParams(params);
-
-                                                        // Set the button background to a drawable with rounded corners
-                                                        GradientDrawable shape = new GradientDrawable();
-                                                        shape.setShape(GradientDrawable.RECTANGLE);
-                                                        shape.setCornerRadii(new float[]{30, 30, 30, 30, 30, 30, 30, 30});
-                                                        shape.setColor(Color.parseColor("#4B4B4B"));
-                                                        button.setBackground(shape);
-
-                                                        button.setTextColor(Color.WHITE);
-                                                        button.setTextSize(27);
-                                                        button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-                                                        linearLayout.addView(button);
-                                                    }
-
-                                                    GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
-                                                    layoutParams.width = GridLayout.LayoutParams.MATCH_PARENT;
-                                                    layoutParams.height = GridLayout.LayoutParams.WRAP_CONTENT;
-                                                    layoutParams.setMargins(50, 0, 32, 0); //left, top, right, bottom
-                                                    linearLayout.setLayoutParams(layoutParams);
-                                                    eventList.addView(linearLayout);
-
+                                                        GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+                                                        layoutParams.width = GridLayout.LayoutParams.MATCH_PARENT;
+                                                        layoutParams.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                                                        layoutParams.setMargins(50, 0, 32, 0); //left, top, right, bottom
+                                                        linearLayout.setLayoutParams(layoutParams);
+                                                        eventList.addView(linearLayout);
                                                         break;
                                                     default:
                                                 }

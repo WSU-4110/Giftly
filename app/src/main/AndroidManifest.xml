@@ -28,6 +28,9 @@
             android:name=".EditGiftListIdeas"
             android:exported="false" />
         <activity
+            android:name=".ThemeScreen"
+            android:exported="false" />
+        <activity
             android:name=".AddEventScreen"
             android:exported="false" />
         <activity
@@ -48,9 +51,6 @@
         <activity
             android:name=".DisplayEventScreen"
             android:exported="false" />
-        <activity
-        android:name=".ThemeScreen"
-        android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
