@@ -9,6 +9,7 @@ public interface IEvent {
     public String getEventID();
     public String getEventOwner();
     public String getEventName();
+    public String getEventLocation();
     public Date getEventStartDate();
     public ArrayList<String> getParticipants();
     public ArrayList<String> removeParticipant(String userID);

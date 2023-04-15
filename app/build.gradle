@@ -48,6 +48,14 @@ dependencies {
         exclude group: 'group_name', module: 'module_name'
     }
 
+    implementation "com.mapbox.search:autofill:1.0.0-rc.3"
+    implementation "com.mapbox.search:discover:1.0.0-rc.3"
+    implementation "com.mapbox.search:place-autocomplete:1.0.0-rc.3"
+    implementation "com.mapbox.search:offline:1.0.0-rc.3"
+    implementation "com.mapbox.search:mapbox-search-android:1.0.0-rc.3"
+    implementation "com.mapbox.search:mapbox-search-android-ui:1.0.0-rc.3"
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:6.11.0'
+
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 

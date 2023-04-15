@@ -11,10 +11,11 @@ import java.util.Objects;
 public class GiftNetworkEvent extends Event {
     //Local Constructor with ID's confirmed
 
-    GiftNetworkEvent(String eventID, String ownerID, String eventName, Date eventStartDate) {
+    GiftNetworkEvent(String eventID, String ownerID, String eventName, String eventLocation, Date eventStartDate) {
         this.eventID = eventID;
         this.ownerID = ownerID;
         this.eventName = eventName;
+        this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
     }
 
@@ -22,6 +23,7 @@ public class GiftNetworkEvent extends Event {
     GiftNetworkEvent(Map<String, Object> event) {
         try {
             eventName = (Objects.requireNonNull(event.getOrDefault("eventName", "Unnamed Event"))).toString();
+            eventLocation = (Objects.requireNonNull(event.getOrDefault("eventLocation", "No Location"))).toString();
             eventID = Objects.requireNonNull(event.getOrDefault("eventID", "No ID")).toString();
             eventStartDate = ((Date) (event.getOrDefault("eventStartDate", null)));
             participants = (ArrayList<String>) event.getOrDefault("participants", new ArrayList<>(1));
@@ -32,10 +34,16 @@ public class GiftNetworkEvent extends Event {
     }
 
     @Override
+    public String getEventLocation() {
+        return null;
+    }
+
+    @Override
     public Map<String, Object> convertToDocument() {
         Map<String, Object> eventDocument = new HashMap<>();
         //get basic event data
         eventDocument.put("eventName", eventName);
+        eventDocument.put("eventLocation", eventLocation);
         eventDocument.put("eventStartDate", eventStartDate);
         eventDocument.put("ownerID", ownerID);  //sets the owner to the creator
         eventDocument.put("participants", participants);  //adds an array list with just the event creator in it

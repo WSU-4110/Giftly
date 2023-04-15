@@ -10,6 +10,7 @@ public abstract class Event implements IEvent{
 
     //Event Info
     String eventName;
+    String eventLocation;
     Date eventStartDate;
     ArrayList<String> participants;
 
@@ -23,6 +24,8 @@ public abstract class Event implements IEvent{
     public String getEventName() {
         return eventName;
     }
+
+    public String getLocation(){return eventLocation; }
     public Date getEventStartDate() {
         return eventStartDate;
     }
@@ -48,4 +51,5 @@ public abstract class Event implements IEvent{
             eventName = "No Name Found";
         }
     }
+
 }
