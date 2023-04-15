@@ -30,7 +30,7 @@
             android:name=".EditGiftListIdeas"
             android:exported="false" />
         <activity
-            android:name=".CThemeScreen"
+            android:name=".ThemeScreen"
             android:exported="false" />
         <activity
             android:name=".AddEventScreen"

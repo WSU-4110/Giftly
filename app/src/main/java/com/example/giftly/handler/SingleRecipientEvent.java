@@ -28,7 +28,6 @@ public class SingleRecipientEvent extends Event {
 
     //Pulls data from document snapshot
     SingleRecipientEvent(Map<String, Object> event) {
-
         try {
             eventName = (Objects.requireNonNull(event.getOrDefault("eventName", "Unnamed Event"))).toString();
             eventLocation = (Objects.requireNonNull(event.getOrDefault("eventLocation", "No Location"))).toString();
@@ -64,12 +63,21 @@ public class SingleRecipientEvent extends Event {
 
     @Override
     public ArrayList<String> getRecipients() {
+
         return (subject);
     }
 
     //TODO IMPLEMENT METHOD
     @Override
     public ArrayList<String> addParticipant(String userID) {
-        return null;
+        //return null;
+        if(participants == null)
+            participants = new ArrayList<String>(1);
+        Log.d(TAG, "Checking Event");
+        if(!participants.contains(userID)){
+            participants.add(userID);
+        }
+
+        return participants;
     }
 }

@@ -55,4 +55,9 @@ public class User {
     public ArrayList<String> getEvents() {
         return events;
     }
+
+    @Override
+    public String toString() {
+        return (String.format("Name: %s, Interests: %s", getFullName(), getInterests()));
+    }
 }
