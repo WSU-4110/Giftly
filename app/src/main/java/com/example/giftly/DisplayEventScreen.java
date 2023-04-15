@@ -117,16 +117,7 @@ public class DisplayEventScreen extends AppCompatActivity {
                     String lon = String.valueOf(firstResultPoint.longitude());
                     String lat = String.valueOf(firstResultPoint.longitude());
 
-                    //Testing Values
-                    //String lon = "-83.0717"; //get longitude
-                    //String lat = "42.3502"; // get latitude
 
-                    // Call to API, uses above values to accurately display location
-                    String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
-
-                    // View of Static Map on Page
-                    ImageView mapView = (ImageView) findViewById(R.id.static_map);
-                    Picasso.get().load(url).into(mapView);
 
                 } else {
 
