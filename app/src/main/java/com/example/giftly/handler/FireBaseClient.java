@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -89,7 +90,7 @@ public class FireBaseClient {
     public ListenableFuture<String> setGift(String targetUserID, String eventID, String gift) {
         class updateGiftList implements Callable<String> {
             @Override
-            public String call() throws Exception {
+            public String call() {
                 DocumentReference targetEvent = getUser().collection("Events").document(eventID);
                 //log status of document allocation
                 Task<DocumentSnapshot> callDB = targetEvent.get().addOnCompleteListener(task -> {
@@ -118,7 +119,7 @@ public class FireBaseClient {
                         assert giftList != null;
                         giftList.ensureCapacity(userIndex);
                     } else {
-                        giftList = new ArrayList<>(userIndex + 1);
+                        giftList = new ArrayList<>(Collections.nCopies(userIndex + 1, ""));
                     }
                     giftList.set(userIndex, gift.trim());
                     getUser().collection("Events").document(eventID).update(targetUserID, giftList);
@@ -292,7 +293,7 @@ public class FireBaseClient {
         }
 
         @Override
-        public String call() throws Exception {
+        public String call() {
             Log.d(TAG, "Event Creation Request started");
             ArrayList<String> participants = new ArrayList<>(1);
             participants.add(getAuth().getUid()); //
@@ -558,7 +559,7 @@ public class FireBaseClient {
                 for (String entry : (ArrayList<String>) Objects.requireNonNull(event.get(userID))) {
                     giftList.append(entry).append("\n");
                 }
-                return giftList.toString();
+                return giftList.toString().trim();
             } catch (Exception e) {
                 Log.d(TAG, e.toString());
                 return "No Gifts Found";
