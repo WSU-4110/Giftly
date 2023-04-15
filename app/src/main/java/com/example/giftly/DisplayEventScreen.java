@@ -29,8 +29,16 @@ import com.example.giftly.handler.IEvent;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.geojson.Point;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DisplayEventScreen extends AppCompatActivity {
@@ -60,7 +68,7 @@ public class DisplayEventScreen extends AppCompatActivity {
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMap(lat, lon);
+                openMap(lon, lat);
             }
         });
 
@@ -83,12 +91,46 @@ public class DisplayEventScreen extends AppCompatActivity {
             Toast.makeText(DisplayEventScreen.this, "Event Successfully Created", Toast.LENGTH_SHORT).show();
         }
 
-
         Log.d(TAG, "EventID: " + eventID);
 
         participantList = findViewById(R.id.participant_list);
         TextView eventTitleDisplay = findViewById(R.id.Event_title);
         TextView eventDateDisplay = findViewById(R.id.event_date);
+        TextView eventLocationDisplay = findViewById(R.id.locatiopn_entry);
+
+
+        // Implemented Geocoding Functionality
+        MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+                .accessToken(getString(R.string.mapbox_access_token))
+                .query(eventLocationDisplay.toString())
+                .build();
+        mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+            @Override
+            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+                List<CarmenFeature> results = response.body().features();
+
+                if (results.size() > 0) {
+
+                    Point firstResultPoint = results.get(0).center();
+                    Log.d(TAG, "LONGITUDE: " + firstResultPoint.longitude());
+                    Log.d(TAG, "LATITUDE: " + firstResultPoint.latitude());
+                    String lon = String.valueOf(firstResultPoint.longitude());
+                    String lat = String.valueOf(firstResultPoint.longitude());
+
+
+
+                } else {
+
+                    Log.d(TAG, "ERROR: No results found");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GeocodingResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
         Futures.addCallback(
                 client.readEvent(eventID),
@@ -105,10 +147,12 @@ public class DisplayEventScreen extends AppCompatActivity {
                         @Override
                         public void run() {
                             String eventName = event.getEventName();
+                            String eventLocation = event.getEventLocation();
                             Date eventDate = event.getEventStartDate();
 
                             eventTitleDisplay.setText(eventName  == null ? "Unnamed Event" : eventName);
                             eventDateDisplay.setText(eventDate == null ? "No Date Set" : eventDate.toString());
+                            eventLocationDisplay.setText(eventLocation == null ? "No Location Set" : eventLocation);
                         }
                     }
 

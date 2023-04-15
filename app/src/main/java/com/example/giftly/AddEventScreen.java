@@ -2,6 +2,7 @@ package com.example.giftly;
 
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
+import com.example.giftly.handler.IEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,13 +39,21 @@ import com.example.giftly.handler.Event;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.geojson.Point;
+
 import org.w3c.dom.Text;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddEventScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     final Calendar myCalendar= Calendar.getInstance();
-
     public Button button_create_event, button_cancel_adding;
-    public TextView textbox_eventName, textbox_eventDate;
+    public TextView textbox_eventName, textbox_eventDate, textbox_eventLocation;
     private SharedPreferences sharedPreferences;
     public SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
 
@@ -55,6 +64,8 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_event);
+
+
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(AddEventScreen.this, R.color.Default_color));
@@ -71,6 +82,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         //Text Entries
         textbox_eventName = (EditText) findViewById(R.id.event_name_entry);
         textbox_eventDate = (EditText) findViewById(R.id.enter_date);
+        textbox_eventLocation = (EditText) findViewById(R.id.locatiopn_entry);
 
         //Event Type Selector
         Spinner spinner = (Spinner)findViewById(R.id.event_type_selection);
@@ -100,6 +112,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
                 eventMap.put("eventStartDate", eventDate);
                 eventMap.put("eventName", textbox_eventName.getText().toString());
                 eventMap.put("eventType", spinner.getSelectedItemPosition());
+                eventMap.put("eventLocation",textbox_eventLocation.getText().toString());
 
 
                 Futures.addCallback(
@@ -124,7 +137,6 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
                         }, Giftly.service);
             }
         });
-
 
 
         //TODO UNCOMMENT SPINNER CATEGOREY ADDITIONS AS THEY ARE IMPLEMENTED
