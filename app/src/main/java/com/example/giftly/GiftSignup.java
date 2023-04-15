@@ -28,7 +28,6 @@ public class GiftSignup extends AppCompatActivity {
 
     final Calendar myCalendar = Calendar.getInstance();
     EditText editText;
-    private SharedPreferences sharedPreferences;
 
     public void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_gift_signup);
@@ -36,14 +35,16 @@ public class GiftSignup extends AppCompatActivity {
 
         //Enable the back-button
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         //Theme: Fetch the current color of the background
-        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(GiftSignup.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
-        TextView giftListDisplay = findViewById(R.id.locatiopn_entry);
+        TextView giftListDisplay = findViewById(R.id.gift_list);
         Button editEventButton = (Button) findViewById(R.id.button_add_event);
         EditText textAdd = findViewById(R.id.event_name_entry);
 
@@ -75,13 +76,14 @@ public class GiftSignup extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Throwable thrown) {
+                    public void onFailure(@NonNull Throwable thrown) {
                     }
                 }, Giftly.service);
 
         editEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, textAdd.getText().toString());
                 client.setGift(userID, eventID, textAdd.getText().toString());
             }
         });
