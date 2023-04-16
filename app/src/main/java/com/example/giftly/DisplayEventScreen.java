@@ -97,7 +97,7 @@ public class DisplayEventScreen extends AppCompatActivity {
         participantList = findViewById(R.id.participant_list);
         TextView eventTitleDisplay = findViewById(R.id.Event_title);
         TextView eventDateDisplay = findViewById(R.id.event_date);
-        TextView eventLocationDisplay = findViewById(R.id.location_entry);
+        TextView eventLocationDisplay = findViewById(R.id.event_location);
 
 
         // Implemented Geocoding Functionality
