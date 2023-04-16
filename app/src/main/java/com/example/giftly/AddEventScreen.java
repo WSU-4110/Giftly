@@ -2,23 +2,28 @@ package com.example.giftly;
 
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
-
+import static com.google.gson.internal.$Gson$Types.arrayOf;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,23 +34,48 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleCoroutineScope;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleOwnerKt;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.example.giftly.handler.Event;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.mapbox.android.core.location.LocationEngineProvider;
+import com.mapbox.geojson.Point;
 import com.mapbox.search.ResponseInfo;
 import com.mapbox.search.SearchEngine;
 import com.mapbox.search.SearchEngineSettings;
 import com.mapbox.search.SearchOptions;
 import com.mapbox.search.SearchSelectionCallback;
+import com.mapbox.search.autofill.AddressAutofill;
+import com.mapbox.search.autofill.AddressAutofillSuggestion;
+import com.mapbox.search.autofill.Query;
 import com.mapbox.search.common.AsyncOperationTask;
 import com.mapbox.search.result.SearchResult;
 import com.mapbox.search.result.SearchSuggestion;
+import com.mapbox.search.ui.adapter.autofill.AddressAutofillUiAdapter;
+import com.mapbox.search.ui.view.CommonSearchViewConfiguration;
+import com.mapbox.search.ui.view.DistanceUnitType;
+import com.mapbox.search.ui.view.SearchResultsView;
 
 import org.w3c.dom.Text;
 
@@ -57,11 +87,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
     private SharedPreferences sharedPreferences;
     public SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
 
-    private SearchEngine searchEngine;
-    private AsyncOperationTask searchRequestTask;
-    private SearchSelectionCallback searchCallback;
-    private SearchOptions options;
-
+    public int AUTOCOMPLETE_REQUEST_CODE = 1;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -93,44 +119,15 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         spinner.setOnItemSelectedListener(this);
 
         //Autofill
-        searchCallback = new SearchSelectionCallback() {
+        textbox_eventLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResult(@NonNull SearchSuggestion suggestion, @NonNull SearchResult result, @NonNull ResponseInfo info) {
-                Log.i("SearchApiExample", "Search result: " + result);
-            }
+            public void onClick(View view) {
 
-            @Override
-            public void onCategoryResult(@NonNull SearchSuggestion suggestion, @NonNull List<SearchResult> results, @NonNull ResponseInfo info) {
-
-                Log.i("SearchApiExample", "Category search results: " + results);
+                openDialog();
+                Toast.makeText(AddEventScreen.this, "Location", Toast.LENGTH_SHORT).show();
 
             }
-
-            @Override
-            public void onSuggestions(@NonNull List<SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
-                if (suggestions.isEmpty()) {
-                    Log.i("SearchApiExample", "No suggestions found");
-                } else {
-                    Log.i("SearchApiExample", "Search suggestions: " + suggestions + "\nSelecting first...");
-                    searchRequestTask = searchEngine.select(suggestions.get(0), this);
-                }
-            }
-
-            @Override
-            public void onError(@NonNull Exception e) {
-
-                Log.i("SearchApiExample", "Search error: ", e);
-
-            }
-        };
-
-        searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(new SearchEngineSettings(getString(R.string.mapbox_access_token)));
-
-        options = new SearchOptions.Builder()
-                .limit(5)
-                .build();
-
-        searchRequestTask = searchEngine.search(String.valueOf(textbox_eventLocation), options, searchCallback);
+        });
 
         button_cancel_adding.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,6 +248,42 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         public void run() {
             Toast.makeText(AddEventScreen.this, message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void autoIntent(){
+        List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.NAME);
+        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                .build(this);
+        startActivity(intent);
+    }
+
+    public void openDialog(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.activity_location_fragment);
+        //Button btnOk = dialog.findViewById(R.id.locatiopn_entry);
+        autoIntent();
+        dialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+
+                textbox_eventLocation.setText(place.getAddress());
+
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

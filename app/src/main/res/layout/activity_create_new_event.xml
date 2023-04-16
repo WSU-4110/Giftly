@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColor="@color/white"
         tools:context=".AddEventScreen">
 
-        <!-- Add Event Header -->
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
+            <fragment
+                android:id="@+id/autocomplete_fragment"
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/copy_link"
@@ -130,59 +140,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_name_entry" />
 
-        <EditText
-            android:id="@+id/locatiopn_entry"
-            android:layout_width="347dp"
-            android:layout_height="102dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/gray_background"
-            android:fontFamily="sans-serif-medium"
-            android:hint="   Location"
-            android:inputType="text"
-            android:minHeight="?actionBarSize"
-            android:textColor="@color/white"
-            android:textColorHighlight="@color/white"
-            android:textColorHint="@color/light_gray"
-            android:textColorLink="@color/white"
-            android:textSize="16sp"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-            app:layout_constraintBottom_toTopOf="@+id/add_invitee"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_type_selection" />
-
-        <com.mapbox.search.ui.view.SearchResultsView
-            android:id="@+id/search_results_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/gray_background"
-            android:clipToPadding="false"
-            android:elevation="4dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="22dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locatiopn_entry"
-            />
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/search_container_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            <com.mapbox.search.ui.view.place.SearchPlaceBottomSheetView
-                android:id="@+id/search_place_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                />
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
         <!-- Accept/Create Event -->
 
         <Button
@@ -289,6 +246,28 @@
             app:layout_constraintTop_toTopOf="@+id/event_type_selection"
             app:srcCompat="@mipmap/ic_dropdown_icon" />
 
+
+        <AutoCompleteTextView
+            android:id="@+id/locatiopn_entry"
+            android:layout_width="347dp"
+            android:layout_height="102dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/gray_background"
+            android:fontFamily="sans-serif-medium"
+            android:hint="   Location"
+            android:inputType="text"
+            android:minHeight="?actionBarSize"
+            android:textColor="@color/white"
+            android:textColorHighlight="@color/white"
+            android:textColorHint="@color/light_gray"
+            android:textColorLink="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/add_invitee"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_type_selection" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

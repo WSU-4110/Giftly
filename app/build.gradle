@@ -52,6 +52,14 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    implementation "com.mapbox.search:autofill:1.0.0-rc.3"
+    implementation "com.mapbox.search:discover:1.0.0-rc.3"
+    implementation "com.mapbox.search:place-autocomplete:1.0.0-rc.3"
+    implementation "com.mapbox.search:offline:1.0.0-rc.3"
+    implementation "com.mapbox.search:mapbox-search-android:1.0.0-rc.3"
+    implementation "com.mapbox.search:mapbox-search-android-ui:1.0.0-rc.3"
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:6.11.0'
+
     implementation "androidx.fragment:fragment:1.5.5"
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
