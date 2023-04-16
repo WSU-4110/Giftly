@@ -99,40 +99,6 @@ public class DisplayEventScreen extends AppCompatActivity {
         TextView eventDateDisplay = findViewById(R.id.event_date);
         TextView eventLocationDisplay = findViewById(R.id.event_location);
 
-
-        // Implemented Geocoding Functionality
-        MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
-                .accessToken(getString(R.string.mapbox_access_token))
-                .query(eventLocationDisplay.toString())
-                .build();
-        mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
-            @Override
-            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
-                List<CarmenFeature> results = response.body().features();
-
-                if (results.size() > 0) {
-
-                    Point firstResultPoint = results.get(0).center();
-                    Log.d(TAG, "LONGITUDE: " + firstResultPoint.longitude());
-                    Log.d(TAG, "LATITUDE: " + firstResultPoint.latitude());
-                    String lon = String.valueOf(firstResultPoint.longitude());
-                    String lat = String.valueOf(firstResultPoint.longitude());
-
-
-
-                } else {
-
-                    Log.d(TAG, "ERROR: No results found");
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GeocodingResponse> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
         Futures.addCallback(
                 client.readEvent(eventID),
                 new FutureCallback<IEvent>() {
@@ -183,6 +149,55 @@ public class DisplayEventScreen extends AppCompatActivity {
                                     public void onFailure(Throwable thrown) {
                                     }
                                 }, Giftly.service);
+
+                        // Implemented Geocoding Functionality
+                        MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+                                .accessToken(getString(R.string.mapbox_access_token))
+                                .query(eventLocationDisplay.toString())
+                                .build();
+
+                        mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+                            @Override
+                            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+                                List<CarmenFeature> results = response.body().features();
+
+                                if (results.size() > 0) {
+                                    Point firstResultPoint = results.get(0).center();
+                                    Log.d(TAG, "LONGITUDE: " + firstResultPoint.longitude());
+                                    Log.d(TAG, "LATITUDE: " + firstResultPoint.latitude());
+                                    String lon = String.valueOf(firstResultPoint.longitude());
+                                    String lat = String.valueOf(firstResultPoint.latitude());
+                                    String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
+
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Glide.with(DisplayEventScreen.this)
+                                                    .load(url)
+                                                    .into(mapView);
+                                            mapView.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    openMap(lon, lat);
+                                                }
+                                            });
+                                        }
+                                    });
+
+
+
+                                } else {
+                                    Log.d(TAG, "ERROR: No results found");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<GeocodingResponse> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+
+
                     }
 
                     @Override
