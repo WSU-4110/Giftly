@@ -30,10 +30,19 @@ import com.example.giftly.handler.IEvent;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import com.squareup.picasso.Picasso;
+import com.mapbox.maps.AsyncOperationResultCallback;
+import com.mapbox.search.ResponseInfo;
+import com.mapbox.search.SearchEngine;
+import com.mapbox.search.SearchEngineSettings;
+import com.mapbox.search.SearchOptions;
+import com.mapbox.search.SearchSelectionCallback;
+import com.mapbox.search.common.AsyncOperationTask;
+import com.mapbox.search.result.SearchResult;
+import com.mapbox.search.result.SearchSuggestion;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class DisplayEventScreen extends AppCompatActivity {
@@ -56,7 +65,7 @@ public class DisplayEventScreen extends AppCompatActivity {
         String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
 
         ImageView mapView = (ImageView) findViewById(R.id.static_map);
-        Picasso.get().load(url).into(mapView);
+
 
         leaveEventBtn = (Button) findViewById(R.id.leave_event);
 

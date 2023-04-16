@@ -38,15 +38,29 @@ import com.example.giftly.handler.Event;
 import com.example.giftly.handler.User;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
+import com.mapbox.search.ResponseInfo;
+import com.mapbox.search.SearchEngine;
+import com.mapbox.search.SearchEngineSettings;
+import com.mapbox.search.SearchOptions;
+import com.mapbox.search.SearchSelectionCallback;
+import com.mapbox.search.common.AsyncOperationTask;
+import com.mapbox.search.result.SearchResult;
+import com.mapbox.search.result.SearchSuggestion;
+
 import org.w3c.dom.Text;
 
 public class AddEventScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     final Calendar myCalendar= Calendar.getInstance();
 
     public Button button_create_event, button_cancel_adding;
-    public TextView textbox_eventName, textbox_eventDate;
+    public TextView textbox_eventName, textbox_eventDate, textbox_eventLocation;
     private SharedPreferences sharedPreferences;
     public SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
+
+    private SearchEngine searchEngine;
+    private AsyncOperationTask searchRequestTask;
+    private SearchSelectionCallback searchCallback;
+    private SearchOptions options;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +69,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_event);
+
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(AddEventScreen.this, R.color.Default_color));
@@ -71,10 +86,51 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         //Text Entries
         textbox_eventName = (EditText) findViewById(R.id.event_name_entry);
         textbox_eventDate = (EditText) findViewById(R.id.enter_date);
+        textbox_eventLocation = (EditText) findViewById(R.id.locatiopn_entry);
 
         //Event Type Selector
         Spinner spinner = (Spinner)findViewById(R.id.event_type_selection);
         spinner.setOnItemSelectedListener(this);
+
+        //Autofill
+        searchCallback = new SearchSelectionCallback() {
+            @Override
+            public void onResult(@NonNull SearchSuggestion suggestion, @NonNull SearchResult result, @NonNull ResponseInfo info) {
+                Log.i("SearchApiExample", "Search result: " + result);
+            }
+
+            @Override
+            public void onCategoryResult(@NonNull SearchSuggestion suggestion, @NonNull List<SearchResult> results, @NonNull ResponseInfo info) {
+
+                Log.i("SearchApiExample", "Category search results: " + results);
+
+            }
+
+            @Override
+            public void onSuggestions(@NonNull List<SearchSuggestion> suggestions, @NonNull ResponseInfo responseInfo) {
+                if (suggestions.isEmpty()) {
+                    Log.i("SearchApiExample", "No suggestions found");
+                } else {
+                    Log.i("SearchApiExample", "Search suggestions: " + suggestions + "\nSelecting first...");
+                    searchRequestTask = searchEngine.select(suggestions.get(0), this);
+                }
+            }
+
+            @Override
+            public void onError(@NonNull Exception e) {
+
+                Log.i("SearchApiExample", "Search error: ", e);
+
+            }
+        };
+
+        searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(new SearchEngineSettings(getString(R.string.mapbox_access_token)));
+
+        options = new SearchOptions.Builder()
+                .limit(5)
+                .build();
+
+        searchRequestTask = searchEngine.search(String.valueOf(textbox_eventLocation), options, searchCallback);
 
         button_cancel_adding.setOnClickListener(new View.OnClickListener() {
             @Override
