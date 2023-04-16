@@ -24,6 +24,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.example.giftly.handler.IEvent;
 import com.example.giftly.handler.User;
@@ -96,7 +97,7 @@ public class DisplayEventScreen extends AppCompatActivity {
         participantList = findViewById(R.id.participant_list);
         TextView eventTitleDisplay = findViewById(R.id.Event_title);
         TextView eventDateDisplay = findViewById(R.id.event_date);
-        TextView eventLocationDisplay = findViewById(R.id.locatiopn_entry);
+        TextView eventLocationDisplay = findViewById(R.id.location_entry);
 
 
         // Implemented Geocoding Functionality
