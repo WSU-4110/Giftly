@@ -48,7 +48,7 @@ import java.util.Map;
 @RunWith(RobolectricTestRunner.class)
 public class ThemeTest {
 
-    private CThemeScreen test;
+    private ThemeScreen test;
     private SharedPreferences sharedPreferences;
 
     private Button dftThemeBtn;
@@ -57,7 +57,7 @@ public class ThemeTest {
     @Before
     public void setUp() {
 
-            test = Robolectric.buildActivity(CThemeScreen.class).create().resume().get();
+            test = Robolectric.buildActivity(ThemeScreen.class).create().resume().get();
             dftThemeBtn = test.findViewById(R.id.defaultTheme);
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(test);
             actionBar = test.getSupportActionBar();
