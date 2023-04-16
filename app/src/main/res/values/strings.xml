@@ -13,5 +13,6 @@
     <string name="event_type">Event Type</string>
 
     <string name="mapbox_access_token">pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A</string>
+    <string name="menuTitle">title</string>
 
 </resources>
