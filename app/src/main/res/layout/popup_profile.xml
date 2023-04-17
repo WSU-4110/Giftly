@@ -1,0 +1,52 @@
+<!-- popup_profile.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Profile information -->
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="18sp"
+        android:padding="16dp" />
+
+    <TextView
+        android:id="@+id/profile_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email Address"
+        android:textSize="14sp"
+        android:padding="16dp"
+        android:layout_below="@id/profile_name" />
+
+    <!-- What they're bringing -->
+    <TextView
+        android:id="@+id/phone_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone Number:"
+        android:textSize="14sp"
+        android:padding="16dp"
+        android:layout_below="@id/profile_email" />
+
+    <TextView
+        android:id="@+id/bringing_items"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Items List"
+        android:textSize="14sp"
+        android:padding="16dp"
+        android:layout_below="@id/phone_number" />
+
+    <!-- Close button -->
+    <Button
+        android:id="@+id/button_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/bringing_items" />
+
+</RelativeLayout>
