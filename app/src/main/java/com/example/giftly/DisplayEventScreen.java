@@ -159,7 +159,6 @@ public class DisplayEventScreen extends AppCompatActivity {
         });
         // The list of participants is displayed on the screen
 
-
         leaveEventBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             //Pop Up for leaving an event
