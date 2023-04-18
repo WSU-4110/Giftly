@@ -85,6 +85,5 @@ dependencies {
     //implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
     //implementation 'de.hdodenhof:circleimageview:3.0.0'
     //implementation 'com.google.firebase:firebase-storage:11.0.4'
-    // TODO: Add the dependencies for Firebase products we'll need (RT DB)'
     // When using the BoM, don't specify versions in Firebase dependencies
 }

@@ -2,7 +2,6 @@ package com.example.giftly;
 
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
-import com.example.giftly.handler.IEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,27 +27,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import com.example.giftly.handler.Event;
-import com.example.giftly.handler.User;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.mapbox.api.geocoding.v5.MapboxGeocoding;
-import com.mapbox.api.geocoding.v5.models.CarmenFeature;
-import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
-import com.mapbox.geojson.Point;
-
-import org.w3c.dom.Text;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AddEventScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     final Calendar myCalendar= Calendar.getInstance();
@@ -82,7 +67,7 @@ public class AddEventScreen extends AppCompatActivity implements AdapterView.OnI
         //Text Entries
         textbox_eventName = (EditText) findViewById(R.id.event_name_entry);
         textbox_eventDate = (EditText) findViewById(R.id.enter_date);
-        textbox_eventLocation = (EditText) findViewById(R.id.locatiopn_entry);
+        textbox_eventLocation = (EditText) findViewById(R.id.location_entry);
 
         //Event Type Selector
         Spinner spinner = (Spinner)findViewById(R.id.event_type_selection);
