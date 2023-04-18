@@ -196,8 +196,6 @@ public class DisplayEventScreen extends AppCompatActivity {
                                 t.printStackTrace();
                             }
                         });
-
-
                     }
 
                     @Override
