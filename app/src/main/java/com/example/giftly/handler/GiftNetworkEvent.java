@@ -35,7 +35,7 @@ public class GiftNetworkEvent extends Event {
 
     @Override
     public String getEventLocation() {
-        return null;
+        return eventLocation;
     }
 
     @Override

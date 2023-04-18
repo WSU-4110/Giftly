@@ -15,23 +15,20 @@
     <!-- Add Event Header -->
 
 
-    <TextView
-        android:id="@+id/copy_link"
-        android:layout_width="344dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="34dp"
-        android:background="@drawable/gray_background"
-        android:gravity="center|start"
-        android:text="  Invite Link"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OR_TextView" />
+        <TextView
+            android:id="@+id/copy_link"
+            android:layout_width="344dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/gray_background"
+            android:gravity="center|start"
+            android:text="  Invite Link"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/OR_TextView" />
 
     <Button
         android:id="@+id/button_add_invitee"
@@ -131,7 +128,7 @@
         app:layout_constraintTop_toBottomOf="@+id/event_name_entry" />
 
     <EditText
-        android:id="@+id/locatiopn_entry"
+        android:id="@+id/location_entry"
         android:layout_width="347dp"
         android:layout_height="102dp"
         android:layout_marginStart="32dp"
@@ -206,7 +203,7 @@
         app:layout_constraintBottom_toTopOf="@+id/OR_TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locatiopn_entry" />
+        app:layout_constraintTop_toBottomOf="@+id/location_entry" />
 
     <TextView
         android:id="@+id/OR_TextView"
@@ -239,7 +236,7 @@
         android:spinnerMode="dropdown"
         android:theme="@style/spinnerTheme"
         android:tooltipText="Select Event Type"
-        app:layout_constraintBottom_toTopOf="@+id/locatiopn_entry"
+        app:layout_constraintBottom_toTopOf="@+id/location_entry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_date" />

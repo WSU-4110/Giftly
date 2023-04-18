@@ -44,16 +44,15 @@
             android:fontFamily="sans-serif-medium"
             android:hint="   Gift List"
             android:paddingStart="10dp"
+            android:paddingTop="20dp"
             android:textColor="@color/white"
             android:textColorHighlight="@color/white"
             android:textColorHint="@color/light_gray"
             android:textColorLink="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header"
-            android:paddingTop="20dp" /> <!-- Adjust the paddingTop value to lower the text -->
+            app:layout_constraintTop_toBottomOf="@+id/AddEvent_Header" /> <!-- Adjust the paddingTop value to lower the text -->
 
 
         <EditText
@@ -73,7 +72,6 @@
             android:textColorLink="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.75"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gift_list" />
 
