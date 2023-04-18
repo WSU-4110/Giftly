@@ -3,10 +3,13 @@ package com.example.giftly;
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +52,7 @@ public class DisplayEventScreen extends AppCompatActivity {
 
     public Button button_edit_event;
     public Button leaveEventBtn;
+    private Button inviteCodeBtn;
     private PopupWindow popupWindow;
     private LayoutInflater inflater;
     private RelativeLayout relativeLayout;
@@ -80,6 +84,8 @@ public class DisplayEventScreen extends AppCompatActivity {
         });
 
         leaveEventBtn = (Button) findViewById(R.id.leave_event);
+        inviteCodeBtn = (Button) findViewById(R.id.invite_code);
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
         //Theme: Fetch the current color of the background
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -159,7 +165,7 @@ public class DisplayEventScreen extends AppCompatActivity {
                         // Implemented Geocoding Functionality
                         MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
                                 .accessToken(getString(R.string.mapbox_access_token))
-                                .query(eventLocationDisplay.toString())
+                                .query(event.getEventLocation())
                                 .build();
 
                         mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
@@ -281,7 +287,21 @@ public class DisplayEventScreen extends AppCompatActivity {
 
 
         });
+
+        inviteCodeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clipboardManager.setPrimaryClip(ClipData.newPlainText("GiftlyInviteCode", eventID));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(DisplayEventScreen.this, "Invite Code Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
+
     class updateParticipants implements Runnable {
         String[] participantNames;
         String[] participantIDs;

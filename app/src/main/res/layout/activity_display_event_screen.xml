@@ -14,6 +14,7 @@
         tools:context=".AddEventScreen">
 
         <!-- Name of Event -->
+
         <TextView
             android:id="@+id/Event_title"
             android:layout_width="wrap_content"
@@ -143,6 +144,21 @@
             app:layout_constraintTop_toBottomOf="@+id/participant_list" />
 
         <!-- Clickable Map of Event -->
+        <Button
+            android:id="@+id/invite_code"
+            android:layout_width="134dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="36dp"
+            android:text="Copy Invite Code"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            app:backgroundTint="#008CF8"
+            app:cornerRadius="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/leave_event"
+            app:layout_constraintTop_toBottomOf="@+id/participant_list" />
+
         <ImageView
             android:id="@+id/static_map"
             android:layout_width="344dp"
