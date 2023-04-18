@@ -32,7 +32,7 @@ public class AddEventTest {
     @Test
     public void onCancelAddingEvent() {
 
-        System.out.println("Testing Adding Event Button...");
+        System.out.println("Testing Cancel Adding Event Button...");
 
         Button button_cancel_adding = (Button) testing.findViewById( R.id.button_cancel );
         assertNotNull(button_cancel_adding);
@@ -40,13 +40,14 @@ public class AddEventTest {
         Intent intent = Shadows.shadowOf(testing).peekNextStartedActivity();
         assertEquals(HomeScreen.class.getCanonicalName(), intent.getComponent().getClassName());
 
+        System.out.println("Test passed");
     }
 
     // Testing Button to Adding an Event
     @Test
     public void onAddingEvent() {
 
-        System.out.println("Testing Cancel Adding Event Button...");
+        System.out.println("Testing Adding Event Button...");
 
         Button button_create_event = (Button) testing.findViewById( R.id.button_cancel );
         assertNotNull(button_create_event);
@@ -54,12 +55,15 @@ public class AddEventTest {
         Intent intent = Shadows.shadowOf(testing).peekNextStartedActivity();
         assertEquals(HomeScreen.class.getCanonicalName(), intent.getComponent().getClassName());
 
+        System.out.println("Test passed");
     }
 
 
     // Testing that setting calendar year input works appropriately
     @Test
     public void testCalenarYearInput() {
+
+        System.out.println("Testing Updating Year Text...");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2023);
@@ -68,13 +72,15 @@ public class AddEventTest {
 
         assertEquals(year, calendar.get(Calendar.YEAR));
 
-        System.out.println("Testing Updating Date Text...");
+        System.out.println("Test passed");
 
     }
 
     // Testing that setting calendar month input works appropriately
     @Test
     public void testCalenarMonthInput() {
+
+        System.out.println("Testing Updating month Text...");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, 8);
@@ -83,13 +89,15 @@ public class AddEventTest {
 
         assertEquals(month, calendar.get(Calendar.MONTH));
 
-        System.out.println("Testing Updating Date Text...");
+        System.out.println("Test passed");
 
     }
 
     // Testing that setting calendar day input works appropriately
     @Test
     public void testCalenarDayInput() {
+
+        System.out.println("Testing Updating day Text...");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 24);
@@ -98,13 +106,15 @@ public class AddEventTest {
 
         assertEquals(day, calendar.get(Calendar.DAY_OF_MONTH));
 
-        System.out.println("Testing Updating Date Text...");
+        System.out.println("Test passed");
 
     }
 
     // Testing that textview will appropriately display the calendar inputs
     @Test
     public void testCalendarUpdate() {
+
+        System.out.println("Testing Updating Calendar in Textview...");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2023);
@@ -121,7 +131,7 @@ public class AddEventTest {
         textbox_eventDate.setText(result);
 
         assertEquals(textbox_eventDate.getText().toString(), result);
-        System.out.println("Testing Updating Date Text...");
+        System.out.println("Test passed");
 
     }
 
