@@ -40,7 +40,7 @@ jobs:
         run: ./gradlew assembleDebug
         
       - name: Test
-        run: gradle test --tests "*"
+        run: ./gradlew test --tests "*"
 
       - name: Upload apk
         uses: actions/upload-artifact@v2
