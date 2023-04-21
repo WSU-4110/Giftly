@@ -5,7 +5,7 @@ on:
   # Triggers the workflow on every pull request to master branch
   pull_request:
     branches:
-      - master
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -40,7 +40,7 @@ jobs:
         run: ./gradlew assembleDebug
         
       - name: Test
-        run: ./gradle test --tests "*"
+        run: gradle test --tests "*"
 
       - name: Upload apk
         uses: actions/upload-artifact@v2
