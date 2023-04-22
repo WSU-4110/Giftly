@@ -43,7 +43,7 @@ android {
     }
 }
 
-test {
+testOptions {
 
     // explicitly include all tests in src/test/java/org/mountsinai/
     include 'src/test/**'
