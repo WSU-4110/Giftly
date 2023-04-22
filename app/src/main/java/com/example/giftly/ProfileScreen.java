@@ -49,7 +49,6 @@ public class ProfileScreen extends AppCompatActivity {
     private Button button2;
     private StorageReference mStorageReference;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
