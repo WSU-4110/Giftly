@@ -43,7 +43,7 @@ jobs:
         run: ./gradlew assembleDebug
         
       - name: Test
-        run: ./gradlew test --tests "*"
+        run: ./gradlew test --tests 'com.example.giftly*'
 
       - name: Upload apk
         uses: actions/upload-artifact@v2
