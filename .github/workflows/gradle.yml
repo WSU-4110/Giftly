@@ -1,4 +1,4 @@
-
+e
 name: Build W Gradle
 
 on:
@@ -35,14 +35,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
-          
-      - name: Test
-        run: ./gradlew testRelease --tests '*'  --q
         
       - name: Build the app
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleDebug
         
-
+      - name: Test
+        run: ./gradlew testRelease --tests '*'  --q
 
       - name: Upload apk
         uses: actions/upload-artifact@v2
