@@ -6,6 +6,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+
+
 android {
     namespace 'com.example.giftly'
     compileSdk 33
@@ -91,5 +93,12 @@ dependencies {
 
 }
 
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
+    }
+}
 
 
