@@ -37,13 +37,13 @@ jobs:
           java-version: 17
           
       - name: Life Alert
-        run: ./gradlew help
+        run: ./gradlew -q showDirs
         
       - name: Build the app
         run: ./gradlew assembleDebug
         
       - name: Test
-        run: ./gradlew testRelease --tests 'com.example.giftly*'
+        run: ./gradlew testRelease --tests '*'
 
       - name: Upload apk
         uses: actions/upload-artifact@v2
