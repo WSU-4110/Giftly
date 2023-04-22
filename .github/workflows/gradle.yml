@@ -45,9 +45,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist-without-markdown
-          path: |
-            dist
-            !dist/**/*.md
+          path: app\build\test-results
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
