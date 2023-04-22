@@ -35,12 +35,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+          
+      - name: Test
+        run: ./gradlew testRelease --tests '*'  --q
         
       - name: Build the app
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleRelease
         
-      - name: Test
-        run: ./gradlew testRelease --tests '*'
+
 
       - name: Upload apk
         uses: actions/upload-artifact@v2
