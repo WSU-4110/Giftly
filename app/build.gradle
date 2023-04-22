@@ -32,15 +32,32 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
     buildFeatures {
         viewBinding true
     }
+}
+
+test {
+
+    // explicitly include all tests in src/test/java/org/mountsinai/
+    include 'src/test/**'
+
+    // show standard out and standard error of the test JVM(s) on the console
+    testLogging.showStandardStreams = true
+
+    // Fail the 'test' task on the first test failure
+    failFast = true
+
+    useJUnitPlatform()    // Configure for Junit5 == Jupiter
+    minHeapSize = "1024m" // initial heap size
+    maxHeapSize = "2048m" // maximum heap size+
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
