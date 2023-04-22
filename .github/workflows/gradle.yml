@@ -2,6 +2,10 @@ name: Build W Gradle
 
 on:
   # Triggers the workflow on every pull request to master branch
+  push:
+    branches:
+      -main
+  
   pull_request:
     branches:
       - main
@@ -39,7 +43,7 @@ jobs:
         run: ./gradlew assembleDebug
         
       - name: Test
-        run: ./gradlew testDebug --tests 'com.example.giftly**'
+        run: ./gradlew build --tests 'com.example.giftly**' --info
         
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
