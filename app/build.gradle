@@ -43,23 +43,6 @@ android {
     }
 }
 
-testOptions {
-
-    // explicitly include all tests in src/test/java/org/mountsinai/
-    include 'src/test/**'
-
-    // show standard out and standard error of the test JVM(s) on the console
-    testLogging.showStandardStreams = true
-
-    // Fail the 'test' task on the first test failure
-    failFast = true
-
-    useJUnitPlatform()    // Configure for Junit5 == Jupiter
-    minHeapSize = "1024m" // initial heap size
-    maxHeapSize = "2048m" // maximum heap size+
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
 dependencies {
     implementation ('com.mapbox.maps:android:10.11.2'){
         exclude group: 'group_name', module: 'module_name'
