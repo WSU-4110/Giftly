@@ -1,4 +1,4 @@
-name: Build W Gradle
+name: Build and Test with Gradle
 
 on:
   # Triggers the workflow on every pull request to master branch
@@ -39,11 +39,11 @@ jobs:
         with:
           java-version: 17
         
+      - name: Test
+        run: ./gradlew buildDegbug --tests 'com.example.giftly**' --info
+        
       - name: Build the app
         run: ./gradlew assembleDebug
-        
-      - name: Test
-        run: ./gradlew build --tests 'com.example.giftly**' --info
         
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
