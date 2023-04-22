@@ -14,7 +14,9 @@ android {
         unitTests {
             includeAndroidResources = true
         }
+        testResultsDir: "build/results"
     }
+
     defaultConfig {
         applicationId "com.example.giftly"
         minSdk 30
@@ -75,33 +77,20 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.4'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.firebase:firebase-storage:20.0.1'
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.robolectric:robolectric:4.9'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     testImplementation 'org.robolectric:robolectric:4.9'
     implementation platform('com.google.firebase:firebase-bom:31.2.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
-    androidTestImplementation 'androidx.test:core:1.4.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    implementation 'androidx.appcompat:appcompat:1.3.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    //implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
-    //implementation 'de.hdodenhof:circleimageview:3.0.0'
-    //implementation 'com.google.firebase:firebase-storage:11.0.4'
-    // When using the BoM, don't specify versions in Firebase dependencies
-}
 
-tasks.named('testDebugUnitTest', Test) {
-    useJUnitPlatform()
+    androidTestImplementation 'androidx.test:core:1.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.9'
 
-    maxHeapSize = '1G'
-
-    testLogging {
-        events "passed"
-    }
 }
 
 
