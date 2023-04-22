@@ -39,7 +39,7 @@ jobs:
         run: ./gradlew assembleDebug
         
       - name: Test
-        run: ./gradlew testRelease --tests '*'  --q
+        run: ./gradlew testDebug --tests 'app.src.test.com.example.giftly**'
 
       - name: Upload apk
         uses: actions/upload-artifact@v2
