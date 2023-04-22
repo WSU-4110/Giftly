@@ -39,6 +39,7 @@ public class GiftSignup extends AppCompatActivity {
     EditText editText;
 
     public void onCreate(Bundle savedInstanceState) {
+        // Call setContentView before super.onCreate
         setContentView(R.layout.activity_gift_signup);
         super.onCreate(savedInstanceState);
 
@@ -60,7 +61,6 @@ public class GiftSignup extends AppCompatActivity {
         Intent participantIntent = getIntent();
         String eventID = participantIntent.getStringExtra("eventID");
         String userID = participantIntent.getStringExtra("userID");
-
 
 
         Futures.addCallback(
@@ -98,18 +98,32 @@ public class GiftSignup extends AppCompatActivity {
             }
         });
 
+        //Profile button
+        Button profileButton = findViewById(R.id.profile_button);
+
+        // Set a click listener for the profile button
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Show the profile popup window
+                showProfilePopup("123"); // replace "123" with the user ID of the profile to display
+            }
+        });
+
 
     }
 
-    //Participant profile popup
     private void showProfilePopup(String profileUserID) {
+
+        relativeLayout = findViewById(R.id.relative_layout);
+
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_profile, null);
         // Find views in the popup layout
         TextView profileName = popupView.findViewById(R.id.profile_name);
         TextView profileEmail = popupView.findViewById(R.id.profile_email);
         TextView bringingItems = popupView.findViewById(R.id.bringing_items);
-        Button buttonClose = popupView.findViewById(R.id.button_close);
+
         // Set profile information
         // Replace with logic to retrieve and set participant information
         String name = "John Doe";
@@ -118,8 +132,9 @@ public class GiftSignup extends AppCompatActivity {
         profileName.setText(name);
         profileEmail.setText(email);
         bringingItems.setText(items);
+
         // Close button click listener
-        buttonClose.setOnClickListener(new View.OnClickListener() {
+        popupView.findViewById(R.id.button_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (popupWindow != null && popupWindow.isShowing()) {
@@ -127,12 +142,19 @@ public class GiftSignup extends AppCompatActivity {
                 }
             }
         });
-        // Create and show the popup window
+
+        // Create the popup window
         popupWindow = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(GiftSignup.this, android.R.color.transparent)));
         popupWindow.setFocusable(true);
-        popupWindow.showAtLocation(relativeLayout, Gravity.CENTER, 0, 0);
+
+        // Show the popup window only if it is not already showing
+        if (!popupWindow.isShowing()) {
+            popupWindow.showAtLocation(relativeLayout, Gravity.CENTER, 0, 0);
+        }
     }
+
+
 
     //Back button configuration
     @Override
