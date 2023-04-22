@@ -35,6 +35,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+          
+      - name: Life Alert
+        run: ./gradlew help
         
       - name: Build the app
         run: ./gradlew assembleDebug
