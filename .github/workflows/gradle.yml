@@ -33,4 +33,3 @@ jobs:
           arguments: build
       - name: Build Debug APK
         run: ./gradlew assembleDebug
-        
