@@ -6,6 +6,7 @@ import static com.example.giftly.Giftly.client;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
@@ -39,6 +41,9 @@ public class GiftSignup extends AppCompatActivity {
     EditText editText;
 
     public void onCreate(Bundle savedInstanceState) {
+
+        popupWindow = null;
+
         // Call setContentView before super.onCreate
         setContentView(R.layout.activity_gift_signup);
         super.onCreate(savedInstanceState);
@@ -97,22 +102,27 @@ public class GiftSignup extends AppCompatActivity {
                 client.setGift(userID, eventID, textAdd.getText().toString());
             }
         });
-
-        //Profile button
         Button profileButton = findViewById(R.id.profile_button);
-
-        // Set a click listener for the profile button
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Show the profile popup window
-                showProfilePopup("123"); // replace "123" with the user ID of the profile to display
+                // Inflate the popup_profile.xml layout
+                View popupView = LayoutInflater.from(GiftSignup.this).inflate(R.layout.popup_profile, null);
+
+                // Create a new PopupWindow object
+                PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                // Set the background drawable of the popup window
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // Show the popup window
+                popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
             }
         });
 
 
     }
-
+    /*
     private void showProfilePopup(String profileUserID) {
 
         relativeLayout = findViewById(R.id.relative_layout);
@@ -153,7 +163,7 @@ public class GiftSignup extends AppCompatActivity {
             popupWindow.showAtLocation(relativeLayout, Gravity.CENTER, 0, 0);
         }
     }
-
+    */
 
 
     //Back button configuration
