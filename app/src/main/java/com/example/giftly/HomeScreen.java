@@ -176,20 +176,20 @@ public class HomeScreen extends AppCompatActivity {
                                                             // Set the event name to lowercase
                                                             String eventName = events.get(i).getEventName().toLowerCase();
                                                             // Capitalize the first letter of the event name if it has a length
-                                                            if (eventName.length() > 1)
+                                                            if (eventName.length() > 1) {
                                                                 eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
-
-                                                            eventName = eventName.toLowerCase();
-                                                            eventName = Character.toString(eventName.charAt(0)).toUpperCase() + eventName.substring(1);
-
-                                                            String[] temp = eventName.split(" ");
-                                                            StringBuilder results = new StringBuilder();
-                                                            int L = temp.length;
-                                                            for (int k = 0; k < L; k++) {
-                                                                results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
+                                                                eventName = eventName.toLowerCase();
+                                                                eventName = Character.toString(eventName.charAt(0)).toUpperCase() + eventName.substring(1);
+                                                                String[] temp = eventName.split(" ");
+                                                                StringBuilder results = new StringBuilder();
+                                                                int L = temp.length;
+                                                                for (int k = 0; k < L; k++) {
+                                                                    results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
+                                                                }
+                                                                String Event_name = results.toString();
+                                                                button.setText(Event_name);
                                                             }
-                                                            String Event_name = results.toString();
-                                                            button.setText(Event_name);
+                                                            else button.setText("Unnamed Event");
 
                                                             button.setTransformationMethod(null);
 
