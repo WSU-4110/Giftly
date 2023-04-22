@@ -102,6 +102,7 @@ public class GiftSignup extends AppCompatActivity {
                 client.setGift(userID, eventID, textAdd.getText().toString());
             }
         });
+
         Button profileButton = findViewById(R.id.profile_button);
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,8 +110,19 @@ public class GiftSignup extends AppCompatActivity {
                 // Inflate the popup_profile.xml layout
                 View popupView = LayoutInflater.from(GiftSignup.this).inflate(R.layout.popup_profile, null);
 
-                // Create a new PopupWindow object
-                PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                // Find the close button view in the popup
+                Button closeButton = popupView.findViewById(R.id.button_close);
+
+                // Set a click listener on the close button to dismiss the popup
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+                // Create the PopupWindow object
+                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
                 // Set the background drawable of the popup window
                 popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
