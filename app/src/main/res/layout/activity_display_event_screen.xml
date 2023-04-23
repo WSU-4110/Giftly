@@ -45,6 +45,7 @@
             android:hint="   Location"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -105,59 +106,72 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_event" />
 
-        <!-- List of Participants -->
 
-        <!-- Leave Event Button -->
-        <ListView
-            android:id="@+id/participant_list"
-            android:layout_width="344dp"
-            android:layout_height="250dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="31dp"
-            android:background="@drawable/gray_background"
-            android:fontFamily="sans-serif-medium"
-            android:forceDarkAllowed="true"
-            android:isScrollContainer="true"
-            android:scrollbarAlwaysDrawHorizontalTrack="true"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:textAlignment="gravity"
-            android:textColor="@color/white"
-            android:textStyle="bold"
+        <!-- Clickable Map of Event -->
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="434dp"
+            android:layout_height="205dp"
+            android:layout_marginTop="11dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/participant_title" />
+            app:layout_constraintTop_toBottomOf="@+id/participant_title">
+
+            <LinearLayout
+                android:id="@+id/participants"
+                android:layout_width="412dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:alwaysDrawnWithCache="false"
+                android:animateLayoutChanges="false"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/participant_title">
+
+                <!-- List of Participants -->
+                <ListView
+                    android:id="@+id/participant_list"
+                    android:layout_width="353dp"
+                    android:layout_height="163dp"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="31dp"
+                    android:background="@drawable/gray_background"
+                    android:divider="#0000"
+                    android:dividerHeight="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/participant_title" />
+            </LinearLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/leave_event"
             android:layout_width="134dp"
             android:layout_height="41dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="44dp"
             android:text="Leave Event"
             android:textAllCaps="false"
             android:textStyle="bold"
             app:backgroundTint="#008CF8"
             app:cornerRadius="40dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/participant_list" />
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
-        <!-- Clickable Map of Event -->
         <Button
             android:id="@+id/invite_code"
             android:layout_width="134dp"
             android:layout_height="41dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="36dp"
-            android:text="Copy Invite Code"
+            android:layout_marginEnd="44dp"
+            android:text="Invite Code"
             android:textAllCaps="false"
             android:textStyle="bold"
             app:backgroundTint="#008CF8"
             app:cornerRadius="40dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/leave_event"
-            app:layout_constraintTop_toBottomOf="@+id/participant_list" />
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
         <ImageView
             android:id="@+id/static_map"
