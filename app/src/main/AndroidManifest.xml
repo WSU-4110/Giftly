@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Giftly"
         tools:targetApi="31">
         <activity
+            android:name=".UserInformation"
+            android:exported="false" />
+        <activity
             android:name=".MenuButtonIcon"
             android:exported="false" />
         <activity
