@@ -12,6 +12,7 @@
         android:background="#1C1C1C"
         tools:context=".SignUpScreen">
 
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="172dp"
