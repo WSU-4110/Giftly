@@ -332,8 +332,8 @@ public class DisplayEventScreen extends AppCompatActivity {
                 }
             });
         }
-
     }
+
     //Back button configuration
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
