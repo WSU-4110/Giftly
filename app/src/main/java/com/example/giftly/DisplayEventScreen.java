@@ -65,23 +65,7 @@ public class DisplayEventScreen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_event_screen);
-
-        // MAPVIEW TEST
-        String lon = "-83.0717"; //get longitude
-        String lat = "42.3502"; // get latitude
-        String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
-
         ImageView mapView = (ImageView) findViewById(R.id.static_map);
-        Glide.with(this)
-                .load(url)
-                .into(mapView);
-
-        mapView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openMap(lon, lat);
-            }
-        });
 
         leaveEventBtn = (Button) findViewById(R.id.leave_event);
         inviteCodeBtn = (Button) findViewById(R.id.invite_code);
@@ -158,56 +142,57 @@ public class DisplayEventScreen extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onFailure(Throwable thrown) {
+                                    public void onFailure(@NonNull Throwable thrown) {
                                     }
                                 }, Giftly.service);
 
-                        // Implemented Geocoding Functionality
-                        MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
-                                .accessToken(getString(R.string.mapbox_access_token))
-                                .query(event.getEventLocation())
-                                .build();
+                        if (event.getEventLocation() != null) {
+                            // Implemented Geocoding Functionality
+                            MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+                                    .accessToken(getString(R.string.mapbox_access_token))
+                                    .query(event.getEventLocation())
+                                    .build();
 
-                        mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
-                            @Override
-                            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
-                                List<CarmenFeature> results = response.body().features();
+                            mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+                                @Override
+                                public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+                                    List<CarmenFeature> results = response.body().features();
 
-                                if (results.size() > 0) {
-                                    Point firstResultPoint = results.get(0).center();
-                                    Log.d(TAG, "LONGITUDE: " + firstResultPoint.longitude());
-                                    Log.d(TAG, "LATITUDE: " + firstResultPoint.latitude());
-                                    String lon = String.valueOf(firstResultPoint.longitude());
-                                    String lat = String.valueOf(firstResultPoint.latitude());
-                                    String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
+                                    if (results.size() > 0) {
+                                        Point firstResultPoint = results.get(0).center();
+                                        Log.d(TAG, "LONGITUDE: " + firstResultPoint.longitude());
+                                        Log.d(TAG, "LATITUDE: " + firstResultPoint.latitude());
+                                        String lon = String.valueOf(firstResultPoint.longitude());
+                                        String lat = String.valueOf(firstResultPoint.latitude());
+                                        String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
 
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Glide.with(DisplayEventScreen.this)
-                                                    .load(url)
-                                                    .into(mapView);
-                                            mapView.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    openMap(lon, lat);
-                                                }
-                                            });
-                                        }
-                                    });
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Glide.with(DisplayEventScreen.this)
+                                                        .load(url)
+                                                        .into(mapView);
+                                                mapView.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        openMap(lon, lat);
+                                                    }
+                                                });
+                                            }
+                                        });
 
 
-
-                                } else {
-                                    Log.d(TAG, "ERROR: No results found");
+                                    } else {
+                                        Log.d(TAG, "ERROR: No results found");
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<GeocodingResponse> call, Throwable t) {
-                                t.printStackTrace();
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<GeocodingResponse> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
+                        }
                     }
 
                     @Override
