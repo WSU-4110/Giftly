@@ -140,7 +140,7 @@
                     android:layout_marginEnd="31dp"
                     android:background="@drawable/gray_background"
                     android:divider="#0000"
-                    android:dividerHeight="1dp"
+                    android:dividerHeight="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/participant_title" />
@@ -158,7 +158,8 @@
             app:backgroundTint="#008CF8"
             app:cornerRadius="40dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <Button
             android:id="@+id/invite_code"
@@ -171,7 +172,8 @@
             app:backgroundTint="#008CF8"
             app:cornerRadius="40dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageView
             android:id="@+id/static_map"
