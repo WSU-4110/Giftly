@@ -16,5 +16,9 @@
     <string name="menuTitle">title</string>
     <string name="unnamed_event">Unnamed Event</string>
     <string name="ongoing_events">Ongoing Events</string>
+    <string name="left_event">You\'ve left this event</string>
+    <string name="leave_event_request">Leave Event Request</string>
+    <string name="dialouge_confirmation">OK</string>
+    <string name="invite_copy_confirmation">Invite Code Copied to Clipboard</string>
 
 </resources>
