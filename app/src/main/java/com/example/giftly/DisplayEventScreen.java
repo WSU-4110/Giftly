@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -318,7 +320,7 @@ public class DisplayEventScreen extends AppCompatActivity {
 
         @Override
         public void run() {
-            ArrayAdapter<String> arr = new ArrayAdapter<String>(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, participantNames);
+            ArrayAdapter<String> arr = new ArrayAdapter<String>(DisplayEventScreen.this, R.layout.participant_list, R.id.participant_text,participantNames);
             participantList.setAdapter(arr);
             participantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -330,9 +332,8 @@ public class DisplayEventScreen extends AppCompatActivity {
                 }
             });
         }
+    }
 
-
-}
     //Back button configuration
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -353,4 +354,3 @@ public class DisplayEventScreen extends AppCompatActivity {
     }
 
 }
-
