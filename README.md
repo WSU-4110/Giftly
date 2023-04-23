@@ -9,7 +9,7 @@ To install Giftly onto your Android device, you will need to download the APK (A
 
 You can use your preferred method of transferring the file onto your phone (e.g. USB, Bluetooth, or Cloud Storage), but it is recommended to use the USB method for larger files.
 
-1. Click on the following [link](https://github.com/WSU-4110/Giftly) to download the APK file.
+1. Click on the following [link](https://github.com/WSU-4110/Giftly/releases/download/1.0/app-release.apk) to download the APK file.
 
 ### USB Method (Using Windows PC)
 
