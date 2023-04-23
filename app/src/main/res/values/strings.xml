@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Giftly</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
@@ -12,7 +12,13 @@
 
     <string name="event_type">Event Type</string>
 
-    <string name="mapbox_access_token">pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A</string>
+    <string name="mapbox_access_token" tools:ignore="Typos">pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A</string>
     <string name="menuTitle">title</string>
+    <string name="unnamed_event">Unnamed Event</string>
+    <string name="ongoing_events">Ongoing Events</string>
+    <string name="left_event">You\'ve left this event</string>
+    <string name="leave_event_request">Leave Event Request</string>
+    <string name="dialouge_confirmation">OK</string>
+    <string name="invite_copy_confirmation">Invite Code Copied to Clipboard</string>
 
 </resources>

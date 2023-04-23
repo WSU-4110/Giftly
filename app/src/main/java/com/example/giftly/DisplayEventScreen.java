@@ -54,11 +54,6 @@ public class DisplayEventScreen extends AppCompatActivity {
 
     public Button button_edit_event;
     public Button leaveEventBtn;
-    private Button inviteCodeBtn;
-    private PopupWindow popupWindow;
-    private LayoutInflater inflater;
-    private RelativeLayout relativeLayout;
-    private SharedPreferences sharedPreferences;
 
     ListView participantList;
 
@@ -67,32 +62,14 @@ public class DisplayEventScreen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_event_screen);
-
-
-
-        // MAPVIEW TEST
-        String lon = "-83.0717"; //get longitude
-        String lat = "42.3502"; // get latitude
-        String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
-
         ImageView mapView = (ImageView) findViewById(R.id.static_map);
-        Glide.with(this)
-                .load(url)
-                .into(mapView);
-
-        mapView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openMap(lon, lat);
-            }
-        });
 
         leaveEventBtn = (Button) findViewById(R.id.leave_event);
-        inviteCodeBtn = (Button) findViewById(R.id.invite_code);
+        Button inviteCodeBtn = (Button) findViewById(R.id.invite_code);
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
         //Theme: Fetch the current color of the background
-        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(DisplayEventScreen.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
 
@@ -162,60 +139,61 @@ public class DisplayEventScreen extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onFailure(Throwable thrown) {
+                                    public void onFailure(@NonNull Throwable thrown) {
                                     }
                                 }, Giftly.service);
 
-                        // Implemented Geocoding Functionality
-                        MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
-                                .accessToken(getString(R.string.mapbox_access_token))
-                                .query(event.getEventLocation())
-                                .build();
+                        if (event.getEventLocation() != null) {
+                            // Implemented Geocoding Functionality
+                            MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+                                    .accessToken(getString(R.string.mapbox_access_token))
+                                    .query(event.getEventLocation())
+                                    .build();
 
-                        mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
-                            @Override
-                            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
-                                List<CarmenFeature> results = response.body().features();
+                            mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+                                @Override
+                                public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+                                    List<CarmenFeature> results = response.body().features();
 
-                                if (results.size() > 0) {
-                                    Point firstResultPoint = results.get(0).center();
-                                    Log.d(TAG, "LONGITUDE: " + firstResultPoint.longitude());
-                                    Log.d(TAG, "LATITUDE: " + firstResultPoint.latitude());
-                                    String lon = String.valueOf(firstResultPoint.longitude());
-                                    String lat = String.valueOf(firstResultPoint.latitude());
-                                    String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
+                                    if (results.size() > 0) {
+                                        Point firstResultPoint = results.get(0).center();
+                                        Log.d(TAG, "LONGITUDE: " + firstResultPoint.longitude());
+                                        Log.d(TAG, "LATITUDE: " + firstResultPoint.latitude());
+                                        String lon = String.valueOf(firstResultPoint.longitude());
+                                        String lat = String.valueOf(firstResultPoint.latitude());
+                                        String url = "https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s+ff0000" + "(" + lon + "," + lat + ")/" + lon + "," + lat + ",9,0/344x127?access_token=pk.eyJ1IjoiaGczODA1IiwiYSI6ImNsZmR0bmdhYTA3dWkzcmxiOWdzY3M1MGgifQ.PtHaeSYNAvKWYzqqAS0v5A";
 
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Glide.with(DisplayEventScreen.this)
-                                                    .load(url)
-                                                    .into(mapView);
-                                            mapView.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    openMap(lon, lat);
-                                                }
-                                            });
-                                        }
-                                    });
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Glide.with(DisplayEventScreen.this)
+                                                        .load(url)
+                                                        .into(mapView);
+                                                mapView.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        openMap(lon, lat);
+                                                    }
+                                                });
+                                            }
+                                        });
 
 
-
-                                } else {
-                                    Log.d(TAG, "ERROR: No results found");
+                                    } else {
+                                        Log.d(TAG, "ERROR: No results found");
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<GeocodingResponse> call, Throwable t) {
-                                t.printStackTrace();
-                            }
-                        });
+                                @Override
+                                public void onFailure(@NonNull Call<GeocodingResponse> call, @NonNull Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
+                        }
                     }
 
                     @Override
-                    public void onFailure(Throwable thrown) {
+                    public void onFailure(@NonNull Throwable thrown) {
                     }
                 }, Giftly.service);
 
@@ -251,15 +229,11 @@ public class DisplayEventScreen extends AppCompatActivity {
                                         Toast.makeText(DisplayEventScreen.this, result, Toast.LENGTH_SHORT).show();
                                         //Pop up to leave event
                                         AlertDialog.Builder builder = new AlertDialog.Builder(DisplayEventScreen.this);
-                                        builder.setMessage("You've left this event")
-                                                .setTitle("Leave Event Request")
-                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                                        Intent intent = new Intent(DisplayEventScreen.this, HomeScreen.class);
-                                                        startActivity(intent);
-                                                    }
+                                        builder.setMessage(R.string.left_event)
+                                                .setTitle(R.string.leave_event_request)
+                                                .setPositiveButton(R.string.dialouge_confirmation, (dialogInterface, i) -> {
+                                                    Intent intent = new Intent(DisplayEventScreen.this, HomeScreen.class);
+                                                    startActivity(intent);
                                                 });
                                         AlertDialog dialog = builder.create();
                                         dialog.show();
@@ -270,7 +244,7 @@ public class DisplayEventScreen extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Throwable thrown) {
+                            public void onFailure(@NonNull Throwable thrown) {
 
                                 String message = (thrown.getMessage().isEmpty() ? "There was a problem leaving the event" : thrown.getMessage());
 
@@ -299,7 +273,7 @@ public class DisplayEventScreen extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(DisplayEventScreen.this, "Invite Code Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DisplayEventScreen.this, R.string.invite_copy_confirmation, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -322,14 +296,11 @@ public class DisplayEventScreen extends AppCompatActivity {
         public void run() {
             ArrayAdapter<String> arr = new ArrayAdapter<String>(DisplayEventScreen.this, R.layout.participant_list, R.id.participant_text,participantNames);
             participantList.setAdapter(arr);
-            participantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent i = new Intent(DisplayEventScreen.this, GiftSignup.class);
-                    i.putExtra("eventID", eventID);
-                    i.putExtra("userID", participantIDs[position]);
-                    startActivity(i);
-                }
+            participantList.setOnItemClickListener((parent, view, position, id) -> {
+                Intent i = new Intent(DisplayEventScreen.this, GiftSignup.class);
+                i.putExtra("eventID", eventID);
+                i.putExtra("userID", participantIDs[position]);
+                startActivity(i);
             });
         }
     }
@@ -354,3 +325,4 @@ public class DisplayEventScreen extends AppCompatActivity {
     }
 
 }
+
