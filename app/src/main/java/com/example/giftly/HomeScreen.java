@@ -2,8 +2,6 @@ package com.example.giftly;
 
 import static android.content.ContentValues.TAG;
 import static com.example.giftly.Giftly.client;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -36,13 +34,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HomeScreen extends AppCompatActivity {
     public Button settingsBtn;
     public Button addEventBtn;
-    public Button addGiftBtn;
     public Button joinEventBtn;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,36 +66,28 @@ public class HomeScreen extends AppCompatActivity {
                             //Create Async Future
                             Futures.addCallback(
                                     client.joinEvent(eventId),
-                                    new FutureCallback<String>() {
+                                    new FutureCallback<>() {
 
                                         @Override
                                         public void onSuccess(String result) {
                                             Log.d(TAG, "Successfully joined event");
 
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Toast.makeText(HomeScreen.this, result, Toast.LENGTH_SHORT).show();
-                                                    finish();
-                                                    overridePendingTransition(0, 0);
-                                                    startActivity(getIntent());
-                                                    overridePendingTransition(0, 0);
-                                                }
+                                            runOnUiThread(() -> {
+                                                Toast.makeText(HomeScreen.this, result, Toast.LENGTH_SHORT).show();
+                                                finish();
+                                                overridePendingTransition(0, 0);
+                                                startActivity(getIntent());
+                                                overridePendingTransition(0, 0);
                                             });
 
                                         }
 
                                         @Override
-                                        public void onFailure(Throwable thrown) {
+                                        public void onFailure(@NonNull Throwable thrown) {
 
-                                            String message = (thrown.getMessage().isEmpty() ? "There was a problem joining the Event" : thrown.getMessage());
+                                            String message = (Objects.requireNonNull(thrown.getMessage()).isEmpty() ? "There was a problem joining the Event" : thrown.getMessage());
 
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Toast.makeText(HomeScreen.this, message, Toast.LENGTH_SHORT).  show();
-                                                }
-                                            });
+                                            runOnUiThread(() -> Toast.makeText(HomeScreen.this, message, Toast.LENGTH_SHORT).show());
                                             Log.d(TAG, thrown.toString());
                                         }
                                     }, Giftly.service);
@@ -109,48 +98,45 @@ public class HomeScreen extends AppCompatActivity {
             });
 
 
-            settingsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            settingsBtn.setOnClickListener(view -> {
                 Intent intent = new Intent(HomeScreen.this, SettingsScreen.class);
                 startActivity(intent);
-            }
-        });
+            });
 
 
-        addEventBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeScreen.this, AddEventScreen.class);
-                startActivity(intent);
-            }
+        addEventBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(HomeScreen.this, AddEventScreen.class);
+            startActivity(intent);
         });
 
         //This call will display the user's name in the greeting message
         Futures.addCallback(
                 Giftly.client.readUser(client.getAuth().getUid()),
-                new FutureCallback<User>() {
+                new FutureCallback<>() {
                     @Override
                     public void onSuccess(User result) {
                         display.setText(result.getFullName());
                         //This call will display the user's name in the greeting message
                         Futures.addCallback(
                                 Giftly.client.readEvent(result.getEvents()),
-                                new FutureCallback<ArrayList<IEvent>>() {
+                                new FutureCallback<>() {
                                     @Override
                                     public void onSuccess(ArrayList<IEvent> events) {
                                         //anon class for updating GUI thread
                                         class updateEvents implements Runnable {
-                                            ArrayList<IEvent> events;
-                                            updateEvents(ArrayList<IEvent> e) { events = e;}
-                                            @SuppressLint("SuspiciousIndentation")
+                                            final ArrayList<IEvent> events;
+
+                                            updateEvents(ArrayList<IEvent> e) {
+                                                events = e;
+                                            }
+
                                             @Override
                                             public void run() {
                                                 LinearLayout eventList = findViewById(R.id.events);
                                                 Log.d(TAG, "Adding Events to List:");
 
                                                 TextView header = new TextView(eventList.getContext());
-                                                header.setText("Ongoing Events");
+                                                header.setText(R.string.ongoing_events);
                                                 header.setTextSize(20);
                                                 header.setPadding(32, 32, 0, 32);
                                                 header.setGravity(Gravity.CENTER_VERTICAL);
@@ -165,32 +151,14 @@ public class HomeScreen extends AppCompatActivity {
 
                                                 int value = getIntent().getIntExtra("VALUE", 0);
                                                 switch (value) {
-                                                    case 0:
+                                                    case 0 -> {
                                                         // code block
                                                         GridLayout gridLayout = new GridLayout(eventList.getContext());
                                                         gridLayout.setColumnCount(2); // set the number of columns you want
                                                         for (int i = 0; i < events.size(); i++) {
                                                             Button button = new Button(eventList.getContext());
                                                             button.setId(i);
-
-                                                            // Set the event name to lowercase
-                                                            String eventName = events.get(i).getEventName().toLowerCase();
-                                                            // Capitalize the first letter of the event name if it has a length
-                                                            if (eventName.length() > 1) {
-                                                                eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
-                                                                eventName = eventName.toLowerCase();
-                                                                eventName = Character.toString(eventName.charAt(0)).toUpperCase() + eventName.substring(1);
-
-                                                                String[] temp = eventName.split(" ");
-                                                                StringBuilder results = new StringBuilder();
-                                                                int L = temp.length;
-                                                                for (int k = 0; k < L; k++) {
-                                                                    results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
-                                                                }
-                                                                String Event_name = results.toString();
-                                                                button.setText(Event_name);
-                                                            } else button.setText("Unnamed Event");
-
+                                                            button.setText(sanitizeEventName(events.get(i).getEventName().toLowerCase()));
                                                             button.setTransformationMethod(null);
 
                                                             //Add button layout modification stuff to make it look nice here (target button)
@@ -230,40 +198,21 @@ public class HomeScreen extends AppCompatActivity {
                                                         paramsGridLayout.setMargins(40, 0, 32, 0); //left, top, right, bottom
                                                         gridLayout.setLayoutParams(paramsGridLayout);
                                                         eventList.addView(gridLayout);
-                                                        break;
-                                                    case 1:
+                                                    }
+                                                    case 1 -> {
                                                         // code block
                                                         GridLayout linearLayout = new GridLayout(eventList.getContext());
                                                         linearLayout.setColumnCount(1); // set the number of columns you want
                                                         for (int i = 0; i < events.size(); i++) {
                                                             Button button = new Button(eventList.getContext());
                                                             button.setId(i);
-
-                                                            // Set the event name to lowercase
-                                                            String eventName = events.get(i).getEventName().toLowerCase();
-                                                            //Capitalize the first letter of the event name if it has a length
-                                                            if (eventName.length() > 1)
-                                                                eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
-
-                                                            eventName = eventName.toLowerCase();
-                                                            eventName = Character.toString(eventName.charAt(0)).toUpperCase()+eventName.substring(1);
-
-                                                            String[] temp = eventName.split(" ");
-                                                            StringBuilder  results = new StringBuilder();
-                                                            int L = temp.length;
-                                                            for (int k = 0; k < L; k++) {
-                                                                results.append(Character.toUpperCase(temp[k].charAt(0))).append(temp[k].substring(1)).append(" ");
-                                                            }
-                                                            String Event_name = results.toString();
-                                                            button.setText(Event_name);
-
+                                                            button.setText(sanitizeEventName(events.get(i).getEventName().toLowerCase()));
                                                             button.setTransformationMethod(null);
-
                                                             //Add button layout modification stuff to make it look nice here (target button)
                                                             button.setOnClickListener(new handleClick(events.get(i).getEventID()));
                                                             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                                                             params.setMargins(90, 16, 16, 32); //left, top, right, bottom
-                                                            params.width =750;
+                                                            params.width = 750;
                                                             params.height = 650;
                                                             button.setLayoutParams(params);
 
@@ -290,48 +239,51 @@ public class HomeScreen extends AppCompatActivity {
                                                             button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
                                                             linearLayout.addView(button);
                                                         }
-
                                                         GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
                                                         layoutParams.width = GridLayout.LayoutParams.MATCH_PARENT;
                                                         layoutParams.height = GridLayout.LayoutParams.WRAP_CONTENT;
                                                         layoutParams.setMargins(50, 0, 32, 0); //left, top, right, bottom
                                                         linearLayout.setLayoutParams(layoutParams);
                                                         eventList.addView(linearLayout);
-                                                        break;
-                                                    default:
+                                                    }
+                                                    default -> {
+                                                    }
                                                 }
 
                                             }
 
                                             class handleClick implements View.OnClickListener {
-                                                String eventID;
+                                                final String eventID;
+
                                                 handleClick(String eventID) {
                                                     this.eventID = eventID;
                                                 }
+
                                                 @Override
                                                 public void onClick(View view) {
                                                     Log.d(TAG, eventID);
-                                                    Intent intent = new Intent(getApplicationContext(),DisplayEventScreen.class);
-                                                    intent.putExtra("eventID", eventID.toString());
+                                                    Intent intent = new Intent(getApplicationContext(), DisplayEventScreen.class);
+                                                    intent.putExtra("eventID", eventID);
                                                     Log.d(TAG, "Event ID: " + intent.getStringExtra("eventID"));
                                                     startActivity(intent);
                                                 }
                                             }
 
-                                        };
+                                        }
                                         Log.d(TAG, events.toString());
                                         //update events list on GUI thread using anon class
                                         runOnUiThread(new updateEvents(events));
                                     }
+
                                     @Override
-                                    public void onFailure(Throwable thrown) {
+                                    public void onFailure(@NonNull Throwable thrown) {
                                     }
                                 }, Giftly.service
                         );
                     }
 
                     @Override
-                    public void onFailure(Throwable thrown) {
+                    public void onFailure(@NonNull Throwable thrown) {
 
                     }
                 },
@@ -339,7 +291,7 @@ public class HomeScreen extends AppCompatActivity {
         );
 
         //Theme: Fetch the current color of the background
-        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int savedColor = sharedPreferences.getInt("BackgroundColor", ContextCompat.getColor(HomeScreen.this, R.color.Default_color));
         getWindow().getDecorView().setBackgroundColor(savedColor);
     }
@@ -356,6 +308,22 @@ public class HomeScreen extends AppCompatActivity {
             startActivity(new Intent(HomeScreen.this, ProfileScreen.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public String sanitizeEventName(String eventName) {
+        // Capitalize the first letter of the event name if it has a length
+        if (eventName.length() > 1) {
+            eventName = eventName.substring(0, 1).toUpperCase() + eventName.substring(1);
+            eventName = eventName.toLowerCase();
+            eventName = Character.toString(eventName.charAt(0)).toUpperCase() + eventName.substring(1);
+
+            String[] temp = eventName.split(" ");
+            StringBuilder results = new StringBuilder();
+            for (String s : temp) {
+                results.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).append(" ");
+            }
+            return results.toString();
+        } else return getString(R.string.unnamed_event);
     }
 }
 
