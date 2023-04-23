@@ -66,6 +66,8 @@ public class DisplayEventScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_event_screen);
 
+
+
         // MAPVIEW TEST
         String lon = "-83.0717"; //get longitude
         String lat = "42.3502"; // get latitude
