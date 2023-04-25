@@ -1,5 +1,23 @@
 # Giftly
-An app for organizing gift giving events
+Giftly is an application that will allow users to anonymously coordinate their gift-giving for multiple types of occasions. Whether the occasion is for a birthday party, Christmas or Easter, Giftly can make coordinating gift-giving easier and fun. Giftly stores user’s information inside a database that is relevant towards the process of using a Giftly account. When a user signs up for Giftly and creates an event, their account and event gets stored inside the database. Each event created receives its own unique event ID for other users to use for joining an event to become a participant. When an event is held, only the users that are getting gifts may see all the gifts in an event. The gifts entered can be anonymously entered depending on whether a user chooses to remain anonymous or not. Giftly will make organizing gift-giving events easier and will save people time figuring out what gifts to purchase and what gifts to not purchase. This application is intended for a relatively tech-savvy group of individuals who are used to the standard messaging-app layout. Giftly is most effective when all members participating in a gift-giving event have downloaded the app.
+
+# Functionalities
+* Creating an account
+* Creating an event
+* Inviting users to an event via an invite code
+* Joining an event
+* Setting an event location
+* Layout/Theme customizations
+* Uploading a profile picture
+* Communicating with Firebase
+
+# Contributors
+
+* Cayden Koweck
+* Noura Alaboudi
+* Hanna Bulinda
+* Luis Plaza
+* Matthew McGowan
 
 # Installation
 
